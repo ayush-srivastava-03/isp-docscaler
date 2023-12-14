@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# This shell script is a workaround for the cases, when script needs to be executed
+# from cwd, which is not /docscaler_core
+cd /docscaler_core && ./docscaler.py "$@"

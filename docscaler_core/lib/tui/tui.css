@@ -1,0 +1,212 @@
+$ddn_red: #A71930;
+$ddn_mahogany: #C4262E;
+$ddn_alizarin: #DB3632;
+$ddn_persimmon: #E05206;
+$ddn_orange_peel: #FFA100;
+$ddn_golden_tainoi: #FFC656;
+$ddn_light: #F2F6FC;
+$ddn_light_gray: #E9EDF4;
+$ddn_mid_gray: #CED3DC;
+$ddn_gray: #91969E;
+$ddn_dark_gray: #4D4F53;
+$ddn_dark: #1F2323;
+
+$green: #4e9a06
+
+
+ *  {
+    transition: background 300ms in_out_cubic, color 300ms in_out_cubic;
+}
+
+.text {
+    color: #1F2323;
+}
+
+.label {
+	height: 3;
+	text-align: end;
+    content-align: center middle;
+}
+
+.labelDate {
+    padding: 1 2;
+    text-align: left;
+    color: $ddn_golden_tainoi;
+}
+
+.input {
+	background: $ddn_light_gray;
+	border: tall $ddn_dark;
+	width: 100%;
+}
+
+.input:focus {
+	border: tall $ddn_persimmon;
+}
+
+.input>.input--cursor {
+    background: $ddn_light_gray;
+    color: $ddn_dark;
+    text-style: reverse;
+}
+
+.input>.input--placeholder {
+    color: $ddn_gray;
+}
+
+.dropdown {
+	background: $ddn_light_gray;
+	border: tall $ddn_dark;
+}
+
+.dropdown:focus {
+	border: tall $ddn_persimmon;
+}
+
+.dropdown>.input--cursor {
+    background: $ddn_light_gray;
+    color: $ddn_dark;
+    text-style: reverse;
+}
+
+.dropdown>.input--placeholder {
+    color: $ddn_gray;
+}
+
+.column {
+	align: center middle;
+    width: 1fr;
+}
+
+.saveButton {
+	width: 113;
+}
+
+.sss_buttons {
+	height: auto;
+	layout: horizontal;
+}
+
+.sss_minus {
+    width: 5;
+    min-width: 3;
+}
+
+.sss_plus {
+	width: 5;
+	min-width: 3;
+}
+
+Screen {
+    overflow: hidden;
+}
+
+Screen > Container {
+    height: 100%;
+    overflow: hidden;
+}
+
+Header {
+	background: $ddn_dark;
+    color: $ddn_light;
+}
+
+HeaderClock {
+    background: $ddn_dark_gray;
+    color: $ddn_golden_tainoi;
+}
+
+Body {
+    layers: base overlay dialog;
+    height: 100%;
+    overflow-y: auto;
+    width: 100%;
+    scrollbar-color: $ddn_red;
+    background: $ddn_light_gray;
+}
+
+Column {
+    height: auto;
+    align: center top;
+    border: hidden;
+    width: 100%;
+    padding: 1 0
+}
+
+Section {    
+    height: auto;
+    min-width: 40;  
+    width: 114;
+}
+
+Section Container {
+	background: $ddn_gray;
+}
+
+SectionTitle {
+    padding: 1 2;
+    background: $ddn_red;
+    text-align: center;
+    text-style: bold;
+}
+
+Form {
+    height: auto;
+    /*margin: 1 1;*/
+    padding: 1 1;
+    layout: grid;
+    grid-size: 2;
+    grid-rows: 4;
+    grid-columns: 20 1fr;
+    background: $ddn_gray;
+    border: wide $ddn_dark;
+}
+
+EmptyForm {
+    height: auto;
+    /*margin: 1 1;*/
+    padding: 1 1;
+    layout: vertical;
+    background: $ddn_gray;
+    border: wide $ddn_dark;
+}
+
+ProjectForm {
+    height: auto;
+    /*margin: 1 1;*/
+    padding: 1 1;
+    layout: grid;
+    grid-size: 3;
+    grid-rows: 4;
+    grid-columns: 20 1fr 10;
+    background: $ddn_gray;
+    border: wide $ddn_dark;
+}
+
+EditableDataTable {
+    height: 5;
+}
+
+EditableDataTable > .datatable--header {
+    text-style: bold;
+    background: $ddn_red;
+    color: $text;
+}
+
+EditableDataTable > .datatable--odd-row {
+	background: $ddn_dark_gray;
+}
+
+EditableDataTable > .datatable--even-row {
+    background: $ddn_dark;
+}
+
+EditableDataTable > TableListView {
+    scrollbar-color: #A71930;
+}
+
+
+
+
+
+
