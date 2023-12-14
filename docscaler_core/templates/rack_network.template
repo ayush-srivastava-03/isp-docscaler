@@ -1,0 +1,11 @@
+{{def(config)}}
+<h1>Rack and Network Diagram</h1>
+{{if "rack_diagram" in config["network"]}}
+<h2>Rack Diagram</h2>
+<img src={{config["network"]["rack_diagram"]}}>
+<pagebreak/>
+{{endif}}
+{{if "network_diagram" in config["network"]}}
+<h2>Networking Diagram</h2>
+<img src={{config["network"]["network_diagram"]}}>
+{{endif}}

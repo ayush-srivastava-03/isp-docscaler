@@ -1,0 +1,25 @@
+{{def(config)}}
+<h1>Installation Summary</h1>
+<h2>Hardware Services</h2>
+<bullet>DDN will pre-build the racks in the factory – integrating all storage components in the provided racks and pre-cable</bullet>
+<bullet>DDN will do a base configuration of the storage components in the factory applying the agreed settings </bullet>
+<bullet>DDN will pre-load the storage-system with EXAScaler software images</bullet>
+<bullet>Customer provides a remote connection to the system for the full implementation phase for DDN technicians</bullet>
+<bullet>Customer is responsible to check and verify the items received matches DDN packing list and matches the items described</bullet>
+<bullet>Customer will deliver all components into the server room (final destination).</bullet>
+<bullet>Customer will then install all components in the pre-built server racks.</bullet>
+<bullet>DDN will configure the software stack of the storage system to match the end user requirements.</bullet>
+<bullet>Customer must provide all necessary configuration information in a timely manner</bullet>
+<br>
+<text>
+<b>DDN will support the customer with:</b>
+</text>
+<bullet>Documentation</bullet>
+<bullet>Configuration and optimization advice</bullet>
+<bullet>DDN will undertake a performance tests as described in the separate agreed acceptance document</bullet>
+<br>
+<h2>Block Storage Services</h2>
+<bullet>Install latest viable firmware and check all systems are up-to-date</bullet>
+<bullet>Insert drives into the enclosures</bullet>
+<bullet>Verify that disk drive firmware is on the latest</bullet>
+<bullet>Verify that the RAID-Pools have been created correctly</bullet>

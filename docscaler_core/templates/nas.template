@@ -1,0 +1,157 @@
+{{def(config)}}
+<h1>MEDIAScaler</h1>
+<h2>Overview</h2>
+The HA failover NAS solution is available only on Tungsten. The shared directory with the configuration files for both NAS servers is located under /tungsten/.ctdbcluster.
+
+<h2>Network Configuration</h2>
+<h3>NAS Server 1</h3>
+<table style="noborder">
+<tr>
+<td>Hostname</td>
+<td>: tungsten-nas1.fmi.ch</td>
+</tr>
+<tr>
+<td>IP IB0 (EDR)</td>
+<td>: 172.30.30.32</td>
+</tr>
+<tr>
+<td>IP IB0 (EDR)</td>
+<td>: 172.30.30.33</td>
+</tr>
+<tr>
+<td>IP eth0 and eth1 Team (100GbE)</td>
+<td>: 172.27.29.147</td>
+</tr>
+<tr>
+<td>CTDB IP</td>
+<td>: ?</td>
+</tr>
+<tr>
+<td>BMC IP</td>
+<td>: 172.27.50.144</td>
+</tr>
+</table>
+
+<h3>NAS Server 2</h3>
+<table style="noborder">
+<tr>
+<td>Hostname</td>
+<td>: tungsten-nas2.fmi.ch</td>
+</tr>
+<tr>
+<td>IP IB0 (EDR)</td>
+<td>: 172.30.30.34</td>
+</tr>
+<tr>
+<td>IP IB0 (EDR)</td>
+<td>: 172.30.30.35</td>
+</tr>
+<tr>
+<td>P eth0 and eth1 Team (100GbE)</td>
+<td>: 172.27.29.148</td>
+</tr>
+<tr>
+<td>CTDB IP</td>
+<td>: ?</td>
+</tr>
+<tr>
+<td>BMC IP</td>
+<td>: 172.27.50.145</td>
+</tr>
+</table>
+
+<h3>Virtual IPs</h3>
+<table style="noborder">
+<tr>
+<td>VIP 1</td>
+<td>: tungsten-nas1.fmi.ch</td>
+</tr>
+<tr>
+<td>VIP 2</td>
+<td>: 172.30.30.32</td>
+</tr>
+</table>
+
+<h3>TSM Server 1</h3>
+<table style="noborder">
+<tr>
+<td>Hostname</td>
+<td>: tsmsrv01.fmi.ch</td>
+</tr>
+<tr>
+<td>IP IB0 (EDR)</td>
+<td>: 172.30.30.40</td>
+</tr>
+<tr>
+<td>IP IB1 (EDR)</td>
+<td>: 172.30.30.41</td>
+</tr>
+<tr>
+<td>IP eth0 and eth1 Team (100GbE)</td>
+<td>: 172.27.29.146</td>
+</tr>
+<tr>
+<td>BMC IP</td>
+<td>: 172.27.50.136</td>
+</tr>
+</table>
+
+<h3>TSM Server 2</h3>
+<table style="noborder">
+<tr>
+<td>Hostname</td>
+<td>: tsmsrv02.fmi.ch</td>
+</tr>
+<tr>
+<td>IP IB0 (EDR)</td>
+<td>: ?</td>
+</tr>
+<tr>
+<td>IP IB1 (EDR)</td>
+<td>: ?</td>
+</tr>
+<tr>
+<td>P eth0 and eth1 Team (100GbE)</td>
+<td>: ?</td>
+</tr>
+<tr>
+<td>BMC IP</td>
+<td>: 172.27.50.137</td>
+</tr>
+</table>
+
+<h2>Managing MEDIAScaler</h2>
+<h3>Starting and Stopping the Services</h3>
+The mediascaler-samba-ctdb service can be started and stopped on the current node, on indivdual nodes, or on all nodes. Note that these commands affect both Samba and NFS services. Failovers may cause delays or require a re-mount of the share.
+<code>mediascaler-samba-ctdb {start | stop | restart}</code>
+<code>onnode $listOfCtdbNodeIds mediascaler-samba-ctdb {start | stop | restart}</code>
+<code>onnode all mediascaler-samba-ctdb {start | stop | restart}</code>
+
+<h3>Editing Shares and Exports</h3>
+The configuration files are usually saved in the .ctdbcluster directory of the parallel filesystem. In this case it is sufficient to modify only one configuration file. If the files are saved under their original location on each server, the modified configuration file has to be copied to all NAS servers, e.g. via clush. It is good practice to make a copy of the current configuration file or to comment in the current setting to be changed.
+<code>vi /etc/samba/smb.conf</code>
+<code>vi /etc/exports</code>
+
+<h3>Reloading Shares and Exports</h3>
+Samba automatically reloads the smb.conf file every minute. Reloading the configuration can be forced. The export file for NFS must be reloaded manually in any case.
+<code>[onnode {$listOfCtdbNodeIds | all}] smbcontrol smbd reload-config</code>
+<code>[onnode {$listOfCtdbNodeIds | all}] exportfs -ra</code>
+
+<h2>Troubleshooting</h2>
+<h3>Status</h3>
+Verify that the services are working properly. Note that it takes a few seconds after starting CTDB until the status changes from unhealthy to ok. Note that the smbstatus command may have an impact with many shares and connected clients.
+<code>ctdb status</code>
+<code>systemctl status mediascaler-samba-ctdb</code>
+<code>smbstatus</code>
+<code>systemctl status mediascaler-samba-smbd</code>
+<code>systemctl status mediascaler-samba-nmbd</code>
+<code>systemctl status mediascaler-samba-winbindd</code>
+<code>showmount -e</code>
+<code>ps -e | grep -w mountd</code>
+<code>ps -e | grep -w rpcbind</code>
+
+<h3>Logs</h3>
+Monitor the logs live. Send the logs to DDN on request only. In most of the cases it is necessary to trace the particular problem. The Samba log level is set to 0 by default because the logs get too large in complex environments.
+<code>tailf /var/log/log.ctdb</code>
+<code>tailf /var/log/samba/$clientLogFile</code>
+<code>tailf /var/log/messages</code>

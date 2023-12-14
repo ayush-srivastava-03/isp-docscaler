@@ -1,0 +1,147 @@
+{{def(config)}}
+<h1>Maintenance</h1>
+<h2>Startup Procedure</h2>
+<h3>SFA</H3>
+<bullet>Turn on the expansion enclosures.</bullet>
+<bullet>Wait for 5 minutes after the enclosures have been powered on.</bullet>
+<bullet>Turn on the controllers in the base enclosure.</bullet>
+<bullet>Wait 5 minutes after the base enclosure is up.</bullet>
+<bullet>Verify that both controllers are healthy.</bullet>
+<code>
+SHOW SUBSYSTEM FAULT
+No SUBSYSTEM faults exist</code>
+<br>
+{{script}}
+virtual = False
+lustre = False
+gpfs = False
+for project in config.project:
+	for subsystem in config.project[project].sfa:
+	    model = config.project[project].sfa[subsystem].getSubsytemModel()
+	    if "E" in model:
+	        virtual = True
+	        
+	    if "gpfs" in config.project[project]:
+	        gpfs = True
+	        
+	    if "lustre" in config.project[project]:
+	        lustre = True
+
+{{endscript}}
+{{if virtual}}
+<bullet>The virtual machines are configured to start automatically.</bullet>
+<bullet>Verify that all VMs are healthy.</bullet>
+<code>APPLICATION SHOW STACK</code>
+<bullet>Start the virtual machines on the stacks manually if required.</bullet>
+<code>APPLICATION START STACK idx</code>
+<br>
+{{endif}}
+{{if lustre or gpfs}}
+<h3>Filesystems</h3>
+{{if gpfs}}
+<h4>GPFS</h4>
+<bullet>Verify that Spectrum Scale has started automatically.</bullet>
+<code>mmgetstate -N nsdNodes</code>
+<bullet>Start Spectrum Scale if required.</bullet>
+<code>mmstartup -N nsdNodes</code>
+<bullet>Verify that Spectrum Scale has mounted the filesystems.</bullet>
+<code>mmlsmount all -L</code>
+<bullet>Mount the filesystems if required.</bullet>
+<code>mmmount all -N nsdNodes</code>
+<bullet>Start the CES service manually if required.</bullet>
+<code>mmces service start NFS
+mmces service start SMB</code>
+<bullet>The MEDIAScaler services are started automatically when mounting the filesystems.</bullet>
+<bullet>Turn on the Spectrum Scale clients if required.</bullet>
+<bullet>Wait 5 minutes until the clients are booted.</bullet>
+<bullet>Verify that Spectrum Scale has started on the clients.</bullet>
+<bullet>Start Spectrum Scale on the clients if required.</bullet>
+<bullet>Verify that Spectrum Scale has mounted the filesystems on the clients.</bullet>
+<bullet>Mount the filesystems on the clients if required.</bullet>
+<bullet>Turn on the NAS clients if required.</bullet>
+<bullet>Wait 5 minutes until the clients are booted.</bullet>
+<bullet>Verify that the shares and exports have been mounted on the NAS clients.</bullet>
+<bullet>Mount the the shares and exports on the NAS clients if required.</bullet>
+{{endif}}
+
+{{if lustre}}
+{{if config.project[project].lustre.getExaScalerType() == 0}}
+<h4>ExaScaler {{config.project[project].lustre.getExaScalerVersionNum()}}</h4>
+<bullet>Start Lustre if required</bullet>
+<code>esctl cluster --action start</code>
+<bullet>Wait for the command to complete and check with</bullet>
+<code>hastatus</code>
+<bullet>Check the recovery status</bullet>
+<code>clush -ba lustre_recovery_status.sh</code>
+<bullet>To get more details about the recovery status, run</bullet>
+<code>clush -ba lustre_recovery_status.sh -v</code>
+<bullet>Mount the clients or check if they can access the FS again.</bullet>
+{{endif}}
+
+{{if config.project[project].lustre.getExaScalerType() == 1}}
+<h4>ExaScaler {{config.project[project].lustre.getExaScalerVersionNum()}}</h4>
+<bullet>Start Lustre if required</bullet>
+<code>clusterctl start</code>
+<bullet>Wait for the command to complete and check with</bullet>
+<code>hastatus</code>
+<bullet>Check the recovery status</bullet>
+<code>clush -ba lustre_recovery_status</code>
+<bullet>To get more details about the recovery status, run</bullet>
+<code>clush -ba lustre_recovery_status -v</code>
+<bullet>Mount the clients or check if they can access the FS again.</bullet>
+{{endif}}
+<pagebreak/>
+{{endif}}
+{{endif}}
+
+<h2>Shutdown Procedure</h2>
+<bullet>Quit applications that have direct access to the filesystems.</bullet>
+{{if gpfs or lustre}}
+<h3>Filesystems</h3>
+{{if gpfs}}
+<h4>GPFS</h4>
+<bullet>Unmount Samba shares and NFS exports on the NAS clients.</bullet>
+<bullet>Make sure that filesystem browsers and terminals do not have access to the Spectrum Scale filesystem paths.</bullet>
+<bullet>Stopp the CES service manually if the server is a protocol node.</bullet>
+<code>mmces service stop NFS
+mmces service stop SMB</code>
+<bullet>The MEDIAScaler services are stopped automatically when shutting down Spectrum Scale.</bullet>
+<bullet>Shut down Spectrum Scale on the individual or all NSD servers and clients.</bullet>
+<code>mmshutdown -a</code>
+{{endif}}
+
+{{if lustre}}
+{{if config.project[project].lustre.getExaScalerType() == 0}}
+<h4>ExaScaler {{config.project[project].lustre.getExaScalerVersionNum()}}</h4>
+<bullet>Unmount all clients</bullet>
+<bullet>Stop Lustre with</bullet>
+<code>esctl cluster --action stop</code>
+<bullet>Wait for the command to complete</bullet>
+<bullet>Shutdown the VMs</bullet>
+{{endif}}
+
+{{if config.project[project].lustre.getExaScalerType() == 1}}
+<h4>ExaScaler {{config.project[project].lustre.getExaScalerVersionNum()}}</h4>
+<bullet>Unmount all clients</bullet>
+<bullet>Stop Lustre with</bullet>
+<code>clusterctl stop</code>
+<bullet>Wait for the command to complete</bullet>
+<bullet>Shutdown the VMs</bullet>
+{{endif}}
+
+{{endif}}
+
+{{endif}}
+<h3>SFA</h3>
+{{if virtual}}
+<bullet>If the VM shutdown from within the VM does not work, run the shutdown from the SFA CLUI or WebUI.</bullet>
+<code>APPLICATION SHUTDOWN STACK idx ABRUPT</code>
+{{endif}}
+<bullet>Shut down the subsystem.</bullet>
+<code>
+SHUTDOWN SUBSYSTEM
+Are you sure you want to shutdown subsystem [Yes]? yes
+</code>
+<bullet>Wait until the controllers are powered off.</bullet>
+<bullet>Power off the the base enclosure.</bullet>
+<bullet>Power off the expansion enclosures.</bullet>

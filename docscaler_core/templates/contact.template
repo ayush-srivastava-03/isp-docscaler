@@ -1,0 +1,58 @@
+{{def(config)}}
+<h1>Contacts and DDN Account Team</h1>
+<h2>Customer</h2>
+<table style="noborder">
+	<tr>
+		<td>Name</td>
+		<td>: {{config["customer"]["name"]}}</td>
+	</tr>
+	<tr>
+		<td>Company</td>
+		<td>: {{config["customer"]["company"]}}</td>
+	</tr>
+{{if "title" in config:}}
+	<tr>
+		<td>Title</td>
+		<td>: {{config["title"]}}</td>
+	</tr>
+{{endif}}
+	<tr>
+		<td>Telephone</td>
+		<td>: {{config["customer"]["phone"]}}</td>
+	</tr>
+	<tr>
+		<td>Email</td>
+		<td>: {{config["customer"]["email"]}}</td>
+	</tr>
+{{if "address" in config["customer"]}}
+	<tr>
+		<td>Address</td>
+{{script}} address=":" {{endscript}}
+{{for p in sorted(config["customer"]["address"])}}
+		<td>{{"{0} {1}".format(address, config["customer"]["address"][p])}}</td>
+{{script}} address=" " {{endscript}}
+	</tr>
+	<tr>
+		<td> </td>
+{{endfor}}
+	</tr>
+{{endif}}
+</table>
+<br>
+<h2>DDN Account Team</h2>
+<table>
+	<tr>
+		<td>Name</td>
+		<td>Role</td>
+		<td>Telephone</td>
+		<td>Email</td>
+	</tr>
+{{for p in config["ddn"]["team"]}}
+	<tr>
+		<td>{{p["name"]}}</td>
+		<td>{{p["role"]}}</td>
+		<td>{{p["phone"]}}</td>
+		<td>{{p["email"]}}</td>
+	</tr>
+{{endfor}}
+</table>

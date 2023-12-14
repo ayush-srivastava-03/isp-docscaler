@@ -1,0 +1,11 @@
+{{def(config)}}
+<h1>Project overview</h1>
+<h2>Description</h2>
+<br><br>
+<text>
+This guide provides details about the installed hardware and software. Example commands demonstrate the use of the command line user interface. The general scope of this document is to show the expected output for the individual components,
+but not to print out the details for every single part. 
+Replace the used IPs or IDs according to the tables if information is required for a system that is not listed here explicitly.
+
+Please make sure that you get familiar with the support procedures and register on our support portal.
+</text>

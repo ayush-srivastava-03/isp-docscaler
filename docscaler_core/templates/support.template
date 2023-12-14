@@ -1,0 +1,178 @@
+{{def(config)}}
+<h1>DDN Support</h1>
+<h2>Contacting DDN Support</h2>
+
+<text>Please contact DDN Technical Support at any time if you have questions or need assistance. Support can be reached online via the Support Portal, by e-mail, or by telephone.
+</text>
+
+<h3>Web Support Portal</h3>
+
+<text>The preferred method of requesting DDN Technical Support is the web-based Support Portal, that is available to all customers. Use the portal to submit service requests, manage the status of your cases, or upload and download files. Please find the Support Portal URL and related addresses and contacts below:
+</text>
+
+<table style="noborder">
+<tr>
+<td>DDN Worldwide Support</td>
+<td>: https://www.ddn.com/support/global-services-overview</td>
+</tr>
+<tr>
+<td>DDN Support Portal Registration</td>
+<td>: https://www.ddn.com/support-portal-registration</td>
+</tr>
+<tr>
+<td>DDN Support Portal</td>
+<td>: https://community.ddn.com/login</td>
+</tr>
+<tr>
+<td>Portal Assistance E-Mail</td>
+<td>: webportal.support@ddn.com</td>
+</tr>
+</table>
+ 
+<h3>Telephone Support</h3>
+
+<text>DDN provides toll-free telephone support lines in most parts of the world. Our Technical Support Engineers (TSEs) staff those lines from offices in the U.S., U.K., and India for follow-the-sun coverage. Customers under warranty can call DDN Technical Support during local business hours at no extra charge. Customers with Extended, Premium, or Mission Critical support contracts can call at no charge on a 24x7x365 basis. Reach us via the following telephone numbers:
+</text>
+
+<table style="noborder">
+<tr>
+<td>EMEA</td>
+<td>: +800 3282 3473</td>
+</tr>
+<tr>
+<td>France</td>
+<td>: +33 80 5100204 or +33 184010332</td>
+</tr>
+<tr>
+<td>Germany</td>
+<td>: +49 6196 5868582</td>
+</tr>
+<tr>
+<td>United Kingdom</td>
+<td>: +44 20 35446672</td>
+</tr>
+</table>
+<h3>Email</h3>
+
+<text>Requests for technical support may be submitted by e-mail. Your e-mails are converted into service requests by our Service Management software system. E-mails responding to an existing case are matched to the respective SR ticket automatically.
+</text>
+
+<table style="noborder">
+<tr>
+<td>E-mail</td>
+<td>: support@ddn.com</td>
+</tr>
+</table>
+
+<pagebreak/>
+<h2>Collecting Logs</h2>
+<h3>SFA</h3>
+<h4>SHOW SUBSYSTEM SUMMARY</h4>
+<text>For any SFA related problem, support requires the so-called SSS logs from the both controllers.
+The files must be named SR<b>&lt;srNumber&gt;</b>_<b>&lt;companyName&gt;</b>_c<b>&lt;controllerId&gt;</b>_SSS_<b>&lt;date&gt;</b>.log.
+The <b>&lt;srNumber&gt;</b> is the support ticket number assigned to your case.
+</text>
+<code>
+echo "SHOW SUBSYSTEM SUMMARY" | ssh user@&lt;controllerIP&gt; | tar cvz > &lt;fileName&gt;.tgz
+</code>
+<br>
+<h4>SHOW SUBSYSTEM SUMMARY ALL</h4>
+<text>In some cases, support may ask for the so-called SSSA logs from both controllers.
+The files must be named SR<b>&lt;srNumber&gt;</b>_<b>&lt;companyName&gt;</b>_c<b>&lt;controllerId&gt;</b>_SSSA_<b>&lt;date&gt;</b>.log.
+The <b>&lt;srNumber&gt;</b> is the support ticket number assigned to your case.
+</text>
+<code>
+echo "SHOW SUBSYSTEM SUMMARY ALL" | ssh user@&lt;controllerIP&gt; | tar cvz > &lt;fileName&gt;.tgz
+</code>
+<br>
+<h4>Diagnostic Logs</h4>
+<text>Support may ask for the so-called diag logs from both controllers. Diagnostic logs are huge and should not be uploaded for every incident.
+Name the files like SR<b>&lt;srNumber&gt;</b>_<b>&lt;companyName&gt;</b>_c<b>&lt;controllerId&gt;</b>_DIAG_<b>&lt;date&gt;</b>.log.
+The <b>&lt;srNumber&gt;</b> is the support ticket number assigned to your case.
+</text>
+<code>
+ssh diag@&lt;controllerIP&gt; tgz > &lt;fileName&gt;.tgz
+</code>
+
+{{if "project" in config}}
+{{script}}
+gpfs = False
+lustre = False
+
+for project in config["project"]:
+  if "gpfs" in config["project"][project]:
+       gpfs = True
+       
+  if "lustre" in config["project"][project]:
+       lustre = True
+
+{{endscript}}
+
+{{if gpfs}}
+<h3>GPFS</h3>
+<h4>gs_showall</h4>
+<text>For any GPFS related problem, support requires a so-called showall. The gsctl tool is must be executed on of the NSD nodes and can collect data from all servers. The output file will be saved to the /root directory. The <b>&lt;srNumber&gt;</b> is the support ticket number assigned to your case.
+</text>
+<code>gsctl showall -s &lt;srNumber&gt; -N serverLicense</code>
+{{endif}}
+
+{{if lustre}}
+{{if config.project[project].lustre.getExaScalerType() == 0}}
+<h3>ExaScaler {{config.project[project].lustre.getExaScalerVersionNum()}}</h3>
+<h4>es_showall</h4>
+<text>For any Lustre related problem, support requires a so-called showall. The esctl tool must be executed on one of the MDS or OSS nodes and can collect data from all servers. The output file will be saved to the directory, where the command is executed. The <b>&lt;srNumber&gt;</b> is the support ticket number assigned to your case.
+
+The showall can be collected with this esctl command:
+</text>
+<code>
+esctl showall -s &lt;srNumber&gt; -g mds,oss
+</code>
+{{endif}}
+
+{{if config.project[project].lustre.getExaScalerType() == 1}}
+<h3>ExaScaler {{config.project[project].lustre.getExaScalerVersionNum()}}</h3>
+<h4>sos report</h4>
+<text>For any Lustre related problem, support requires a so-called sos-report. 'emf sos' must be executed on one of the MDS or OSS nodes and can collect data from all servers. The output file will be saved to the directory, where the command is executed. The <b>&lt;srNumber&gt;</b> is the support ticket number assigned to your case.
+
+The sos report can be collected with this emf command:
+</text>
+<code>
+emf sos -s &lt;srNumber&gt;
+</code>
+{{endif}}
+
+{{endif}}
+
+{{endif}}
+<pagebreak/>
+<h2>Information to Provide to DDN Support</h2>
+<text>Please be ready to explain the problem and help support personnel to qualify the severity of the situation. Open a ticket with support and note down the SR number for your case. Collect the requested logs as described above and make sure that the files are named properly. 
+</text>
+<h3>FTP</h3>
+<text>DDN Support offers an FTP site to allow customers to send large log files for examination. 
+</text>
+<code>
+curl -T &lt;fileName&gt;.tar.gz -u ddnsupport:ddnftppass ftp://datadirect.files.com
+</code>
+
+<h2>Documentation</h2>
+<text>You can access technical documents without registration, e.g. Technical Support Bulletins (TSBs) or End of Life Notices. Product Release Notes and User and Administration Guides are only available via the Support Portal. Subscribing to the mailing list allows DDN to notify you about technical news regarding your product such as bulletins and firmware releases.
+</text>
+<table style="noborder">
+<tr>
+<td>Support Bulletins (TSBs)</td>
+<td>: http://www.ddn.com/support/technical-support-bulletins</td>
+</tr>
+<tr>
+<td>End-of-Life (EOL) Notices</td>
+<td>: http://www.ddn.com/support/end-of-life-notices</td>
+</tr>
+<tr>
+<td>Release Notes and User and Administration Guides</td>
+<td>: https://community.ddn.com/login</td>
+</tr>
+<tr>
+<td>TSB Subscription Requests</td>
+<td>: support-tsb@ddn.com</td>
+</tr>
+</table>

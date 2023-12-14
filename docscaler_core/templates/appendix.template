@@ -1,0 +1,18 @@
+{{def(config)}}
+<h1>Appendix</h1>
+
+{{for project in config.project}}
+	{{if "lustre" in config.project[project]}}
+	
+		{{if config.project[project].lustre.getExaScalerType() == 0}}
+			<h2>{{project}} - exascaler.conf</h2>
+		{{endif}}
+		
+		{{if config.project[project].lustre.getExaScalerType() == 1}}
+			<h2>{{project}} - exascaler.toml</h2>
+		{{endif}}
+			
+		<code>{{config.project[project].lustre.getRawExaScalerConf()}}</code>
+		<pagebreak/>
+	{{endif}}
+{{endfor}}

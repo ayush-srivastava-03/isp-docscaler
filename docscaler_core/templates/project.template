@@ -1,0 +1,251 @@
+#
+# The template for a project
+#
+# Each project has one or more SFA entries with the SSS data and
+# the lustre data with one ore more filesystems.
+#
+# The data for the SFAs is stored at:
+# config.project.[project].sfa
+#
+# The data for exascaler is stored at:
+# config.project.[project].lustre
+#
+# To access the raw stored data you first have to specify the SFA you want to use.
+# They are in the order you put it in the config. If there is one, you can access it directly with:
+# config.project[project].sfa[subsystem].getRawSection("Controller(s)")
+#
+# The string used to get the section is the same as you would see in an SSS. 
+#
+
+{{def(config)}}
+{{script}}
+snapshot = False
+{{endscript}}
+{{for index, project in enumerate(config.project)}}
+	<h1>Project - {{project}}</h1>
+	<h2>Storage</h2>
+	{{for subsystem in config.project[project].sfa}}
+	    {{script}}
+			sfa = config.project[project].sfa[subsystem]
+		{{endscript}}
+		<h3>{{subsystem}} ({{sfa.getSubsytemModel()}})</h3>
+		<h4>Subsystem configuration</h4>
+		<table style="noborder">
+			<tr>
+				<td>SFAOS Version</td>
+				<td>: {{sfa.getFirmware()[0]}}</td>
+			</tr>
+			<tr>
+				<td>Timezone</td>
+				<td>: {{sfa.getTimezone()}}</td>
+			</tr>
+		</table>
+		
+		{{if "[" in subsystem and "]" in subsystem}}
+			<text>
+			Only one subsystem is shown, as the configuration for all subsystems is the same, 
+			except the naming (subsystem, controllers, pools, vds). The number and size of
+			pools, vds and disks is the same.
+			</text>
+		{{endif}}
+		
+		<h4>Subsystem</h4>
+		<code>{{sfa.getRawSectionData("Subsystem")}}</code>
+		
+		<h4>Controller</h4>
+		<code>{{sfa.getRawSectionData("Controller(s)")}}</code>
+		
+		<h4>Enclosures</h4>
+		<code>{{sfa.getRawSectionData("Enclosure(s)")}}</code>
+		
+		{{if sfa.getRawSectionData("Spare Pool(s)")}}
+			<h4>Spare Pools</h4>
+			<bullet>Hot spares are configured</bullet>
+			<br>
+			<code>
+				{{sfa.getRawSectionData("Spare Pool(s)")}}
+			</code>
+		{{endif}}
+		
+		<h4>Pool configuration</h4>
+		<code>{{sfa.getRawSectionData("Pool(s)")}}</code>
+
+		<h4>Virtual Disks</h4>
+		<code>{{sfa.getRawSectionData("Virtual Disk(s)")}}</code>
+		
+		<h4>Physical Disks</h4>
+		{{sfa.getDiskSummary()}}
+		<pagebreak/>
+	{{endfor}}
+
+# ExaScaler
+	{{if "lustre" in config.project[project]}}
+		{{script}}
+		esconf = config.project[project].lustre
+		if isinstance(esconf, dict):
+			esconf = esconf[0]
+		
+		if esconf.snapshotKernelInstalled():
+			snapshot = True	
+		{{endscript}}
+	
+		<h2>ExaScaler</h2>
+		<table style="noborder">
+		<tr>
+		<td>Exascaler version</td>
+		<td>: {{esconf.getExaScalerVersion()}}</td>
+		</tr>
+		<tr>
+		<td>Lustre version</td>
+		<td>: {{esconf.getLustreVersion()}}</td>
+		</tr>
+		<tr>
+		<td>Timezone</td>
+		<td>: {{esconf.getTimezone()}}</td>
+		</tr>
+		<tr>
+		<td>NTP Servers</td>
+		<td>: {{esconf.getNTPServers()}}</td>
+		</tr>
+		</table>
+		
+		<h4>Filesystems</h4>
+		<table>
+			<tr>
+			<td>Filesystem</td>
+			<td>MDS Server</td>
+			<td>OSS Server</td>
+			</tr>
+		{{for filesystem in esconf.getFilesystemNames()}}
+			<tr>
+			<td>{{filesystem}}</td>
+			<td>{{esconf.getMDSServerList(filesystem, True)}}</td>
+			<td>{{esconf.getOSSServerList(filesystem, True)}}</td>
+			</tr>
+		{{endfor}}
+		</table>
+		
+		{{for filesystem in esconf.getFilesystemNames()}}
+			<h3>{{filesystem}}</h3>
+				<h4>Lustre settings</h4>
+				<code>{{esconf.getLustreSettings()}}</code>
+				{{if isinstance(esconf.getModuleSettings(), str)}}
+					<h4>Module configuration</h4>
+					<code>{{esconf.getModuleSettings()}}</code>
+				{{endif}}
+		{{endfor}}
+		<pagebreak/>
+		{{for node in esconf.getNodes()}}
+			<h3>{{node}}</h3>
+			{{if "[" in node and "]" in node}}
+				<text>
+				Only one node config is shown, as the configuration for all nodes is the same, 
+				except the some parameters (hostname, IPs, MDS/OST names).
+				</text>
+		    {{endif}}
+		    
+		    <h4>Interfaces</h4>
+			{{esconf.getInterfaceConfig(node)}}
+			{{if not isinstance(esconf.getModuleSettings(), str)}}
+				<h4>Module configuration</h4>
+				<code>{{esconf.getModuleSetting(node)}}</code>
+			{{endif}}
+			
+			
+			<br>
+			<pagebreak/>
+		{{endfor}}
+	{{endif}}
+{{endfor}}
+		
+{{if snapshot}}
+	<h1>Lustre Snapshots</h1>
+	<br>
+	<text>
+	<b>NOTE:</b> There is a limit of 32x snapshots to created simultaneously.
+	</text>
+	
+	<h2>Create a snapshot</h2>
+	<text>Create snapshot with the given name. The tool loads system configuration from the file /etc/ldev.conf as described in the lctl(8) 
+	SNAPSHOT section. Then, the snapshot pieces are created on every Lustre target (MGT/MDT/OST).
+	</text>
+	<code>lctl snapshot_create -c comment -F fsname -n ssname</code>
+	<table style="noborder">
+		<tr>
+			<td><b>-c</b></td>
+			<td>Add an optional comment to the snapshot_create request. The comment can include anything to describe what the snapshot 
+is for or for a reminder. The comment can be shown via snapshot_list.</td>
+		</tr>
+		<tr>
+			<td><b>-F</b></td>
+			<td>The filesystem name.</td>
+		</tr>
+		<tr>
+			<td><b>-n</b></td>
+			<td>The snapshot's name must be specified. It follows the general ZFS snapshot name rules, such as the max length is 256 bytes, cannot conflict with the reserved names, and so on.</td>
+		</tr>
+	</table>
+	
+	<h2>List snapshots</h2>
+	<text>Query the snapshot information, such as fsname of the snapshot, comment, create time, the latest modification time, whether mounted or not, and so on.
+	</text>
+	<code>lctl snapshot_list -F fsname</code>
+	<table style="noborder">
+		<tr>
+			<td><b>-F</b></td>
+			<td>The filesystem name.</td>
+		</tr>
+	</table>
+	
+	<h2>Mount snapshot locally</h2>
+	<text>Mount the specified snapshot on the servers. Since it is a read-only mode Lustre filesystem, if the snapshot is mounted, then it 
+	cannot be renamed. It is the user's duty to mount client (must as read only mode with "-o ro") to the snapshot when needed.  
+	</text>
+	<code>lctl snapshot_mount -F fsname -n ssname</code>
+	<table style="noborder">
+		<tr>
+			<td><b>-F</b></td>
+			<td>The filesystem name.</td>
+		</tr>
+		<tr>
+			<td><b>-n</b></td>
+			<td>The snapshot (to be mounted) name must be specified.</td>
+		</tr>
+	</table>
+	
+	<h2>Mount snapshot on a client</h2>
+	<text><b>NOTE:</b> the snapshot has its own fsname that is different from the original filesystem fsname, it can be queried via snapshot_list.
+	</text>
+	<code>mount -t lustre -o ro mdt_list:/snap_id /mountpoint</code>
+	
+	<h2>Umount local snapshot</h2>
+	<text>Umount the specified snapshot on the servers.
+	</text>
+	<code>lctl snapshot_umount -F fsname -n ssname</code>
+	<table style="noborder">
+		<tr>
+			<td><b>-F</b></td>
+			<td>The filesystem name.</td>
+		</tr>
+		<tr>
+			<td><b>-n</b></td>
+			<td>The snapshot (to be umounted) name must be specified.</td>
+		</tr>
+	</table>
+	
+	<h2>Destroy a snapshot</h2>
+	<text>Destroy the specified snapshot. The tool loads system configuration from the file /etc/ldev.conf as described in the lctl(8) 
+	SNAPSHOT section. Then, the snapshot pieces are destroyed on every Lustre target (MGT/MDT/OST).
+	</text>
+	<code>lctl snapshot_destroy -F fsname -n ssname</code>
+	<table style="noborder">
+		<tr>
+			<td><b>-F</b></td>
+			<td>The filesystem name.</td>
+		</tr>
+		<tr>
+			<td><b>-n</b></td>
+			<td>The snapshot (to be destroyed) name must be specified.</td>
+		</tr>
+	</table>
+{{endif}}
