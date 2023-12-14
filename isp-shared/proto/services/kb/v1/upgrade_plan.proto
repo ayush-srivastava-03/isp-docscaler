@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+package services.kb.v1;
+
+option go_package = "services/kb/v1;kbv1";
+
+import "google/protobuf/timestamp.proto";
+import "bundles/sfa/v1/sfa.proto";
+
+enum UpgradePlanSystemType {
+    SYSTEM_TYPE_UNSPECIFIED = 0;
+    SFA = 1;
+    EXASCALER = 2;
+}
+
+// Entry/Basic/BASIC_UPLIFT/Premium/Mission Critical
+enum UpgradePlanSupportLevel {
+    SUPPORT_LEVEL_UNSPECIFIED = 0;
+    ENTRY = 1;
+    BASIC = 2;
+    BASIC_UPLIFT = 3;
+    PREMIUM = 4;
+    MISSION_CRITICAL = 5;
+}
+
+// Online of offline upgrade
+enum UpgradePlanMode {
+    MODE_UNSPECIFIED = 0;
+    ONLINE = 1;
+    OFFLINE = 2;
+}
+
+// Determines type of object, which needs to upgrade
+enum UpgradePlanObjectType {
+    OBJECT_TYPE_UNSPECIFIED = 0;
+
+    CONTROLLER_FIRMWARE = 1;
+    CONTROLLER_BMC = 2;
+    CONTROLLER_BIOS = 3;
+    CONTROLLER_CPLD = 4;
+
+    ENCLOSURE_FIRMWARE = 10;
+    ENCLOSURE_CPLD = 11;
+
+    DISK_DRIVE = 20;
+}
+
+enum UpgradePlanSupportType {
+    SUPPORT_TYPE_UNSPECIFIED = 0;
+    REMOTE = 1;
+    ON_SITE = 2;
+}
+
+message UpgradePlanObject {
+    UpgradePlanObjectType type = 1 [json_name="type"];
+    // Can be a model
+    string id = 3 [json_name="id"];
+    bool upgrade = 4 [json_name="upgrade"];
+    string version_from = 5 [json_name="versionFrom"];
+    string version_to = 6 [json_name="versionTo"];
+    string comments = 7 [json_name="comments"];
+    string description = 8 [json_name="description"];
+    string firmware_filename = 9 [json_name="firmwareFilename"];
+    string firmware_url = 10 [json_name="firmwareUrl"];
+    string firmware_md5 = 11 [json_name="firmwareMd5"];
+    string firmware_release_notes_filename = 12 [json_name="firmwareReleaseNotesFilename"];
+    string firmware_release_notes_url = 13 [json_name="firmwareReleaseNotesUrl"];
+}
+
+message GetSFAUpgradePlanObjectsRequest {
+    bundles.sfa.v1.SystemInfo system_info = 1 [json_name="systemInfo"];
+}
+
+message GetSFAUpgradePlanObjectsResponse {
+    repeated UpgradePlanObject objects = 1 [json_name="objects"];
+}
+
+message GetSFAUpgradePlanRequest {
+    message SupportData {
+        UpgradePlanSupportLevel support_level = 1 [json_name="supportLevel"];
+        string support_case = 2 [json_name="supportCase"];
+
+        string customer = 3 [json_name="customer"];
+        string customer_location = 4 [json_name="customerLocation"];
+        string customer_contact = 5 [json_name="customerContact"];
+        string customer_email = 6 [json_name="customerEmail"];
+        string customer_phone = 7 [json_name="customerPhone"];
+
+        UpgradePlanSupportType support_type = 8 [json_name="supportType"];
+
+        google.protobuf.Timestamp upgrade_date = 9 [json_name="upgradeDate"];
+    }
+
+    UpgradePlanSystemType system_type = 1 [json_name="systemType"];
+
+    // General data
+    SupportData support_data = 2 [json_name="supportData"];
+
+    UpgradePlanMode upgrade_mode = 3 [json_name="upgradeMode"];
+
+    // SFA Specific options
+    bundles.sfa.v1.SystemInfo system_info = 4 [json_name="systemInfo"];
+
+    // Objects to upgrade
+    repeated UpgradePlanObject objects = 50 [json_name="objects"];
+}
+
+message GetSFAUpgradePlanResponse {
+    string upgrade_plan = 1 [json_name="upgradePlan"];
+}
+
+message GetSFAUpgradePlanSectionRequest {
+    bundles.sfa.v1.SystemInfo system_info = 1 [json_name="systemInfo"];
+    repeated UpgradePlanObject objects = 2 [json_name="objects"];
+}
+
+message GetSFAUpgradePlanSectionResponse {
+    string data = 1 [json_name="data"];
+}
+
+message GetSFAUpgradePlanTemplateRequest {
+    UpgradePlanSystemType system_type = 1 [json_name="systemType"];
+    UpgradePlanMode upgrade_mode = 2 [json_name="upgradeMode"];
+    // SFA Specific options
+    bundles.sfa.v1.SystemInfo system_info = 3 [json_name="systemInfo"];
+}
+
+message GetSFAUpgradePlanTemplateResponse {
+    string template = 1 [json_name="template"];
+}

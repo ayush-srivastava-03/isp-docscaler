@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package services.api.v1;
+
+option go_package = "services/api/v1;apiv1";
+
+import "services/api/v1/common.proto";
+
+import "google/protobuf/timestamp.proto";
+
+
+service UserData {
+    rpc FindUserData(FindUserDataRequest) returns (FindUserDataResponse) {}
+    rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse) {}
+    rpc SetUserData(SetUserDataRequest) returns (SetUserDataResponse) {}
+    rpc DeleteUserData(DeleteUserDataRequest) returns (DeleteUserDataResponse) {}
+}
+
+enum UserDataObjectType {
+    TYPE_UNSPECIFIED = 0;
+    TYPE_CUSTOM_REPORT = 1;
+    TYPE_USER_SETTINGS = 2;
+}
+
+message UserDataObject {
+    string id =  1 [json_name="id"];
+    UserDataObjectType type = 2 [json_name="type"];
+    string name = 3 [json_name="name"];
+    string description = 4 [json_name="description"];
+    string user_id = 5 [json_name="userId"];
+    bool public = 6 [json_name="public"];
+    google.protobuf.Timestamp timestamp = 7 [json_name="timestamp"];
+    string data = 8 [json_name="data"];
+}
+
+message FindUserDataRequest {
+    // bool include_public = 1 [json_name="include_public"];
+    repeated UserDataObjectType type = 2 [json_name="type"];
+    repeated SortClause sort = 3 [json_name="sort"];
+    uint32 offset = 4 [json_name="offset"];
+    uint32 limit = 5 [json_name="limit"];
+}
+
+message FindUserDataResponse {
+    repeated UserDataObject res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+message GetUserDataRequest {
+    string id = 1 [json_name="id"];
+}
+
+message GetUserDataResponse {
+    UserDataObject res = 1 [json_name="res"];
+}
+
+message SetUserDataRequest {
+    UserDataObject obj = 1 [json_name="obj"];
+}
+
+message SetUserDataResponse {
+    string id = 1 [json_name="id"];
+}
+
+message DeleteUserDataRequest {
+    string id = 1 [json_name="id"];
+}
+
+message DeleteUserDataResponse {
+
+}

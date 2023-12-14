@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package services.kb.v1;
+
+option go_package = "services/kb/v1;kbv1";
+
+import "google/protobuf/timestamp.proto";
+import "services/kb/v1/objects.proto";
+import "services/kb/v1/upgrade_plan.proto";
+
+service KBService {
+    rpc FindObjects(FindObjectsRequest) returns (FindObjectsResponse) {}
+    rpc GetDownloadLink(GetDownloadLinkRequest) returns (GetDownloadLinkResponse) {}
+
+    rpc GetSFAUpgradePlanObjects(GetSFAUpgradePlanObjectsRequest) returns (GetSFAUpgradePlanObjectsResponse) {}
+    rpc GetSFAUpgradePlan(GetSFAUpgradePlanRequest) returns (GetSFAUpgradePlanResponse) {}
+    rpc GetSFAUpgradePlanSection(GetSFAUpgradePlanSectionRequest) returns (GetSFAUpgradePlanSectionResponse) {}
+    rpc GetSFAUpgradePlanTemplate(GetSFAUpgradePlanTemplateRequest) returns (GetSFAUpgradePlanTemplateResponse) {}
+}
+
+message FindObjectsRequest {
+    repeated FilterClause filter = 1 [json_name="filter"];
+    uint32 offset = 2 [json_name="offset"];
+    uint32 limit = 3 [json_name="limit"];
+}
+
+message FindObjectsResponse {
+    repeated services.kb.v1.KBObject res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+message GetDownloadLinkRequest {
+    string name = 1 [json_name="name"];
+    google.protobuf.Timestamp valid_until = 2 [json_name="validUntil"];
+}
+
+message GetDownloadLinkResponse {
+    string url = 1 [json_name="url"];
+    string file_name = 2 [json_name="fileName"];
+}
+
+message FilterClause {
+    string field = 1;
+    bool not = 2;
+    repeated string values = 3;
+}
+
+message FindObjectsMeta {
+    uint32 total = 1;
+    uint32 offset = 2;
+    uint32 limit = 3;
+}

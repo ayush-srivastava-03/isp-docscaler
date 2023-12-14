@@ -1,0 +1,253 @@
+syntax = "proto3";
+
+package services.catalog.v1;
+
+option go_package = "services/catalog/v1;catalogv1";
+
+import "google/protobuf/timestamp.proto";
+
+service CatalogService {
+    rpc FindBundles(FindBundlesRequest) returns (FindBundlesResponse) {}
+    rpc FindBundlesValues(FindBundlesValuesRequest) returns (FindBundlesValuesResponse) {}
+    rpc FindColumnValues(FindColumnValuesRequest) returns (FindColumnValuesResponse) {}
+    rpc GetBundle(GetBundleRequest) returns (GetBundleResponse) {}
+    rpc DownloadBundle(DownloadBundleRequest) returns (DownloadBundleResponse) {}
+    rpc GetCustomerBySystemId(GetCustomerBySystemIdRequest) returns (GetCustomerBySystemIdResponse) {}
+    rpc ValidateBundleFingerprint(ValidateBundleFingerprintRequest) returns (ValidateBundleFingerprintResponse) {}
+    rpc SetLabelForSystem(SetLabelForSystemRequest) returns (SetLabelForSystemResponse) {}
+    rpc GetSupportCaseDetails(GetSupportCaseDetailsRequest) returns (GetSupportCaseDetailsResponse) {}
+}
+
+message FindColumnValuesRequest {
+    string column = 1 [json_name="column"];
+    BundleWhereClause where = 2 [json_name="where"];
+    uint32 limit = 4 [json_name="limit"];
+}
+
+message FindColumnValuesResponse {
+    repeated BundleValues res = 1 [json_name="res"];
+}
+
+message FindBundlesValuesRequest {
+    string search = 1 [json_name="search"];
+    BundleWhereClause where = 2 [json_name="where"];
+    uint32 limit = 4 [json_name="limit"];
+}
+
+message FindBundlesValuesResponse {
+    repeated BundleValues res = 1 [json_name="res"];
+}
+
+message BundleValues {
+    string value = 1 [json_name="value"];
+    string column = 2 [json_name="column"];
+    uint32 count = 3 [json_name="count"];
+}
+
+enum Column {
+    COLUMN_UNSPECIFIED = 0;
+    COLUMN_CUSTOMER_NAME = 1;
+    COLUMN_CASE = 2;
+}
+
+message FindBundlesRequest {
+    BundleWhereClause where = 1 [json_name="where"];
+    SortCondition sort = 2 [json_name="sort"];
+    string search = 3 [json_name="search"];
+    GroupBundle group_by = 4 [json_name="groupBy"];
+    uint32 offset = 5 [json_name="offset"];
+    uint32 limit = 6 [json_name="limit"];
+}
+
+enum GroupBundle {
+    GROUP_BUNDLE_UNSPECIFIED = 0;
+    GROUP_BUNDLE_BY_SYSTEM = 1;
+    // Temporary disabled
+    // GROUP_BUNDLE_BY_CUSTOMER = 2;
+}
+
+message FindBundlesResponse {
+    repeated Bundle res = 1 [json_name="res"];
+    FindBundlesMeta meta = 2 [json_name="meta"];
+}
+
+message Bundle {
+    string bundle_id = 1 [json_name="bundleId"];
+    string bundle_version = 2 [json_name="bundleVersion"];
+    string bundle_type = 3 [json_name="bundleType"];
+    uint64 bundle_size = 4 [json_name="bundleSize"];
+    string customer_id = 5 [json_name="customerId"];
+    string system_type = 6 [json_name="systemType"];
+    string system_id = 7 [json_name="systemId"];
+    string support_case = 8 [json_name="supportCase"];
+    string platform = 9 [json_name="platform"];
+    string s3_bucket = 10 [json_name="s3Bucket"];
+    string s3_key = 11 [json_name="s3Key"];
+    string sender_ip = 12 [json_name="senderIp"];
+    google.protobuf.Timestamp created = 13 [json_name="created"];
+    google.protobuf.Timestamp uploaded = 14 [json_name="uploaded"];
+    google.protobuf.Timestamp updated = 15 [json_name="updated"];
+    string customer_name = 20 [json_name="customerName"];
+    string system_name = 21 [json_name="systemName"];
+    string label = 22 [json_name="label"];
+    map <string, string> tags = 23 [json_name="tags"];
+    uint32 count = 50 [json_name="count"];
+}
+
+message BundleWhereClause {
+    WhereStringCondition bundle_id = 1 [json_name="bundleId"];
+    WhereStringCondition bundle_version = 2 [json_name="bundleVersion"];
+    WhereStringCondition bundle_type = 3 [json_name="bundleType"];
+    WhereUint64Condition bundle_size = 4 [json_name="bundleSize"];
+    WhereStringCondition customer_id = 5 [json_name="customerId"];
+    WhereStringCondition system_type = 6 [json_name="systemType"];
+    WhereStringCondition system_id = 7 [json_name="systemId"];
+    WhereStringCondition support_case = 8 [json_name="supportCase"];
+    WhereStringCondition platform = 9 [json_name="platform"];
+    WhereStringCondition s3_bucket = 10 [json_name="s3Bucket"];
+    WhereStringCondition s3_key = 11 [json_name="s3Key"];
+    WhereStringCondition sender_ip = 12 [json_name="senderIp"];
+    WhereTimestampCondition created = 13 [json_name="created"];
+    WhereTimestampCondition uploaded = 14 [json_name="uploaded"];
+    WhereTimestampCondition updated = 15 [json_name="updated"];
+    WhereStringCondition customer_name = 20 [json_name="customerName"];
+    WhereStringCondition system_name = 21 [json_name="systemName"];
+    WhereStringCondition label = 22 [json_name="label"];
+    map<string, WhereStringCondition> tags = 23 [json_name="tags"];
+
+    WhereUint32Condition count = 50 [json_name="count"];
+}
+
+enum Sort {
+    SORT_UNSPECIFIED = 0;
+    SORT_ASC = 1;
+    SORT_DESC = 2;
+}
+
+message SortCondition {
+    Sort bundle_id = 1 [json_name="bundleId"];
+    Sort bundle_version = 2 [json_name="bundleVersion"];
+    Sort bundle_type = 3 [json_name="bundleType"];
+    Sort bundle_size = 4 [json_name="bundleSize"];
+    Sort customer_id = 5 [json_name="customerId"];
+    Sort system_type = 6 [json_name="systemType"];
+    Sort system_id = 7 [json_name="systemId"];
+    Sort support_case = 8 [json_name="supportCase"];
+    Sort platform = 9 [json_name="platform"];
+    Sort s3_bucket = 10 [json_name="s3Bucket"];
+    Sort s3_key = 11 [json_name="s3Key"];
+    Sort sender_ip = 12 [json_name="senderIp"];
+    Sort created = 13 [json_name="created"];
+    Sort uploaded = 14 [json_name="uploaded"];
+    Sort updated = 15 [json_name="updated"];
+    Sort customer_name = 20 [json_name="customerName"];
+    Sort system_name = 21 [json_name="systemName"];
+    Sort label = 22 [json_name="label"];
+    map<string, Sort> tags = 23 [json_name="tags"];
+
+    Sort count = 50 [json_name="count"];
+}
+
+message FindBundlesMeta {
+    uint32 total = 1 [json_name="total"];
+    bool has_more = 2 [json_name="hasMore"];
+    uint32 offset = 3 [json_name="offset"];
+    uint32 limit = 4 [json_name="limit"];
+}
+
+message WhereTimestampCondition {
+    repeated google.protobuf.Timestamp eq = 1 [json_name="eq"];
+    repeated google.protobuf.Timestamp neq = 2 [json_name="neq"];
+    google.protobuf.Timestamp gt = 3 [json_name="gt"];
+    google.protobuf.Timestamp lt = 4 [json_name="lt"];
+    google.protobuf.Timestamp gte = 5 [json_name="gte"];
+    google.protobuf.Timestamp lte = 6 [json_name="lte"];
+}
+
+message WhereStringCondition {
+    repeated string eq = 1 [json_name="eq"];
+    repeated string neq = 2 [json_name="neq"];
+    string like = 3 [json_name="like"];
+}
+
+message WhereUint32Condition {
+    repeated uint32 eq = 1 [json_name="eq"];
+    repeated uint32 neq = 2 [json_name="neq"];
+    uint32 gt = 3 [json_name="gt"];
+    uint32 lt = 4 [json_name="lt"];
+    uint32 gte = 5 [json_name="gte"];
+    uint32 lte = 6 [json_name="lte"];
+}
+
+message WhereUint64Condition {
+    repeated uint64 eq = 1 [json_name="eq"];
+    repeated uint64 neq = 2 [json_name="neq"];
+    uint64 gt = 3 [json_name="gt"];
+    uint64 lt = 4 [json_name="lt"];
+    uint64 gte = 5 [json_name="gte"];
+    uint64 lte = 6 [json_name="lte"];
+}
+
+message GetCustomerBySystemIdRequest {
+    string system_id = 1 [json_name="systemId"];
+}
+
+message GetCustomerBySystemIdResponse {
+    string system_id = 1 [json_name="systemId"];
+    string system_name = 2 [json_name="systemName"];
+    string customer_id = 3 [json_name="customerId"];
+    string customer_name = 4 [json_name="customerName"];
+    string sfdc_source = 5 [json_name="sfdcSource"];
+}
+
+message DownloadBundleRequest {
+    string bundle_id = 1 [json_name="bundleId"];
+}
+
+message DownloadBundleResponse {
+    string url = 1 [json_name="url"];
+}
+
+message ValidateBundleFingerprintRequest {
+    string fingerprint = 1 [json_name="fingerprint"];
+}
+
+message ValidateBundleFingerprintResponse {
+    bool is_duplicate = 1 [json_name="isDuplicate"];
+    string bundle_id = 2 [json_name="bundleId"];
+}
+
+message GetBundleRequest {
+    string bundle_id = 1 [json_name="bundleId"];
+}
+
+message GetBundleResponse {
+    Bundle bundle = 1 [json_name="bundle"];
+}
+
+message SetLabelForSystemRequest {
+    string system_id = 1 [json_name="systemId"];
+    string label = 2 [json_name="label"];
+}
+
+message SetLabelForSystemResponse {}
+
+message SupportCase {
+    string case_id = 1 [json_name="caseId"];
+    string case_number = 2 [json_name="caseNumber"];
+    string customer_id = 3 [json_name="customerId"];
+    string contact_email = 4 [json_name="contactEmail"];
+    string contact_fax = 5 [json_name="contactFax"];
+    string contact_mobile = 6 [json_name="contactMobile"];
+    string contact_phone = 7 [json_name="contactPhone"];
+    string contact_name = 8 [json_name="contactName"];
+    string case_subject = 9 [json_name="caseSubject"];
+}
+
+message GetSupportCaseDetailsRequest {
+    string case_number = 1 [json_name="caseNumber"];
+}
+
+message GetSupportCaseDetailsResponse {
+    SupportCase case = 1 [json_name="case"];
+}

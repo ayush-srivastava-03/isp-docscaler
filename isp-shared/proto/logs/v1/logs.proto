@@ -1,0 +1,194 @@
+syntax = "proto3";
+
+package logs.v1;
+
+option go_package = "logs/v1;logsv1";
+
+import "google/protobuf/timestamp.proto";
+
+// Bundle Log
+message Log {
+    // Original log message
+    string raw = 1 [json_name="raw"];
+
+    // Reference to bundle
+    string bundle_id = 2 [json_name="bundleId"];
+
+    // Reference to storage system
+    string system_id = 3 [json_name="systemId"];
+
+    // System type
+    string system_type = 4 [json_name="systemType"];
+
+    // Log timestamp
+    google.protobuf.Timestamp timestamp = 5 [json_name="timestamp"];
+
+    // Source of the log message. For example it can be hostname or ctrl index (like in SFA bundles)
+    string source = 6 [json_name="source"];
+
+    // Component, like "kernel" or "system"
+    string component = 7 [json_name="component"];
+
+    // Severity
+    string severity = 8 [json_name="severity"];
+
+    // Log message
+    string message = 9 [json_name="message"];
+
+
+    // SFA specific properties
+    //
+
+    string sequence = 40 [json_name="sequence"];
+    string raid_processor = 41 [json_name="raidProcessor"];
+    string event = 42 [json_name="event"];
+
+    // Counter for frequency query
+    uint64 count = 50 [json_name="count"];
+}
+
+message LogGroup {
+    message Needle {
+        string value = 1 [json_name='value'];
+        repeated string options = 2 [json_name='options'];
+    }
+
+    // Original log message
+    string raw = 1 [json_name="raw"];
+
+    // Reference to bundle
+    string bundle_id = 2 [json_name="bundleId"];
+
+    // Reference to storage system
+    string system_id = 3 [json_name="systemId"];
+
+    // System type
+    string system_type = 4 [json_name="systemType"];
+
+    // Log timestamp
+    google.protobuf.Timestamp timestamp = 5 [json_name="timestamp"];
+
+    // Source of the log message. For example it can be hostname or ctrl index (like in SFA bundles)
+    string source = 6 [json_name="source"];
+
+    // Component, like "kernel" or "system"
+    string component = 7 [json_name="component"];
+
+    // Severity
+    string severity = 8 [json_name="severity"];
+
+    // Log message
+    string message = 9 [json_name="message"];
+
+
+    // SFA specific properties
+    //
+
+    string sequence = 40 [json_name="sequence"];
+    string raid_processor = 41 [json_name="raidProcessor"];
+    string event = 42 [json_name="event"];
+
+    // Group specific properties
+    google.protobuf.Timestamp interval_gte = 50 [json_name="intervalGte"];
+    google.protobuf.Timestamp interval_lte = 51 [json_name="intervalLte"];
+    repeated Needle needles = 52 [json_name='needles'];
+    uint64 count = 53 [json_name="count"];
+}
+
+
+enum LogPeriod {
+    LOG_PERIOD_UNSPECIFIED = 0;
+    LOG_PERIOD_SECOND = 1;
+    LOG_PERIOD_MINUTE = 2;
+    LOG_PERIOD_HOUR = 3;
+    LOG_PERIOD_DAY = 4;
+    LOG_PERIOD_WEEK = 5;
+    LOG_PERIOD_MONTH = 6;
+    LOG_PERIOD_YEAR = 7;
+}
+
+enum LogColumn {
+    LOG_COLUMN_UNSPECIFIED = 0;
+    LOG_COLUMN_BUNDLE_ID = 1;
+    LOG_COLUMN_SYSTEM_ID = 2;
+    LOG_COLUMN_SYSTEM_TYPE = 3;
+    LOG_COLUMN_SOURCE = 4;
+    LOG_COLUMN_COMPONENT = 5;
+    LOG_COLUMN_SEVERITY = 6;
+    LOG_COLUMN_MESSAGE = 7;
+    LOG_COLUMN_RAID_PROCESSOR = 8;
+    LOG_COLUMN_EVENT = 9;
+    LOG_COLUMN_TIMESTAMP = 10;
+    LOG_COLUMN_SEQUENCE = 11;
+
+    LOG_COLUMN_COUNT = 20;
+}
+
+message LogColumnSettings {
+    enum ValueCondition {
+        VALUE_CONDITION_UNSPECIFIED = 0;
+        VALUE_CONDITION_REGEXP_MATCH = 1;
+        VALUE_CONDITION_EQUAL = 2;
+        VALUE_CONDITION_NOT_EQUAL = 3;
+        VALUE_CONDITION_GT = 4;
+        VALUE_CONDITION_LT = 5;
+        VALUE_CONDITION_GTE = 6;
+        VALUE_CONDITION_LTE = 7;
+        VALUE_CONDITION_SEARCH = 8;
+        VALUE_CONDITION_NOT_SEARCH = 9;
+    }
+
+    message ColumnMatcher {
+        string object_type = 1 [json_name="objectType"];
+        string object_column = 2 [json_name="objectColumn"];
+        string regexp = 5 [json_name="regexpMatch"];
+    }
+
+    LogColumn column = 1 [json_name="column"];
+    string column_regexp_extract = 2 [json_name="columnRegexpExtract"];
+    repeated string values = 3 [json_name="values"];
+    ValueCondition value_condition = 4 [json_name="valueCondition"];
+
+    // Regexp to match various portions of column with appropriate bundle object
+    repeated ColumnMatcher column_regexp_matchers = 5 [json_name="columnMatchers"];
+}
+
+// Bundle Log Query
+message LogsQuery {
+    repeated LogColumnSettings filters = 1 [json_name="filters"];
+
+    LogPeriod log_period_unit = 10 [json_name="logPeriodUnit"];
+    uint64 log_period_value = 11 [json_name="logPeriodValue"];
+
+    LogPeriod log_frequency_unit = 12 [json_name="logFrequencyUnit"];
+    uint64 log_frequency_value = 13 [json_name="logFrequencyValue"];
+    uint64 log_frequency_threshold = 14 [json_name="logFrequencyThreshold"];
+}
+
+message LogGroupColumnSettings {
+    enum ValueCondition {
+        VALUE_CONDITION_UNSPECIFIED = 0;
+        VALUE_CONDITION_EQUAL = 1;
+        VALUE_CONDITION_NOT_EQUAL = 2;
+        VALUE_CONDITION_GT = 3;
+        VALUE_CONDITION_LT = 4;
+        VALUE_CONDITION_GTE = 5;
+        VALUE_CONDITION_LTE = 6;
+        VALUE_CONDITION_SEARCH = 7;
+        VALUE_CONDITION_NOT_SEARCH = 8;
+    }
+
+    LogColumn column = 1 [json_name="column"];
+    repeated string values = 2 [json_name="values"];
+    ValueCondition value_condition = 3 [json_name="valueCondition"];
+}
+
+
+// Bundle Log Groups Query
+message LogGroupsQuery {
+    repeated LogGroupColumnSettings filters = 1 [json_name="filters"];
+
+    LogPeriod log_frequency_unit = 12 [json_name="logFrequencyUnit"];
+    uint64 log_frequency_value = 13 [json_name="logFrequencyValue"];
+    uint64 log_frequency_threshold = 14 [json_name="logFrequencyThreshold"];
+}

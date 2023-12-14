@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package services.api.v1;
+
+option go_package = "services/api/v1;apiv1";
+
+
+import "google/protobuf/timestamp.proto";
+
+service BundleHistoryService {
+    rpc FindBundleHistory(FindBundleHistoryRequest) returns (FindBundleHistoryResponse) {}
+}
+
+message BundleHistory {
+    string bundle_id = 1 [json_name="bundleId"];
+    string source = 2 [json_name="source"];
+    string severity = 3 [json_name="severity"];
+    google.protobuf.Timestamp timestamp = 4 [json_name="timestamp"];
+    string message = 5 [json_name="message"];
+}
+
+message FindBundleHistoryRequest {
+    string bundle_id = 1 [json_name="bundleId"];
+}
+
+message FindBundleHistoryResponse {
+    repeated BundleHistory res = 1;
+}

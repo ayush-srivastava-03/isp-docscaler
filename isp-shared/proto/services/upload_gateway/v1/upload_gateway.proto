@@ -1,0 +1,76 @@
+// !!! -------
+// !!! This file is not yet used by any service
+// !!! It was created as a stub for future grpc upload bundle service,
+// !!! if there is any demand
+// !!! -------
+
+syntax = "proto3";
+
+package services.upload_gateway.v1;
+
+// option go_package = "services/upload_gateway/v1;uplgwv1";
+
+// import "google/api/annotations.proto";
+// import "google/protobuf/timestamp.proto";
+
+// service CatalogService {
+//     // Request pre-signed S3 upload URL
+//     rpc Upload(UploadRequest) returns (UploadResponse) {
+//         option (google.api.http) = {
+//             post: "/v1/upload"
+//             body: "*"
+//         };
+//     }
+// }
+
+// message UploadRequest {
+//     // Base64 encoded md5 checksum of bundle file
+//     string file_md5 = 1 [json_name="fileMd5"];
+
+//     // Size of bundle file (in bytes)
+//     uint64 file_size = 2 [json_name="fileSize"];
+
+//     // MIME type of bundle file
+//     string file_type = 3 [json_name="fileType"];
+
+//     // Bundle type
+//     BundleType bundle_type = 4 [json_name="bundleType"];
+
+//     // Version of bundle collector software
+//     string bundle_version = 5 [json_name="bundleVersion"];
+
+//     // Bundle created timestamp
+//     google.protobuf.Timestamp created = 6 [json_name="created"];
+
+//     // Salesforce customer id
+//     string customer_id = 7 [json_name="customerId"];
+
+//     // Unique system id
+//     string system_id = 8 [json_name="systemId"];
+
+//     // System type
+//     SystemType system_type = 9 [json_name="systemType"];
+// }
+
+// enum SystemType {
+//     SYSTEM_TYPE_UNSPECIFIED = 0;
+//     SYSTEM_TYPE_SFA = 1;
+//     SYSTEM_TYPE_EXASCALER = 2;
+// }
+
+// enum BundleType {
+//     BUNDLE_TYPE_UNSPECIFIED = 0;
+//     BUNDLE_TYPE_NIGHTLY = 1;
+//     BUNDLE_TYPE_DEBUG = 2;
+//     BUNDLE_TYPE_OTHER = 10;
+// }
+
+// message UploadResponse {
+//     string url = 1 [json_name="url"];
+//     repeated HttpHeader headers = 2 [json_name="headers"];
+// }
+
+// message HttpHeader {
+//     string name = 1 [json_name="name"];
+//     string value = 2 [json_name="value"];
+// }

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package services.api.v1;
+
+option go_package = "services/api/v1;apiv1";
+
+
+service UtilsService {
+    rpc SendFeedback(SendFeedbackRequest) returns (SendFeedbackResponse) {}
+}
+
+message SendFeedbackRequest {
+    string message = 1 [json_name="message"];
+}
+
+message SendFeedbackResponse {
+}

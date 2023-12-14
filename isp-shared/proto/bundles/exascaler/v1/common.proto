@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package bundles.exascaler.v1;
+
+option go_package = "bundles/exascaler/v1;bexav1";
+
+message KeyValuePair {
+    string name = 1 [json_name="key"];
+    string value = 2 [json_name="value"];
+}
+
+message Health {
+    HealthState value = 1 [json_name="value"];
+    string reason = 2 [json_name="reason"];
+}
+
+// Common enums
+enum HealthState {
+    HEALTH_STATE_UNSPECIFIED = 0;
+    HEALTH_STATE_OK = 1;
+    HEALTH_STATE_INFO = 2;
+    HEALTH_STATE_WARNING = 3;
+    HEALTH_STATE_ERROR = 4;
+    HEALTH_STATE_CRITICAL = 5;
+}
+
+enum Severity {
+    SEVERITY_UNSPECIFIED = 0;
+    SEVERITY_INFO = 1;
+    SEVERITY_WARNING = 2;
+    SEVERITY_ERROR = 3;
+}

@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package services.kb.v1;
+
+// This proto is used only by internals of KB. UI or other consumers doesn't
+// need to import this file
+
+option go_package = "services/kb/v1;kbv1";
+
+import "services/kb/v1/upgrade_plan.proto";
+
+message UpgradePlanConfig {
+    message LogicGroup {
+        repeated UpgradePlanSupportLevel support_level = 1 [json_name="supportLevel"];
+        repeated UpgradePlanObjectType object_type = 2 [json_name="objectType"];
+        repeated string model = 3 [json_name="model"];
+        repeated string firmware = 4 [json_name="firmware"];
+    }
+
+    message Section {
+        string title = 1 [json_name="title"];
+        float time_hours = 2 [json_name="timeHours"];
+        LogicGroup only_for = 3 [json_name="onlyFor"];
+
+        string template = 30 [json_name="template"];
+    }
+
+
+    UpgradePlanSystemType system_type = 1 [json_name="systemType"];
+    repeated string platform = 2 [json_name="platform"];
+    repeated UpgradePlanMode mode = 3 [json_name="mode"];
+
+    repeated Section sections = 10 [json_name="sections"];
+    repeated Section plan = 20 [json_name="plan"];
+}

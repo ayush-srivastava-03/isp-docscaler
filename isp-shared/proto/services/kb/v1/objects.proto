@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package services.kb.v1;
+
+option go_package = "services/kb/v1;kbv1";
+
+message EnclosureFirmware {
+    string platform = 1 [json_name="Platform"];
+
+    string controller_firmware = 10 [json_name="ControllerFirmware"];
+    string controller_fw_source = 11 [json_name="ControllerFWSource"];
+    string controller_bmc = 12 [json_name="ControllerBmc"];
+    string controller_bios = 13 [json_name="ControllerBios"];
+    string controller_bios_firmware_filename = 14 [json_name="ControllerBiosFirmwareFilename"];
+    string controller_cpld = 15 [json_name="ControllerCpld"];
+    string controller_firmware_filename = 16 [json_name="ControllerFirmwareFilename"];
+    string controller_firmware_md5sum = 17 [json_name="ControllerFirmwareMd5sum"];
+
+    string enclosure_model = 20 [json_name="EnclosureModel"];
+    string enclosure_firmware = 21 [json_name="EnclosureFirmware"];
+    string enclosure_firmware_filename = 22 [json_name="EnclosureFirmwareFilename"];
+    string enclosure_cpld = 23 [json_name="EnclosureCpld"];
+    string enclosure_cpld_firmware_filename = 24 [json_name="EnclosureCpldFirmwareFilename"];
+    string release_notes_filename = 25 [json_name="ReleaseNotesFilename"];
+}
+
+message DiskDriveFirmware {
+    string disk_drive_product_id = 2 [json_name="DiskDriveProductID"];
+    string disk_drive_product_revision = 3 [json_name="DiskDriveProductRevision"];
+    string disk_drive_fw_filename = 4 [json_name="DiskDriveFWFilename"];
+}
+
+message KBObject {
+    oneof object {
+        EnclosureFirmware enclosure_firmware = 1 [json_name="EnclosureFirmware"];
+        DiskDriveFirmware disk_drive_firmware = 2 [json_name="DiskDriveFirmware"];
+    }
+}

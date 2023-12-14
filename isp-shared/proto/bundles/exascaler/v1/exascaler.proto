@@ -1,0 +1,684 @@
+syntax = "proto3";
+
+package bundles.exascaler.v1;
+
+option go_package = "bundles/exascaler/v1;bexav1";
+
+import "google/protobuf/timestamp.proto";
+import "bundles/exascaler/v1/common.proto";
+
+message BundleInfo {
+    string bundle_id = 1 [json_name="BundleId"];
+    string system_id = 2 [json_name="SystemId"];
+    string customer_id = 3 [json_name="CustomerId"];
+    google.protobuf.Timestamp created = 4 [json_name="Created"];
+    string collector_version = 5 [json_name="CollectorVersion"];
+    string case_number = 6 [json_name="CaseNumber"];
+    string customer = 7 [json_name="Customer"];
+    string contact_name = 8 [json_name="ContactName"];
+    string contact_email = 9 [json_name="ContactEmail"];
+    string contact_phone = 10 [json_name="ContactPhone"];
+    string cluster_name = 11 [json_name="ClusterName"];
+    string instance_id = 12 [json_name="InstanceId"];
+    string bundle_type = 13 [json_name="BundleType"];
+}
+
+// node module
+message Node {
+    message NetworkInterface {
+        string name = 1 [json_name="name"];
+        string address = 2 [json_name="address"];
+        string master = 3 [json_name="master"];
+        string type = 4 [json_name="type"];
+        bundles.exascaler.v1.Health health = 10 [json_name="health"];
+    }
+
+    message Mount {
+        int32 idx = 1 [json_name="idx"];
+        string kind = 2 [json_name="kind"];
+        string filesystem = 3 [json_name="filesystem"];
+        string device = 4 [json_name="device"];
+        string mount_point = 5 [json_name="mountPoint"];
+        bool is_primary = 6 [json_name="isPrimary"];
+        string size = 7 [json_name="size"];
+        bundles.exascaler.v1.Health health = 10 [json_name="health"];
+        bundles.exascaler.v1.Health lsblk_health = 11 [json_name="lsblkHealth"];
+    }
+
+    string node_id = 1 [json_name="nodeId"];
+    string hostname = 2 [json_name="hostname"];
+    string exascaler_version = 3 [json_name="exascalerVersion"];
+    string exascaler_flavor = 4 [json_name="exascalerFlavor"];
+    repeated string peers = 5 [json_name="peers"];
+    repeated NetworkInterface network_interfaces = 6 [json_name="networkInterfaces"];
+    bool is_bonded = 7 [json_name="isBonded"];
+    repeated string lustre_interfaces = 8 [json_name="lustreInterfaces"];
+    string stonith_type = 9 [json_name="stonithType"];
+    string filesystem_name = 10 [json_name="filesystemName"];
+    repeated string warnings = 11 [json_name="warnings"];
+    repeated Mount mounts = 12 [json_name="mounts"];
+    map<string, string> fsck_log_dirs = 13 [json_name="fsckLogDirs"];
+}
+
+message ParserData {
+    message HealthStat {
+        string object_type = 1 [json_name="objectType"];
+        bundles.exascaler.v1.HealthState health = 2 [json_name="health"];
+        int32 count = 3 [json_name="count"];
+    }
+
+    message ParserLog {
+        string object_type = 1 [json_name="objectType"];
+        string node_id = 2 [json_name="nodeId"];
+        bundles.exascaler.v1.Severity severity = 3 [json_name="severity"];
+        string message = 4 [json_name="message"];
+    }
+
+    repeated HealthStat health_stats = 1 [json_name="healthStats"];
+    repeated ParserLog parser_logs = 2 [json_name="parserLogs"];
+}
+
+// clock module
+message Clock {
+    string node_id = 1 [json_name="nodeId"];
+    google.protobuf.Timestamp clock = 2 [json_name="clock"];
+    bundles.exascaler.v1.Health health = 3 [json_name="health"];
+}
+
+// HAGroup module
+message HAGroup {
+    message Resource {
+        string name = 1 [json_name="name"];
+        string id = 2 [json_name="id"];
+        string status = 3 [json_name="status"];
+        bundles.exascaler.v1.Health health = 4 [json_name="health"];
+    }
+
+    message Node {
+        string name = 1 [json_name="name"];
+        string status = 2 [json_name="status"];
+        repeated Resource resources = 3 [json_name="resources"];
+        bundles.exascaler.v1.Health health = 4 [json_name="health"];
+    }
+
+    string status = 1 [json_name="status"];
+    bundles.exascaler.v1.Health health = 2 [json_name="health"];
+    string domain_controller = 3 [json_name="domainController"];
+    string type = 4 [json_name="type"];
+    repeated Node nodes = 10 [json_name="nodes"];
+    string ha_group = 11 [json_name="haGroup"];
+}
+
+// network_devs module
+message NetworkDevices {
+    message NetworkDevice {
+        string nid = 1 [json_name="nid"];
+        string status = 2 [json_name="status"];
+        int32 alive = 3 [json_name="alive"];
+        int32 refs = 4 [json_name="refs"];
+        int32 peer = 5 [json_name="peer"];
+        int32 rtr = 6 [json_name="rtr"];
+        int32 max = 7 [json_name="max"];
+        int32 tx = 8 [json_name="tx"];
+        int32 min = 9 [json_name="min"];
+    }
+
+    string node_id = 1 [json_name="nodeId"];
+    bundles.exascaler.v1.Health health = 2 [json_name="health"];
+    repeated NetworkDevice nics = 3 [json_name="nics"];
+};
+
+// versions module
+message SoftwareVersion {
+    string node_id = 1 [json_name="nodeId"];
+    string name = 2 [json_name="name"];
+    string version = 3 [json_name="version"];
+    bundles.exascaler.v1.Health health = 4 [json_name="health"];
+};
+
+// uptime module
+message Uptime {
+    string node_id = 1 [json_name="nodeId"];
+    int32 uptime_days = 2 [json_name="uptimeDays"];
+    int32 users = 3 [json_name="users"];
+    float load_1m = 4 [json_name="load1m"];
+    float load_5m = 5 [json_name="load5m"];
+    float load_15m = 6 [json_name="load15m"];
+};
+
+// es_config module
+message ESConfig {
+    string node_id = 1 [json_name="nodeId"];
+    string name = 2 [json_name="name"];
+    string md5 = 3 [json_name="md5"];
+    bundles.exascaler.v1.Health health = 4 [json_name="health"];
+}
+
+// lustre module
+message LustreNetworks {
+    string node_id = 1 [json_name="nodeId"];
+    string networks = 2 [json_name="networks"];
+    bundles.exascaler.v1.Health health = 3 [json_name="health"];
+}
+
+// system_filesystems module
+message SystemFilesystems {
+    message Filesystem {
+        string name = 1 [json_name="name"];
+        string size = 2 [json_name="size"];
+        string used = 3 [json_name="used"];
+        string available = 4 [json_name="available"];
+        int32 use_percent = 5 [json_name="usePercent"];
+        string mounted_on = 6 [json_name="mountedOn"];
+        bundles.exascaler.v1.Health health = 7 [json_name="health"];
+    }
+
+    string node_id = 1 [json_name="nodeId"];
+    repeated Filesystem filesystems = 2 [json_name="filesystems"];
+}
+
+// system_inodes module
+message SystemINodes {
+    message Filesystem {
+        string name = 1 [json_name="name"];
+        uint64 i_nodes = 2 [json_name="iNodes"];
+        uint64 i_used = 3 [json_name="iUsed"];
+        uint64 i_free = 4 [json_name="iFree"];
+        int32 i_use_percent = 5 [json_name="iUsePercent"];
+        string mounted_on = 6 [json_name="mountedOn"];
+        bundles.exascaler.v1.Health health = 7 [json_name="health"];
+    }
+
+    string node_id = 1 [json_name="nodeId"];
+    repeated Filesystem filesystems = 2 [json_name="filesystems"];
+}
+
+// system_other module
+message SystemOther {
+    message Crashes {
+        uint32 count = 1 [json_name="crashes"];
+        google.protobuf.Timestamp last_crash_timestamp = 2 [json_name="lastCrashTimestamp"];
+        bundles.exascaler.v1.Health health = 3 [json_name="health"];
+    }
+
+    message Memory {
+        uint64 total = 1 [json_name="total"];
+        uint64 used = 2 [json_name="used"];
+        uint64 free = 3 [json_name="free"];
+        uint64 shared = 4 [json_name="shared"];
+        uint64 available = 5 [json_name="available"];
+        uint64 swap_total = 6 [json_name="swapTotal"];
+        uint64 swap_used = 7 [json_name="swapUsed"];
+        uint64 swap_free = 8 [json_name="swapFree"];
+
+        bundles.exascaler.v1.Health health = 10 [json_name="health"];
+    }
+
+    string node_id = 1 [json_name="nodeId"];
+    Crashes crashes = 2 [json_name="crashes"];
+    Memory memory = 3 [json_name="memory"];
+}
+
+// fabric module
+message Fabric {
+    message InfinibandAdapter {
+        // ibstat
+        string name = 1 [json_name="name"];
+        string type = 2 [json_name="type"];
+        string firmware_version = 3 [json_name="firmwareVersion"];
+        string hardware_version = 4 [json_name="hardwareVersion"];
+        string node_guid = 5 [json_name="nodeGuid"];
+        string system_image_guid = 6 [json_name="systemImageGuid"];
+        repeated InfinibandAdapterPort ports = 7 [json_name="ports"];
+
+        // ibdev2netdev
+        string active_port = 8 [json_name="activePort"];
+        string state = 9 [json_name="state"];
+        string bond_if = 10 [json_name="bondIf"];
+
+        bundles.exascaler.v1.Health health = 11 [json_name="health"];
+    }
+
+    message InfinibandAdapterPort {
+        string name = 1 [json_name="name"];
+        string state = 2 [json_name="state"];
+        string phy_state = 3 [json_name="phyState"];
+        string rate = 4 [json_name="rate"];
+        string base_lid = 5 [json_name="baseLid"];
+        string lmc = 6 [json_name="lmc"];
+        string sm_lid = 7 [json_name="smLid"];
+        string capability_mask = 8 [json_name="capabilityMask"];
+        string port_guid = 9 [json_name="portGuid"];
+        string link_layer = 10 [json_name="linkLayer"];
+    }
+
+    message OpaStatus {
+        // opa_info_info
+        string name = 1 [json_name="name"];
+        string port_state = 2 [json_name="portState"];
+        string physical_state = 3 [json_name="physicalState"];
+        bundles.exascaler.v1.Health health = 4 [json_name="health"];
+    }
+
+    string node_id = 1 [json_name="nodeId"];
+    repeated InfinibandAdapter infiniband_adapters = 2 [json_name="infinibandAdapters"];
+    bundles.exascaler.v1.Health subnet_manager_health = 3 [json_name="subnetManagerHealth"];
+    repeated OpaStatus opa_statuses = 4 [json_name="opaStatuses"];
+}
+
+// Storage module
+message Storage {
+    message SCSIDevice {
+        string scsi_host = 1 [json_name="scsiHost"];
+        string channel = 2 [json_name="channel"];
+        string target_number = 3 [json_name="targetNumber"];
+        string lun_tuple = 4 [json_name="lunTuple"];
+        string device_type = 5 [json_name="deviceType"];
+        string vendor = 6 [json_name="vendor"];
+        string model = 7 [json_name="model"];
+        string revision = 8 [json_name="revision"];
+        string device = 9 [json_name="device"];
+        string state = 10 [json_name="state"];
+        string queue_depth = 11 [json_name="queueDepth"];
+        string scsi_level = 12 [json_name="scsiLevel"];
+        string type = 13 [json_name="type"];
+        string device_blocked = 14 [json_name="deviceBlocked"];
+        string timeout = 15 [json_name="timeout"];
+        bundles.exascaler.v1.Health health = 16 [json_name="health"];
+    }
+
+    message BlockDevice {
+        string name = 1 [json_name="name"];
+        string maj_min = 2 [json_name="majMin"];
+        bool removable = 3 [json_name="removable"];
+        string size = 4 [json_name="size"];
+        bool read_only = 5 [json_name="readOnly"];
+        string device_type = 6 [json_name="deviceType"];
+        string mount_point = 7 [json_name="mountPoint"];
+        // string parent_device_name = 8 [json_name="parentDeviceName"];
+    }
+
+    string node_id = 1 [json_name="nodeId"];
+    repeated SCSIDevice scsi_devices = 2 [json_name="scsiDevices"];
+    repeated BlockDevice block_devices = 3 [json_name="blockDevices"];
+}
+
+// Network module
+message Network {
+    message NetworkInterface {
+        string id = 1 [json_name="id"];
+        string name = 2 [json_name="name"];
+        string state = 3 [json_name="state"];
+        repeated string addresses = 4 [json_name="addresses"];
+        bool exascaler_config_nic = 5 [json_name="exascalerConfigNic"];
+        bundles.exascaler.v1.Health health = 10 [json_name="health"];
+    }
+
+    string node_id = 1 [json_name="nodeId"];
+    repeated NetworkInterface network_interfaces = 3 [json_name="networkInterfaces"];
+}
+
+// NetworkEtcHosts module
+message NetworkEtcHosts {
+    message EtcHost {
+        string address = 1 [json_name="address"];
+        repeated string hostnames = 2 [json_name="hostnames"];
+    }
+
+    repeated EtcHost etc_hosts = 1 [json_name="etcHosts"];
+    bundles.exascaler.v1.Health health = 2 [json_name="health"];
+}
+
+// ExascalerConfig module
+message ExascalerConfig {
+    // 5.3 Global Settings.
+    // Global settings under the [global] section of the EXAScaler configuration file
+    message Global {
+        // 5.3.1 File Systems List
+        // A list of file systems that will exist on the cluster
+        repeated string fs_list = 10 [json_name="fsList"];
+
+        // 5.3.2 Email Settings for Logs
+        // List of emails to receive logging
+        repeated string email_list = 20 [json_name="emailList"];
+        // A domain of the email addresses
+        string email_domain = 21 [json_name="emailDomain"];
+        // A hostname of the SMTP mail server
+        string email_relay = 32 [json_name="emailRelay"];
+
+        // 5.3.3 SFA Appliances List
+        // List of SFA storage appliances that are part of the cluster
+        repeated string sfa_list = 30 [json_name="sfaList"];
+
+        // 5.3.4 Extra Hosts
+        // List of hostnames that have IP addresses lower than the server node range
+        repeated string extra_hosts_start = 40 [json_name="extraHostsStart"];
+        // List of hostnames that have IP addresses higher than the server node range
+        repeated string extra_hosts_end = 41 [json_name="extraHostsEnd"];
+        // List of hostnames that are not part of the Corosync cluster and are not included in the hosts list in the configuration of the clush utility
+        repeated string clients_list = 42 [json_name="clientsList"];
+        // An additional method to use for detecting network failure. This should always be true
+        bool pingd = 43 [json_name="pingd"];
+
+        // 5.3.5 Time and Timezone
+        // A timezone for the hosts. Defaults to UTC
+        string timezone = 50 [json_name="timezone"];
+
+        // List of NTP servers to sync with
+        repeated string ntp_list = 51 [json_name="ntpList"];
+
+        // 5.3.6 Miscellaneous
+        // Either plain-text (default) or encryption for the passwords of the SFA and STONITH users
+        string password_policy = 60 [json_name="passwordPolicy"];
+        // A directory for saving logs. Defaults to /scratch/log
+        string log_dir = 61 [json_name="logDir"];
+        // Frequency or type of automatic MDT backups (Section 14): daily, weekly, none (default), or loris
+        string mdt_backup = 62 [json_name="mdtBackup"];
+        // A path for LORIS MDT backups of supported file systems: ext4 and btrfs. Defaults to /scratch
+        string mdt_backup_dir = 63 [json_name="mdtBackupDir"];
+        // A path where kdump will create a crash dump. Defaults to /scratch/crash
+        string kdump_path = 64 [json_name="kdumpPath"];
+        // A list of volume groups to be activated by default in case of failover: either auto (default) to have the list calculated automatically or none to have all the volume groups activated on failover
+        repeated string vg_activation_list = 65 [json_name="vgActivationList"];
+        // Specifies if a shadow configuration file is used for sensitive configuration information like passwords. Defaults to no
+        bool shadow_conf = 66 [json_name="shadowConf"];
+    }
+
+    message SFAStorage {
+        string hostname = 1 [json_name="hostname"];
+        repeated string controllers = 10 [json_name="controllers"];
+        string user = 11 [json_name="user"];
+        string password = 12 [json_name="password"];
+    }
+
+    message HA {
+        message Group {
+            string id = 1 [json_name="id"];
+            repeated string members = 2 [json_name="members"];
+        }
+
+        // 5.7.1 General Configuration
+
+        // Type of HA for the cluster: none (no HA configured) or corosync (HA setup with Corosync, which is the basic option for new systems
+        string type = 1 [json_name="type"];
+        // Specifies if quorum policy (Section 7.1.2.3) should be enabled or disabled
+        // * freeze (default) - Enables quorum policy. Must be used for an EXAScaler system with more than two server nodes)
+        // * ignore - Disables quorum policy. Must be used for an EXAScaler system with only two server nodes or on a SFA10000E if only a single couplet is used
+        string no_quorum_policy = 2 [json_name="noQuorumPolicy"];
+        // If set to true (default), starts HA software (cluster services) automatically on server node boot, which sets both failover and failback resources
+        bool start_on_boot = 3 [json_name="startOnBoot"];
+
+        // 5.7.2 Network
+
+        // Mode for the redundant ring (Section 7.1.2.2): none, active, or passive (recommended).
+        string rrp_mode = 10 [json_name="rrpMode"];
+        // The transport that Corosync should use for communication (Section 7.1.2.1) with server nodes in the rings: multicast (default) or unicast.
+        string transport = 11 [json_name="transport"];
+        // If you run multiple Corosync clusters on the same subnet, change this to avoid conflicts
+        string mcastport = 12 [json_name="mcastPort"];
+        // Required. The NICs for Corosync rings (ring0 and/or ring1) as you defined for the hosts
+        repeated string corosync_nics = 13 [json_name="corosyncNics"];
+        // Corosync fails to manage a large number of server nodes in the ring. If necessary, use these settings to split the cluster into smaller manageable groups of server nodes, placing failover peers in the same group (HA is possible only within the same group).
+        uint32 ha_group_count = 14 [json_name="haGroupCount"];
+        repeated Group ha_groups = 15 [json_name="haGroups"];
+
+        // 5.7.3 Authentication and Encryption
+
+        // Enables HMAC/SHA1 authentication for Corosync messages if set to on (default) or disables it if set to off.
+        bool secauth = 20 [json_name="secAuth"];
+        // Type of HMAC authentication to use for Corosync messages: none (no authentication), md5, sha1 (default), sha256, sha384, or sha512
+        string crypto_hash = 21 [json_name="cryptoHash"];
+        // Type of cipher to use for encrypting Corosync messages: none (no encryption), aes256 (default), aes192, aes128, or 3des. For encryption to work, crypto_hash must be other than none
+        string crypto_cypher = 22 [json_name="cryptoCypher"];
+
+        // 5.7.4 Timeouts
+
+        // Maximum time, in seconds, to wait for a file system storage target to mount and start. Defaults to 450.
+        uint32 lustre_start_timeout = 30 [json_name="lustreStartTimeout"];
+        // Time to wait, in seconds, for further changes to ping resource
+        uint32 dampen_ping = 31 [json_name="dampenPing"];
+        // Time to wait, in seconds, for further changes to ifspeed resource
+        uint32 dampen_ifspeed = 32 [json_name="dampenIfspeed"];
+
+        // 5.7.5 Corosync Transmission Settings
+
+        // Network maximum transmission unit, in bytes. Defaults to 1500
+        uint32 net_mtu = 40 [json_name="netMtu"];
+        // Maximum messages to send in one token rotation. Defaults to 50
+        uint32 window_size = 41 [json_name="windowSize"];
+        // Maximum messages to send by one processor on receipt of the token. Defaults to 17
+        uint32 max_messages = 42 [json_name="maxMessages"];
+    }
+
+    message FileSystem {
+        // Filesystem name ([fs <name>] section in config)
+        string name = 1 [json_name="name"];
+
+        // 5.8.1 File System Servers
+
+        // A space-delimited list of hosts (EXAScaler server nodes) that will provide metadata for this file system.
+        repeated string mds_list = 10 [json_name="mdsList"];
+        // A space-delimited list of hosts that will provide the MGS service for this file system
+        repeated string mgs_list = 11 [json_name="mgsList"];
+        // A space-delimited list of hosts that will provide the MGS service for this file system.
+        repeated string oss_list = 12 [json_name="ossList"];
+
+        // 5.8.2 File System Targets
+
+        // Set the default number of OSTs and MDTs per OSS and MDS, respectively. With the Distributed Namespace (DNE) feature available for the file system since EXAScaler 2.0.0,
+        // multiple MDTs per MDS are supported. You can overwrite both settings on a per-host basis (Section 5.9.5).
+        uint32 default_ost_count = 20 [json_name="defaultOstCount"];
+        uint32 default_mdt_count = 21 [json_name="defaultMdtCount"];
+
+        // 5.8.3 MDT Configuration
+
+        // Stripe the MDT across the LUNs setting this to the number of LUNs the MDT is going to use. If enabled and not 1, use a new LUN naming scheme
+        uint32 mdt_parts = 30 [json_name="mdtParts"];
+        // When the LVM storage size is initially set up during EXAScaler deployment, specify how much of the LVM volume group the file system should use for the MDT, reserving the rest for backup snapshots (Section 14).
+        // For MDT backups with LORIS, DDN recommends setting 80%% (80% for the MDT and 20% for backup snapshots). In general, the backup space depends on IO frequency
+        string mdt_size = 31 [json_name="mdtSize"];
+        // Fail back the MDT to its primary MDS. Set to no on block storage where MDS nodes are equal peers and set to yes on internal-MDS embedded systems where MDS nodes may not have matching performance.
+        bool mdt_failback = 32 [json_name="mdtFailback"];
+
+        // 5.8.4 MGS Configuration
+
+        // The size of the backing file system on the MGS. DDN recommends a size of 256MB. You need to increase it to 2 G (Section 13.11) in order to support snapshots (Section 16.7). Valid units are: m, g, and %%, as in mgs_size: 500m.
+        string mgs_size = 40 [json_name="mgsSize"];
+        // Set yes (default) for the MGS to run on the MDS or set no for the MGS to run elsewhere
+        bool mgs_internal = 41 [json_name="mgsInternal"];
+        // Set to yes to allow the MGS and the MDT to run on different hosts, thereby allowing the use of IR (Imperative Recovery).
+        bool mgs_standalone = 42 [json_name="mgsStandalone"];
+        // Required if the MGS is not internal to this file system (mgs_internal: no). Specify the name of a local file system the MGS is internal to
+        string mgs_fs = 43 [json_name="mgsFs"];
+
+        // 5.8.5 MDT and OST Formatting (File System Creation Only)
+
+        // A list of options added verbatim to the mke2fs command when creating the MDT and OST
+        string mdt_mke2fs_opts = 50 [json_name="mdtMke2fsOpts"];
+        string ost_mke2fs_opts = 51 [json_name="ostMke2fsOpts"];
+        // Use this setting to tune OST formatting with ost_mke2fs_opts (above) by specifying the OST formatting options depending on OST size
+        string tune_ost_mke2fs_opts = 52 [json_name="tuneOstMke2fsOpts"];
+        // 5.8.5.1 Enabling Data on MDT
+        // Either no (default) or yes to support the DoM feature (Section 15).
+        bool dom_enabled = 53 [json_name="domEnabled"];
+        // Change the default maximum size (64KB = 65536) for a file’s DoM component, which will override the default maximum size (1MB) set by the file system.
+        uint32 dom_max_file_size = 54 [json_name="domMaxFileSize"];
+
+        // 5.8.6 MDT and OST Tuning Options
+        // A list of options that EXAScaler adds verbatim to the tunefs.lustre command when configuring the MDTs and OSTs respectively
+        string mdt_opts = 60 [json_name="mdtOpts"];
+        string ost_opts = 61 [json_name="ostOpts"];
+
+        // 5.8.7 MGT, MDT, and OST Mount Options
+        // A list of options that EXAScaler adds verbatim to the mount.lustre command when mounting the MDTs and OSTs
+        string ost_mount_opts = 70 [json_name="ostMountOpts"];
+        string mgt_mount_opts = 71 [json_name="mgtMountOpts"];
+        string mdt_mount_opts = 72 [json_name="mdtMountOpts"];
+
+        // 5.8.8 Multi-mount Protection
+        // This is the time interval, in seconds, between Multi-Mount Protection updates. MMP protects the file system from multiple concurrent mounts
+        uint32 mmp_update_interval = 80 [json_name="mmpUpdateInterval"];
+
+        // 5.8.9 MDT and OST Device Paths
+        // Define a path to the disk devices that back the MDT and OST
+        string mdt_base_device_path = 90 [json_name="mdtBaseDevicePath"];
+        string ost_base_device_path = 91 [json_name="ostBaseDevicePath"];
+
+        // 5.8.10 OST Pools
+        // A list of OST pools to be created for this file system. Required if you define pools (Section 5.10)
+        repeated string pools = 100 [json_name="pools"];
+    }
+
+    message Host {
+        message NetworkInterface {
+            string name = 1 [json_name="name"];
+            string ip_base = 2 [json_name="ipBase"];
+            string ip = 3 [json_name="ip"];
+            string gateway = 4 [json_name="gateway"];
+            string netmask = 5 [json_name="netmask"];
+            repeated string cfg = 6 [json_name="cfg"];
+            // bond<iface>_slaves - Use to specify slave interfaces for a bonded interface by its order number, as in bond0_slaves: ens0 ens1.
+            repeated string slaves = 7 [json_name="slaves"];
+            // repeated NetworkInterface aliases = 10 [json_name="aliases"];
+        }
+
+        message FilesystemSettings {
+            string name = 1 [json_name="name"];
+
+            // Required if default_ost_count is not set (Section 5.8.2). Set the number of OSTs served by this OSS.
+            uint32 ost_count = 2 [json_name="ostCount"];
+            string osts = 3 [json_name="osts"];
+
+            // Required if default_mdt_count is not set (Section 5.8.2). Set the number of MDTs served by this MDS.
+            uint32 mdt_count = 4 [json_name="mdtCount"];
+            string mdts = 5 [json_name="mdts"];
+
+            // Change the path to the disk devices that back the OST. You must define the same device path for all peers.
+            string ost_device_path = 6 [json_name="ostDevicePath"];
+            // Change the path to the disk devices that back the MDT. You must define the same device path for all peers.
+            string mdt_device_path = 7 [json_name="mdtDevicePath"];
+        }
+
+        string hostname = 1 [json_name="hostname"];
+
+        // 5.9.1 Corosync Ring Settings (HA)
+
+        // Each of the configured rings should correspond to one of the rings specified with the corosync_nics option in the [HA] section.
+        // Host network interfaces in each ring should have a consistent subnet mask to ensure the interfaces have the same broadcast domain.
+        repeated string rings = 10 [json_name="rings"];
+
+        // 5.9.2 STONITH Settings (HA)
+
+        // Either ipmi, ipmi-slow, or sfa_vm
+        string stonith_type = 20 [json_name="stonithType"];
+        // Required. The username and password for an IPMI interface or an SFA controller.
+        string stonith_user = 21 [json_name="stonithUser"];
+        string stonith_password = 22 [json_name="stonithPassword"];
+        // IPMI delay time, in seconds, to wait before fencing starts. Valid only for the ipmi STONITH type. The default value is 15
+        uint32 ipmi_delay = 23 [json_name="ipmiDelay"];
+        // IPMI fencing method. Valid only for the ipmi STONITH type. The valid values are onoff (default) or cycle.
+        string ipmi_method = 24 [json_name="ipmiMethod"];
+        // Configurable monitoring interval for fence_ipmilan fence agent, the default is 60 seconds. Valid only for the ipmi STONITH type.
+        uint32 ipmi_monitor = 25 [json_name="ipmiMonitor"];
+        // Number of seconds to wait after issuing a power-off or power-on command. Valid only for the ipmi STONITH type. The default value is 5
+        uint32 ipmi_power_wait = 26 [json_name="ipmiPowerWait"];
+        // Timeout period for a fencing operation, in seconds. If this timeout elapses before the fencing operation completes, the operation is considered failed. The default value is 60 seconds
+        uint32 stonith_timeout = 27 [json_name="stonithTimeout"];
+
+        // 5.9.3 Automatic IP Address Assignment Settings
+        // 5.9.4 Additional Network Interface Settings
+        repeated NetworkInterface network_settings = 30 [json_name="networkSettings"];
+        // list of file system networks. Each entry of the list should be an LNet name and an interface in parentheses (for example, tcp0(ens0))
+        repeated string lnets = 31 [json_name="lnets"];
+        // Required. A list of network interfaces for the host
+        repeated string nic_list = 32 [json_name="nicList"];
+        // This is the serial speed to emulate on serial-over-lan (SOL) connections. This must match the speedthattheSOLdeviceistouse.
+        uint32 serial_speed = 33 [json_name="serialSpeed"];
+        // Port to be used for serial console over LAN. Defaults to ttyS1 for external servers and ttyS0 for embedded VMs
+        string serial_port = 34 [json_name="serialPort"];
+        // Use to specify the mode in case of channel-bonding. Possible values are 0-6. Only one value can be accepted
+        string bonding_mode = 35 [json_name="bondingMode"];
+
+        // 5.9.5 Host-specific File System Settings
+        repeated FilesystemSettings fs_settings = 40 [json_name="fsSettings"];
+
+        // 5.9.6 Settings for SFA Embedded Platforms
+
+        // Required if stonith_primary_peers and stonith_secondary_peers are not set. This is the OID of the node obtainedbyrunningtheapp show stack x allcommand in the SFACLUI
+        string oid = 50 [json_name="oid"];
+        // A space-separated list of embedded EXAScaler server nodes (VMs) that are the preferred and secondary location for the fencing agent
+        repeated string stonith_primary_peers = 51 [json_name="stonithPrimaryPeers"];
+        repeated string stonith_secondary_peers = 52 [json_name="stonithSecondaryPeers"];
+        // Set host SFA storage on embedded solutions (STONITH type is sfa_vm) or (optionally) on other solutions.
+        repeated string host_sfa_list = 53 [json_name="hostSfaList"];
+
+        // 5.9.7 Miscellaneous Host Settings
+
+        // Used to append file system modprobe entries to /etc/modprobe.d/lustre.conf
+        repeated string modprobe_cfg = 60 [json_name="modProbeCfg"];
+        // List of kernel boot parameters that EXAScaler adds verbatim
+        string grub_args = 61 [json_name="grubArgs"];
+        // (host-specific) A space-delimited list of one or more server nodes in the cluster that act as failover nodes for this host
+        repeated string peers = 62 [json_name="peers"];
+    }
+
+    message PoolSettings {
+        string name = 1 [json_name="name"];
+        string ost_list = 10 [json_name="ostList"];
+    }
+
+    message EMF {
+        bool enabled = 1 [json_name="enabled"];
+        string ip = 2 [json_name="ip"];
+        string size = 3 [json_name="size"];
+        string cidr = 4 [json_name="cidr"];
+        string nic = 5 [json_name="nic"];
+    }
+
+    // Tuning options like sysctl or set_param_tunings
+    message TuningOptions {
+        string object = 1 [json_name="object"];
+        repeated bundles.exascaler.v1.KeyValuePair data = 20 [json_name="data"];
+    }
+
+    // List of errors and warnings found during parsing exascaler.conf
+    repeated bundles.exascaler.v1.Health config_health = 1 [json_name="configHealth"];
+
+    Global global = 10 [json_name="global"];
+
+    // Settings under this section of the EXAScaler configuration file configure sysctl defaults for all hosts or to specific host in the cluster
+    // "object" == "defaults" are default sysctl settings for all hosts
+    repeated TuningOptions sysctl_settings = 20 [json_name="sysctlSettings"];
+
+    // 5.5 Cluster-level File System Performance Settings
+    // Settings under this section of the EXAScaler configuration file tune file system performance through the set_param interface
+    repeated bundles.exascaler.v1.KeyValuePair set_param_tunings = 25 [json_name="setParamTunings"];
+    // Settings under this section of the EXAScaler configuration file tune file system
+    repeated bundles.exascaler.v1.KeyValuePair conf_param_tunings = 28 [json_name="confParamTunings"];
+
+    // 5.6 Storage Settings. List of SFA storages specified globally with sfa_list
+    repeated SFAStorage sfa_list = 30 [json_name="sfaList"];
+
+    // 5.7 HA. Specify settings for high availability of the cluster (Section 7.1) under the [HA] section of the EXAScaler configuration file.
+    HA ha = 40 [json_name="ha"];
+
+    // 5.8 File System Settings
+    repeated FileSystem filesystems = 50 [json_name="filesystems"];
+
+    // 5.9 Host settings
+    // "hostname" == "defaults"
+    repeated Host hosts = 60 [json_name="hosts"];
+
+    // 5.10 Pool Settings
+    repeated PoolSettings pool_settings = 70 [json_name="poolSettings"];
+
+    // 5.11 EMF Settings
+    EMF emf = 80 [json_name="emf"];
+}
+
+message DeviceAlias {
+    string node_id = 1 [json_name="nodeId"];
+    string name = 2 [json_name="name"];
+    string alias = 3 [json_name="alias"];
+    // bundles.exascaler.v1.Health health = 4 [json_name="health"];
+};

@@ -1,0 +1,137 @@
+syntax = "proto3";
+
+package services.api.v1;
+
+option go_package = "services/api/v1;apiv1";
+
+import "services/api/v1/common.proto";
+import "logs/v1/logs.proto";
+
+import "google/protobuf/timestamp.proto";
+
+
+service LogsService {
+    rpc FindLogs(FindLogsRequest) returns (FindLogsResponse) {}
+    rpc FindLogGroups(FindLogGroupsRequest) returns (FindLogGroupsResponse) {}
+    rpc FindLogsColumnValues(FindLogsColumnValuesRequest) returns (FindLogsColumnValuesResponse) {}
+    rpc CreateLogsQueryObject(CreateLogsQueryObjectRequest) returns (CreateLogsQueryObjectResponse) {}
+    rpc GetLogsQueryObject(GetLogsQueryObjectRequest) returns (GetLogsQueryObjectResponse) {}
+    rpc UpdateLogsQueryObject(UpdateLogsQueryObjectRequest) returns (UpdateLogsQueryObjectResponse) {}
+    rpc DeleteLogsQueryObject(DeleteLogsQueryObjectRequest) returns (DeleteLogsQueryObjectResponse) {}
+    rpc FindLogsQueryObjects(FindLogsQueryObjectsRequest) returns (FindLogsQueryObjectsResponse) {}
+}
+
+message FindLogsRequest {
+    logs.v1.LogsQuery query = 1 [json_name="query"];
+    repeated SortLogsClause sort = 2 [json_name="sort"];
+    google.protobuf.Timestamp timestamp_gte = 3 [json_name="timestampGte"];
+    google.protobuf.Timestamp timestamp_lte = 4 [json_name="timestampLte"];
+    uint32 offset = 5 [json_name="offset"];
+    uint32 limit = 6 [json_name="limit"];
+    bool skip_meta = 7 [json_name="skipMeta"];
+}
+
+message FindLogsResponse {
+    repeated logs.v1.Log res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+
+message FindLogGroupsRequest {
+    logs.v1.LogGroupsQuery query = 1 [json_name="query"];
+    repeated SortLogsClause sort = 2 [json_name="sort"];
+    google.protobuf.Timestamp timestamp_gte = 3 [json_name="timestampGte"];
+    google.protobuf.Timestamp timestamp_lte = 4 [json_name="timestampLte"];
+    uint32 offset = 5 [json_name="offset"];
+    uint32 limit = 6 [json_name="limit"];
+    bool skip_meta = 7 [json_name="skipMeta"];
+}
+
+message FindLogGroupsResponse {
+    repeated logs.v1.LogGroup res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+
+message FindLogsColumnValuesRequest {
+    logs.v1.LogColumn column = 1 [json_name="column"];
+    logs.v1.LogsQuery query = 2 [json_name="query"];
+    SortDirection sort = 3 [json_name="sort"];
+    google.protobuf.Timestamp timestamp_gte = 4 [json_name="timestampGte"];
+    google.protobuf.Timestamp timestamp_lte = 5 [json_name="timestampLte"];
+    uint32 limit = 6 [json_name="limit"];
+}
+
+message FindLogsColumnValuesResponse {
+    repeated string res = 1 [json_name="res"];
+}
+
+message LogsQueryObject {
+    string query_id = 1 [json_name="queryId"];
+    string name = 2 [json_name="name"];
+    string description = 3 [json_name="description"];
+    string user_id = 4 [json_name="userId"];
+    bool auto_run = 5 [json_name="autoRun"];
+    bool public = 6 [json_name="public"];
+    google.protobuf.Timestamp timestamp = 7 [json_name="timestamp"];
+    logs.v1.LogsQuery query = 8 [json_name="query"];
+    string severity = 9 [json_name="severity"];
+}
+
+message CreateLogsQueryObjectRequest {
+    string name = 1 [json_name="name"];
+    string description = 2 [json_name="description"];
+    bool auto_run = 3 [json_name="autoRun"];
+    bool public = 4 [json_name="public"];
+    logs.v1.LogsQuery query = 5 [json_name="query"];
+    string severity = 6 [json_name="severity"];
+}
+
+message CreateLogsQueryObjectResponse {
+    string query_id = 1 [json_name="queryId"];
+}
+
+message UpdateLogsQueryObjectRequest {
+    string query_id = 1 [json_name="queryId"];
+    string name = 2 [json_name="name"];
+    string description = 3 [json_name="description"];
+    bool auto_run = 4 [json_name="autoRun"];
+    bool public = 5 [json_name="public"];
+    logs.v1.LogsQuery query = 6 [json_name="query"];
+    string severity = 7 [json_name="severity"];
+}
+
+message UpdateLogsQueryObjectResponse {}
+
+message DeleteLogsQueryObjectRequest {
+    string query_id = 1 [json_name="queryId"];
+}
+
+message DeleteLogsQueryObjectResponse {}
+
+message FindLogsQueryObjectsRequest {
+    string search = 1 [json_name="search"];
+    repeated string system_type = 2 [json_name="systemType"];
+    bool auto_run_only = 3 [json_name="autoRunOnly"];
+    repeated SortClause sort = 4 [json_name="sort"];
+    uint32 offset = 5 [json_name="offset"];
+    uint32 limit = 6 [json_name="limit"];
+}
+
+message FindLogsQueryObjectsResponse {
+    repeated LogsQueryObject res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+message GetLogsQueryObjectRequest {
+    string query_id = 1 [json_name="queryId"];
+}
+
+message GetLogsQueryObjectResponse {
+    LogsQueryObject res = 1 [json_name="res"];
+}
+
+message SortLogsClause {
+    logs.v1.LogColumn column = 1;
+    SortDirection value = 2;
+}

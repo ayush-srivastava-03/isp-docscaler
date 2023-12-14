@@ -1,0 +1,1976 @@
+// Via sia/isp-tools/protogenjs
+
+// GENERATED CODE -- DO NOT EDIT!
+
+syntax = "proto3";
+
+package bundles.sfa.v1;
+
+option go_package = "bundles/sfa/v1;sfav1";
+
+import "google/protobuf/timestamp.proto";
+
+// Messages
+
+// Bundle Information
+message BundleInfo {
+    string collector_version = 1 [json_name="CollectorVersion"];
+    string sfa_api_version = 2 [json_name="SFAAPIVersion"];
+    string case_number = 3 [json_name="CaseNumber"];
+    string customer = 4 [json_name="Customer"];
+    string contact_name = 5 [json_name="ContactName"];
+    string contact_email = 6 [json_name="ContactEmail"];
+    string contact_phone = 7 [json_name="ContactPhone"];
+    string platform = 8 [json_name="Platform"];
+    string description = 9 [json_name="Description"];
+    repeated string licenses = 10 [json_name="Licenses"];
+    bool license_needed = 11 [json_name="LicenseNeeded"];
+    google.protobuf.Timestamp date_and_time = 12 [json_name="DateAndTime"];
+    string time_zone = 13 [json_name="TimeZone"];
+    string controller0_serial = 14 [json_name="Controller0Serial"];
+    string controller1_serial = 15 [json_name="Controller1Serial"];
+    string customer_id = 16 [json_name="CustomerId"];
+    string instance_id = 17 [json_name="InstanceId"];
+    string cluster_name = 18 [json_name="ClusterName"];
+    string uuid = 19 [json_name="uuid"];
+}
+
+// Represents the SFA ASM Allowed IP Range object.
+message AllowedIPRange {
+    string ip_address = 1 [json_name="IPAddress"];
+    string ip_family = 2 [json_name="IPFamily"];
+    uint32 ip_mask = 3 [json_name="IPMask"];
+    uint32 index = 4 [json_name="Index"];
+    string oid = 5 [json_name="OID"];
+}
+
+// Represents the SFA ASM Authentication object.
+message Authentication {
+    uint32 index = 1 [json_name="Index"];
+    string initiator_username = 2 [json_name="InitiatorUsername"];
+    string name = 3 [json_name="Name"];
+    string oid = 4 [json_name="OID"];
+    string target_username = 5 [json_name="TargetUsername"];
+    string type = 6 [json_name="Type"];
+}
+
+// Represents information about the self-encrypting drive authorization key for an SFA storage system.
+message AuthorizationKey {
+    google.protobuf.Timestamp deactivation_date = 1 [json_name="DeactivationDate"];
+    string health_state = 2 [json_name="HealthState"];
+    string health_state_reason = 3 [json_name="HealthStateReason"];
+    uint32 index = 4 [json_name="Index"];
+    string oid = 5 [json_name="OID"];
+    string state = 6 [json_name="State"];
+    string uuid = 7 [json_name="UUID"];
+}
+
+// Represents the client IO Controller object of an SFA. This class only functions on embedded SFA models.
+message ClientIOC {
+    uint32 controller_index = 1 [json_name="ControllerIndex"];
+    string description = 2 [json_name="Description"];
+    string ioc_firmware_version = 3 [json_name="IOCFirmwareVersion"];
+    string ioc_hardware_revision = 4 [json_name="IOCHardwareRevision"];
+    string ioc_part_number = 5 [json_name="IOCPartNumber"];
+    uint32 ioc_port_count = 6 [json_name="IOCPortCount"];
+    repeated uint32 ioc_port_mt_us = 7 [json_name="IOCPortMTUs"];
+    repeated uint32 ioc_port_numbers = 8 [json_name="IOCPortNumbers"];
+    repeated string ioc_port_types = 9 [json_name="IOCPortTypes"];
+    string ioc_slot_number = 10 [json_name="IOCSlotNumber"];
+    string ioc_type = 11 [json_name="IOCType"];
+    uint32 index = 12 [json_name="Index"];
+    uint32 logical_parent_processor_index = 13 [json_name="LogicalParentProcessorIndex"];
+    string oid = 14 [json_name="OID"];
+    uint32 pci_bus_number = 15 [json_name="PCIBusNumber"];
+    uint32 pci_device_number = 16 [json_name="PCIDeviceNumber"];
+    uint32 pci_function_number = 17 [json_name="PCIFunctionNumber"];
+    uint32 pci_product_id = 18 [json_name="PCIProductID"];
+    uint32 pci_vendor_id = 19 [json_name="PCIVendorID"];
+    string physical_parent_processor = 20 [json_name="PhysicalParentProcessor"];
+    uint32 virtual_function_count = 21 [json_name="VirtualFunctionCount"];
+}
+
+// Represents a configuration file (aka ISO) object for the SFA embedded platform's Virtual Machine (stack) management.  The configuration files provides a location from which a guest OS can be installed onto a running SFAVirtualMachine object.
+message ConfigurationFile {
+    uint32 controller_index = 1 [json_name="ControllerIndex"];
+    string file_name = 2 [json_name="FileName"];
+    uint32 index = 3 [json_name="Index"];
+    string oid = 4 [json_name="OID"];
+    uint32 size = 5 [json_name="Size"];
+    bool used = 6 [json_name="Used"];
+}
+
+// A class that represents a SAS Connector object in a DISK type enclosure. This class has been deprecated in favor of SFASASConnector.
+message Connector {
+    string cable_part_number = 1 [json_name="CablePartNumber"];
+    string cable_revision = 2 [json_name="CableRevision"];
+    string cable_serial_number = 3 [json_name="CableSerialNumber"];
+    string cable_vendor_name = 4 [json_name="CableVendorName"];
+    string child_health_state = 5 [json_name="ChildHealthState"];
+    string element_name = 6 [json_name="ElementName"];
+    uint32 enclosure_index = 7 [json_name="EnclosureIndex"];
+    string enclosure_oid = 8 [json_name="EnclosureOID"];
+    uint32 enclosure_position = 9 [json_name="EnclosurePosition"];
+    bool fault = 10 [json_name="Fault"];
+    string health_state = 11 [json_name="HealthState"];
+    string health_state_reason = 12 [json_name="HealthStateReason"];
+    bool identify_indicator = 13 [json_name="IdentifyIndicator"];
+    uint32 index = 14 [json_name="Index"];
+    string name = 15 [json_name="Name"];
+    string oid = 16 [json_name="OID"];
+    uint32 position = 17 [json_name="Position"];
+    string ses_status = 18 [json_name="SESStatus"];
+    string type = 19 [json_name="Type"];
+}
+
+// Represents the SFA controller.  This object contains information about the state of one of the physical controllers that makes up an SFA subsystem.
+message Controller {
+    string child_health_state = 1 [json_name="ChildHealthState"];
+    bool crash_dump_enabled = 2 [json_name="CrashDumpEnabled"];
+    string description = 3 [json_name="Description"];
+    uint32 dirty_system_cache = 4 [json_name="DirtySystemCache"];
+    uint32 dirty_system_cache_percent = 5 [json_name="DirtySystemCachePercent"];
+    uint32 dirty_write_cache = 6 [json_name="DirtyWriteCache"];
+    uint32 dirty_write_cache_total = 7 [json_name="DirtyWriteCacheTotal"];
+    uint32 enclosure_index = 8 [json_name="EnclosureIndex"];
+    string enclosure_oid = 9 [json_name="EnclosureOID"];
+    string fw_build_host = 10 [json_name="FWBuildHost"];
+    string fw_build_user = 11 [json_name="FWBuildUser"];
+    google.protobuf.Timestamp fw_date_and_time = 12 [json_name="FWDateAndTime"];
+    bool fw_debug = 13 [json_name="FWDebug"];
+    bool fw_private_build = 14 [json_name="FWPrivateBuild"];
+    string fw_release = 15 [json_name="FWRelease"];
+    uint32 fw_source_version = 16 [json_name="FWSourceVersion"];
+    string fw_target_cpu = 17 [json_name="FWTargetCPU"];
+    string hw_version = 18 [json_name="HWVersion"];
+    string health_state = 19 [json_name="HealthState"];
+    string health_state_reason = 20 [json_name="HealthStateReason"];
+    uint32 icc_protocol_version = 21 [json_name="ICCProtocolVersion"];
+    repeated string icc_services_enabled = 22 [json_name="ICCServicesEnabled"];
+    string icc_state = 23 [json_name="ICCState"];
+    string id = 24 [json_name="ID"];
+    uint32 index = 25 [json_name="Index"];
+    uint32 last_event_sequence_id = 26 [json_name="LastEventSequenceID"];
+    bool local = 27 [json_name="Local"];
+    bool log_disk_enabled = 28 [json_name="LogDiskEnabled"];
+    uint32 long_term_shutdown_eta_local = 29 [json_name="LongTermShutdownETALocal"];
+    uint32 long_term_shutdown_eta_remote = 30 [json_name="LongTermShutdownETARemote"];
+    repeated google.protobuf.Timestamp mir_configuration_creation_times = 31 [json_name="MIRConfigurationCreationTimes"];
+    string mir_description = 32 [json_name="MIRDescription"];
+    string mir_model_local = 33 [json_name="MIRModelLocal"];
+    string mir_model_other = 34 [json_name="MIRModelOther"];
+    string mir_reason = 35 [json_name="MIRReason"];
+    string manufacturer = 36 [json_name="Manufacturer"];
+    uint64 max_qos_id = 37 [json_name="MaxQOSID"];
+    uint32 memory_size = 38 [json_name="MemorySize"];
+    string ntp_sync_address = 39 [json_name="NTPSyncAddress"];
+    string name = 40 [json_name="Name"];
+    uint32 num_rps = 41 [json_name="NumRPs"];
+    uint32 num_sub_rps = 42 [json_name="NumSubRPs"];
+    string oid = 43 [json_name="OID"];
+    string part_number = 44 [json_name="PartNumber"];
+    bool primary = 45 [json_name="Primary"];
+    uint32 rpcount = 46 [json_name="RPCount"];
+    bool restart_pending = 47 [json_name="RestartPending"];
+    string serial_number = 48 [json_name="SerialNumber"];
+    string shutdown_status = 49 [json_name="ShutdownStatus"];
+    bool signed_kit_check_enabled = 50 [json_name="SignedKitCheckEnabled"];
+    google.protobuf.Timestamp start_time = 51 [json_name="StartTime"];
+    string state = 52 [json_name="State"];
+    uint32 system_disk_members_active = 53 [json_name="SystemDiskMembersActive"];
+    uint32 system_disk_members_failed = 54 [json_name="SystemDiskMembersFailed"];
+    uint32 system_disk_members_working = 55 [json_name="SystemDiskMembersWorking"];
+    string system_disk_mirror_state = 56 [json_name="SystemDiskMirrorState"];
+    uint32 total_system_cache = 57 [json_name="TotalSystemCache"];
+    string universal_lan_address = 58 [json_name="UniversalLANAddress"];
+    uint64 uptime = 59 [json_name="Uptime"];
+    string vendor_equipment_type = 60 [json_name="VendorEquipmentType"];
+    string write_back_caching = 61 [json_name="WriteBackCaching"];
+}
+
+// Represents an SFA discovered initiator object.
+message DiscoveredInitiator {
+    string channel_mask = 1 [json_name="ChannelMask"];
+    uint32 controller_index = 2 [json_name="ControllerIndex"];
+    bool end_to_end_data_integrity_supported = 3 [json_name="EndToEndDataIntegritySupported"];
+    string ip_address = 4 [json_name="IPAddress"];
+    uint64 isid = 5 [json_name="ISID"];
+    uint32 index = 6 [json_name="Index"];
+    repeated uint32 logged_in_channel_connections = 7 [json_name="LoggedInChannelConnections"];
+    repeated string logged_in_channel_labels = 8 [json_name="LoggedInChannelLabels"];
+    repeated uint32 logged_in_channels = 9 [json_name="LoggedInChannels"];
+    string node_identifier = 10 [json_name="NodeIdentifier"];
+    string oid = 11 [json_name="OID"];
+    uint32 port_id = 12 [json_name="PortID"];
+    string port_identifier = 13 [json_name="PortIdentifier"];
+    string type = 14 [json_name="Type"];
+    string iscsi_name = 15 [json_name="iSCSIName"];
+}
+
+// Represents the SFA Disk Channel.
+message DiskChannel {
+    repeated uint32 available_speeds = 1 [json_name="AvailableSpeeds"];
+    string child_health_state = 2 [json_name="ChildHealthState"];
+    uint32 controller_index = 3 [json_name="ControllerIndex"];
+    repeated uint32 controller_rpindices = 4 [json_name="ControllerRPIndices"];
+    repeated uint32 current_position = 5 [json_name="CurrentPosition"];
+    uint32 current_speed = 6 [json_name="CurrentSpeed"];
+    uint32 current_width = 7 [json_name="CurrentWidth"];
+    string device_status = 8 [json_name="DeviceStatus"];
+    repeated uint32 expected_position = 9 [json_name="ExpectedPosition"];
+    uint32 expected_width = 10 [json_name="ExpectedWidth"];
+    string health_state = 11 [json_name="HealthState"];
+    string health_state_reason = 12 [json_name="HealthStateReason"];
+    uint32 ioc_index = 13 [json_name="IOCIndex"];
+    string ioc_oid = 14 [json_name="IOCOID"];
+    uint32 ioc_port = 15 [json_name="IOCPort"];
+    string identifier = 16 [json_name="Identifier"];
+    uint32 index = 17 [json_name="Index"];
+    string link_state = 18 [json_name="LinkState"];
+    string oid = 19 [json_name="OID"];
+    repeated uint32 phys = 20 [json_name="PHYs"];
+    string port_location = 21 [json_name="PortLocation"];
+    uint32 rpindex_on_controller = 22 [json_name="RPIndexOnController"];
+    repeated uint32 sas_level = 23 [json_name="SASLevel"];
+}
+
+// Represents a physical disk drive on an SFAStorageSystem.
+message DiskDrive {
+    repeated uint32 available_channels = 1 [json_name="AvailableChannels"];
+    string block_size = 2 [json_name="BlockSize"];
+    string child_health_state = 3 [json_name="ChildHealthState"];
+    uint32 current_error_count = 4 [json_name="CurrentErrorCount"];
+    float current_error_metric = 5 [json_name="CurrentErrorMetric"];
+    string device_type = 6 [json_name="DeviceType"];
+    string disk_health_state = 7 [json_name="DiskHealthState"];
+    uint32 disk_slot_number = 8 [json_name="DiskSlotNumber"];
+    repeated string enabled_path_ids = 9 [json_name="EnabledPathIDs"];
+    repeated string enabled_path_rps = 10 [json_name="EnabledPathRPs"];
+    uint32 enclosure_index = 11 [json_name="EnclosureIndex"];
+    uint32 enclosure_position = 12 [json_name="EnclosurePosition"];
+    string encryption_state = 13 [json_name="EncryptionState"];
+    bool encryption_supported = 14 [json_name="EncryptionSupported"];
+    uint32 endurance = 15 [json_name="Endurance"];
+    repeated uint32 error_counts = 16 [json_name="ErrorCounts"];
+    repeated float error_impacts = 17 [json_name="ErrorImpacts"];
+    repeated string error_information = 18 [json_name="ErrorInformation"];
+    repeated float error_metrics = 19 [json_name="ErrorMetrics"];
+    repeated string error_operations = 20 [json_name="ErrorOperations"];
+    repeated string error_rps = 21 [json_name="ErrorRPs"];
+    repeated string error_sources = 22 [json_name="ErrorSources"];
+    repeated string error_statuses = 23 [json_name="ErrorStatuses"];
+    repeated google.protobuf.Timestamp error_times = 24 [json_name="ErrorTimes"];
+    bool failed = 25 [json_name="Failed"];
+    bool format_in_progress = 26 [json_name="FormatInProgress"];
+    uint32 format_percent_complete = 27 [json_name="FormatPercentComplete"];
+    uint64 formatted_capacity = 28 [json_name="FormattedCapacity"];
+    uint64 fractional_rebuild_size = 29 [json_name="FractionalRebuildSize"];
+    string health_state = 30 [json_name="HealthState"];
+    string health_state_reason = 31 [json_name="HealthStateReason"];
+    repeated string ioc_index_port_pairs = 32 [json_name="IOCIndexPortPairs"];
+    uint32 index = 33 [json_name="Index"];
+    uint32 indirection_unit = 34 [json_name="IndirectionUnit"];
+    string interposer_boot_loader_version = 35 [json_name="InterposerBootLoaderVersion"];
+    string interposer_config_data_version = 36 [json_name="InterposerConfigDataVersion"];
+    string interposer_fw_revision = 37 [json_name="InterposerFWRevision"];
+    string interposer_hw_revision = 38 [json_name="InterposerHWRevision"];
+    string interposer_part_number = 39 [json_name="InterposerPartNumber"];
+    string interposer_product_id = 40 [json_name="InterposerProductID"];
+    string interposer_product_revision = 41 [json_name="InterposerProductRevision"];
+    string interposer_serial_number = 42 [json_name="InterposerSerialNumber"];
+    string interposer_type = 43 [json_name="InterposerType"];
+    string interposer_vendor_id = 44 [json_name="InterposerVendorID"];
+    bool medium_corrupt = 45 [json_name="MediumCorrupt"];
+    uint32 member_index = 46 [json_name="MemberIndex"];
+    string member_state = 47 [json_name="MemberState"];
+    string member_type = 48 [json_name="MemberType"];
+    string oid = 49 [json_name="OID"];
+    repeated string path_information = 50 [json_name="PathInformation"];
+    uint32 pool_index = 51 [json_name="PoolIndex"];
+    bool power_cycle_supported = 52 [json_name="PowerCycleSupported"];
+    string product_id = 53 [json_name="ProductID"];
+    string product_revision = 54 [json_name="ProductRevision"];
+    bool quorum = 55 [json_name="Quorum"];
+    uint64 raw_capacity = 56 [json_name="RawCapacity"];
+    repeated string reduced_path_rps = 57 [json_name="ReducedPathRPs"];
+    string rotation_speed = 58 [json_name="RotationSpeed"];
+    repeated string smart_attributes = 59 [json_name="SMARTAttributes"];
+    repeated string smart_statuses = 60 [json_name="SMARTStatuses"];
+    repeated uint32 smart_thresholds = 61 [json_name="SMARTThresholds"];
+    repeated uint32 smart_values = 62 [json_name="SMARTValues"];
+    string serial_number = 63 [json_name="SerialNumber"];
+    bool spare = 64 [json_name="Spare"];
+    string state = 65 [json_name="State"];
+    bool t10_pi_enabled = 66 [json_name="T10_PIEnabled"];
+    bool t10_pi_supported = 67 [json_name="T10_PISupported"];
+    string t10_pi_type = 68 [json_name="T10_PIType"];
+    repeated string t10_pi_types_supported = 69 [json_name="T10_PITypesSupported"];
+    bool unmap_readback_zeroes = 70 [json_name="UnmapReadbackZeroes"];
+    bool unmap_supported = 71 [json_name="UnmapSupported"];
+    bool updating = 72 [json_name="Updating"];
+    string vendor_id = 73 [json_name="VendorID"];
+    string wwn = 74 [json_name="WWN"];
+    uint32 zone_index = 75 [json_name="ZoneIndex"];
+}
+
+// Represents the PHY errors of a physical disk drive in an SFAStorageSystem.
+message DiskDrivePHYErrors {
+    string device_type = 1 [json_name="DeviceType"];
+    uint32 disk_slot_number = 2 [json_name="DiskSlotNumber"];
+    uint32 enclosure_index = 3 [json_name="EnclosureIndex"];
+    uint32 enclosure_position = 4 [json_name="EnclosurePosition"];
+    uint32 index = 5 [json_name="Index"];
+    repeated uint32 invalid_dword_counts = 6 [json_name="InvalidDwordCounts"];
+    repeated string link_rates = 7 [json_name="LinkRates"];
+    repeated uint32 loss_of_dword_sync_counts = 8 [json_name="LossOfDwordSyncCounts"];
+    repeated uint32 phy_reset_problem_counts = 9 [json_name="PHYResetProblemCounts"];
+    uint32 port_count = 10 [json_name="PortCount"];
+    string rotation_speed = 11 [json_name="RotationSpeed"];
+    repeated uint32 running_disparity_error_counts = 12 [json_name="RunningDisparityErrorCounts"];
+    repeated bool valid_ports = 13 [json_name="ValidPorts"];
+    string wwn = 14 [json_name="WWN"];
+}
+
+// Represents the statistics, also known as counters, of an SFADiskDrive object.
+message DiskDriveStatistics {
+    double average_read_io_latency = 1 [json_name="AverageReadIOLatency"];
+    double average_write_io_latency = 2 [json_name="AverageWriteIOLatency"];
+    string element_name = 3 [json_name="ElementName"];
+    string element_type = 4 [json_name="ElementType"];
+    uint32 filter_mask = 5 [json_name="FilterMask"];
+    repeated uint64 forwarded_ios = 6 [json_name="ForwardedIOs"];
+    repeated string io_latency_index_labels = 7 [json_name="IOLatencyIndexLabels"];
+    repeated string io_size_index_labels = 8 [json_name="IOSizeIndexLabels"];
+    uint32 index = 9 [json_name="Index"];
+    repeated uint64 kbytes_forwarded = 10 [json_name="KBytesForwarded"];
+    repeated uint64 kbytes_read = 11 [json_name="KBytesRead"];
+    repeated uint64 kbytes_transferred = 12 [json_name="KBytesTransferred"];
+    repeated uint64 kbytes_unmapped = 13 [json_name="KBytesUnmapped"];
+    repeated uint64 kbytes_written = 14 [json_name="KBytesWritten"];
+    string oid = 15 [json_name="OID"];
+    repeated uint64 read_io_latency_buckets = 16 [json_name="ReadIOLatencyBuckets"];
+    repeated uint64 read_io_size_buckets = 17 [json_name="ReadIOSizeBuckets"];
+    repeated uint64 read_ios = 18 [json_name="ReadIOs"];
+    google.protobuf.Timestamp start_statistic_time = 19 [json_name="StartStatisticTime"];
+    google.protobuf.Timestamp statistic_time = 20 [json_name="StatisticTime"];
+    int32 total_io_latency_modifier = 21 [json_name="TotalIOLatencyModifier"];
+    repeated uint64 total_ios = 22 [json_name="TotalIOs"];
+    uint64 total_read_io_latency = 23 [json_name="TotalReadIOLatency"];
+    uint64 total_write_io_latency = 24 [json_name="TotalWriteIOLatency"];
+    uint32 unknown_statistic_type = 25 [json_name="UnknownStatisticType"];
+    repeated uint64 unmap_ios = 26 [json_name="UnmapIOs"];
+    repeated uint64 write_io_latency_buckets = 27 [json_name="WriteIOLatencyBuckets"];
+    repeated uint64 write_io_size_buckets = 28 [json_name="WriteIOSizeBuckets"];
+    repeated uint64 write_ios = 29 [json_name="WriteIOs"];
+}
+
+// This class supplies the RATES related statistics data for the SFADiskDrive objects. The data returned is identical to that returned by the SFADiskDriveStatistics class with the FilterMask set to RATES. However, calls to this class may have a lower latency due to reduced overhead.
+message DiskDriveStatisticsRates {
+    string element_name = 1 [json_name="ElementName"];
+    repeated uint64 forwarded_ios = 2 [json_name="ForwardedIOs"];
+    uint32 index = 3 [json_name="Index"];
+    repeated uint64 kbytes_forwarded = 4 [json_name="KBytesForwarded"];
+    repeated uint64 kbytes_read = 5 [json_name="KBytesRead"];
+    repeated uint64 kbytes_transferred = 6 [json_name="KBytesTransferred"];
+    repeated uint64 kbytes_unmapped = 7 [json_name="KBytesUnmapped"];
+    repeated uint64 kbytes_written = 8 [json_name="KBytesWritten"];
+    repeated uint64 read_ios = 9 [json_name="ReadIOs"];
+    google.protobuf.Timestamp statistic_time = 10 [json_name="StatisticTime"];
+    repeated uint64 total_ios = 11 [json_name="TotalIOs"];
+    repeated uint64 unmap_ios = 12 [json_name="UnmapIOs"];
+    repeated uint64 write_ios = 13 [json_name="WriteIOs"];
+}
+
+// A class that represents information about the progress of updating  the firmware on a disk drive.
+message DiskDriveUpdateProgress {
+    uint32 bytes_in_image = 1 [json_name="BytesInImage"];
+    uint32 disk_enclosure_index = 2 [json_name="DiskEnclosureIndex"];
+    uint32 disk_enclosure_position = 3 [json_name="DiskEnclosurePosition"];
+    string disk_health_state = 4 [json_name="DiskHealthState"];
+    string disk_member_state = 5 [json_name="DiskMemberState"];
+    string disk_rotation_speed = 6 [json_name="DiskRotationSpeed"];
+    string disk_serial_number = 7 [json_name="DiskSerialNumber"];
+    uint32 disk_slot_number = 8 [json_name="DiskSlotNumber"];
+    string disk_state = 9 [json_name="DiskState"];
+    string disk_type = 10 [json_name="DiskType"];
+    string file_name = 11 [json_name="FileName"];
+    uint32 image_being_downloaded = 12 [json_name="ImageBeingDownloaded"];
+    uint32 image_bytes_downloaded = 13 [json_name="ImageBytesDownloaded"];
+    uint32 images_in_download = 14 [json_name="ImagesInDownload"];
+    bool in_progress = 15 [json_name="InProgress"];
+    uint32 index = 16 [json_name="Index"];
+    string manufacturer = 17 [json_name="Manufacturer"];
+    string model = 18 [json_name="Model"];
+    string oid = 19 [json_name="OID"];
+    bool offline = 20 [json_name="Offline"];
+    string package_version = 21 [json_name="PackageVersion"];
+    uint32 percent_complete = 22 [json_name="PercentComplete"];
+    string product_id = 23 [json_name="ProductID"];
+    string release_date = 24 [json_name="ReleaseDate"];
+    string revision = 25 [json_name="Revision"];
+    string state = 26 [json_name="State"];
+    string status = 27 [json_name="Status"];
+    string status_description = 28 [json_name="StatusDescription"];
+    uint32 total_bytes_downloaded = 29 [json_name="TotalBytesDownloaded"];
+    uint32 total_bytes_in_download = 30 [json_name="TotalBytesInDownload"];
+    bool updates_in_progress = 31 [json_name="UpdatesInProgress"];
+    string vendor_id = 32 [json_name="VendorID"];
+    string wwn = 33 [json_name="WWN"];
+}
+
+// A class that represents a disk slot in a disk enclosure on the SFA platform.
+message DiskSlot {
+    string child_health_state = 1 [json_name="ChildHealthState"];
+    uint32 disk_drive_index = 2 [json_name="DiskDriveIndex"];
+    string disk_drive_oid = 3 [json_name="DiskDriveOID"];
+    string disk_drive_wwn = 4 [json_name="DiskDriveWWN"];
+    string element_name = 5 [json_name="ElementName"];
+    uint32 enclosure_index = 6 [json_name="EnclosureIndex"];
+    string enclosure_oid = 7 [json_name="EnclosureOID"];
+    uint32 enclosure_position = 8 [json_name="EnclosurePosition"];
+    bool fault = 9 [json_name="Fault"];
+    string health_state = 10 [json_name="HealthState"];
+    string health_state_reason = 11 [json_name="HealthStateReason"];
+    uint32 index = 12 [json_name="Index"];
+    bool locate_on = 13 [json_name="LocateOn"];
+    uint32 number = 14 [json_name="Number"];
+    string oid = 15 [json_name="OID"];
+    bool ok = 16 [json_name="OK"];
+    uint32 position = 17 [json_name="Position"];
+    bool powered = 18 [json_name="Powered"];
+    bool powered_on = 19 [json_name="PoweredOn"];
+    bool predict_failure = 20 [json_name="PredictFailure"];
+    bool present = 21 [json_name="Present"];
+    string ses_status = 22 [json_name="SESStatus"];
+}
+
+// A class that represents a DNS configuration details of an SFA storage system.
+message DNSAgent {
+    repeated string domain_names = 1 [json_name="DomainNames"];
+    bool enabled = 2 [json_name="Enabled"];
+    repeated string ip_addresses = 3 [json_name="IPAddresses"];
+    uint32 index = 4 [json_name="Index"];
+    string security_extensions = 5 [json_name="SecurityExtensions"];
+}
+
+// A class that represents the settings and configuration details of the email agent on each controller of an SFA Storage System.
+message EmailAgent {
+    bool append_event_summary = 1 [json_name="AppendEventSummary"];
+    string backup_ip_address = 2 [json_name="BackupIPAddress"];
+    uint32 backup_ip_port = 3 [json_name="BackupIPPort"];
+    bool enabled = 4 [json_name="Enabled"];
+    string from_address = 5 [json_name="FromAddress"];
+    string ip_address = 6 [json_name="IPAddress"];
+    uint32 ip_port = 7 [json_name="IPPort"];
+    uint32 index = 8 [json_name="Index"];
+    string severity_filter = 9 [json_name="SeverityFilter"];
+    string subject = 10 [json_name="Subject"];
+    string to_address = 11 [json_name="ToAddress"];
+}
+
+// A class that represents an SFA enclosure object. An enclosure object is an abstraction of a physical container of other managed components, such as power supplies, fans, sensors, disks, etc.  Healthy SFA products will always present at least 3 enclosure objects, two representing the controller modules and one representing a disk enclosure module.
+message Enclosure {
+    string baseboard_cplda_revision = 1 [json_name="BaseboardCPLDARevision"];
+    string baseboard_cpldb_revision = 2 [json_name="BaseboardCPLDBRevision"];
+    string baseboard_part_number = 3 [json_name="BaseboardPartNumber"];
+    string baseboard_serial_number = 4 [json_name="BaseboardSerialNumber"];
+    string baseboard_version = 5 [json_name="BaseboardVersion"];
+    string bios_version = 6 [json_name="BiosVersion"];
+    string bmc_config = 7 [json_name="BmcConfig"];
+    string bmc_ip_address = 8 [json_name="BmcIPAddress"];
+    string bmc_ip_address_alt = 9 [json_name="BmcIPAddressAlt"];
+    string bmc_version = 10 [json_name="BmcVersion"];
+    string canister_location = 11 [json_name="CanisterLocation"];
+    string chassis_part_number = 12 [json_name="ChassisPartNumber"];
+    string chassis_serial_number = 13 [json_name="ChassisSerialNumber"];
+    string child_health_state = 14 [json_name="ChildHealthState"];
+    string communication_status = 15 [json_name="CommunicationStatus"];
+    string configuration_version = 16 [json_name="ConfigurationVersion"];
+    uint32 cover_open = 17 [json_name="CoverOpen"];
+    string display_firmware_version = 18 [json_name="DisplayFirmwareVersion"];
+    string display_hardware_version = 19 [json_name="DisplayHardwareVersion"];
+    string display_part_number = 20 [json_name="DisplayPartNumber"];
+    string display_ses_status = 21 [json_name="DisplaySESStatus"];
+    string display_serial_number = 22 [json_name="DisplaySerialNumber"];
+    string element_name = 23 [json_name="ElementName"];
+    bool fault = 24 [json_name="Fault"];
+    string firmware_version = 25 [json_name="FirmwareVersion"];
+    string fpga_version = 26 [json_name="FpgaVersion"];
+    string health_state = 27 [json_name="HealthState"];
+    string health_state_reason = 28 [json_name="HealthStateReason"];
+    string i_el_m = 29 [json_name="IELM"];
+    uint32 index = 30 [json_name="Index"];
+    bool locate_on = 31 [json_name="LocateOn"];
+    string location = 32 [json_name="Location"];
+    string logical_identifier = 33 [json_name="LogicalIdentifier"];
+    string logical_index = 34 [json_name="LogicalIndex"];
+    bool low_power_mode = 35 [json_name="LowPowerMode"];
+    string manufacture_date = 36 [json_name="ManufactureDate"];
+    string manufacturer = 37 [json_name="Manufacturer"];
+    string midplane_part_number = 38 [json_name="MidplanePartNumber"];
+    string midplane_serial_number = 39 [json_name="MidplaneSerialNumber"];
+    string model = 40 [json_name="Model"];
+    string oid = 41 [json_name="OID"];
+    bool ok = 42 [json_name="OK"];
+    string p_so_cversion = 43 [json_name="PSoCVersion"];
+    string part_number = 44 [json_name="PartNumber"];
+    repeated string path_all_info = 45 [json_name="PathAllInfo"];
+    repeated uint32 path_controller_indices = 46 [json_name="PathControllerIndices"];
+    repeated uint32 path_disk_channel_indices = 47 [json_name="PathDiskChannelIndices"];
+    repeated uint32 path_ioc_handles = 48 [json_name="PathIOCHandles"];
+    repeated uint32 path_ioc_ports = 49 [json_name="PathIOCPorts"];
+    repeated uint32 path_indices = 50 [json_name="PathIndices"];
+    repeated uint32 path_rpindices = 51 [json_name="PathRPIndices"];
+    repeated string path_rps = 52 [json_name="PathRPs"];
+    repeated uint32 path_zones = 53 [json_name="PathZones"];
+    uint32 position = 54 [json_name="Position"];
+    string position_status = 55 [json_name="PositionStatus"];
+    bool powered_on = 56 [json_name="PoweredOn"];
+    bool predict_failure = 57 [json_name="PredictFailure"];
+    bool redundant_psu_design = 58 [json_name="RedundantPSUDesign"];
+    string revision = 59 [json_name="Revision"];
+    uint32 riser_count = 60 [json_name="RiserCount"];
+    repeated string riser_dates = 61 [json_name="RiserDates"];
+    repeated string riser_part_numbers = 62 [json_name="RiserPartNumbers"];
+    repeated string riser_serial_numbers = 63 [json_name="RiserSerialNumbers"];
+    repeated string riser_versions = 64 [json_name="RiserVersions"];
+    string scp_firmware_versions = 65 [json_name="SCPFirmwareVersions"];
+    string ses_pages_read = 66 [json_name="SESPagesRead"];
+    string ses_status = 67 [json_name="SESStatus"];
+    string serial_number = 68 [json_name="SerialNumber"];
+    string type = 69 [json_name="Type"];
+    string version = 70 [json_name="Version"];
+    uint32 zones = 71 [json_name="Zones"];
+    uint32 zoning_configuration = 72 [json_name="ZoningConfiguration"];
+}
+
+// A class that specifies the disk enclosure configurations supported on a particular storage system.
+message EnclosureConfigurations {
+    string configuration_description = 1 [json_name="ConfigurationDescription"];
+    string configuration_status = 2 [json_name="ConfigurationStatus"];
+    string element_name = 3 [json_name="ElementName"];
+    uint32 index = 4 [json_name="Index"];
+    uint32 missing_enclosures = 5 [json_name="MissingEnclosures"];
+    uint32 selected_configuration = 6 [json_name="SelectedConfiguration"];
+    string selection_mechanism = 7 [json_name="SelectionMechanism"];
+    repeated string supported_configurations = 8 [json_name="SupportedConfigurations"];
+    uint32 total_configurations = 9 [json_name="TotalConfigurations"];
+}
+
+// A class that represents information about the progress of any firmware updates on a DDN_SFAEnclosure of type 'DISK'.
+message EnclosureUpdateProgress {
+    uint32 bytes_in_image = 1 [json_name="BytesInImage"];
+    string file_name = 2 [json_name="FileName"];
+    string iom = 3 [json_name="IOM"];
+    uint32 image_being_downloaded = 4 [json_name="ImageBeingDownloaded"];
+    uint32 image_bytes_downloaded = 5 [json_name="ImageBytesDownloaded"];
+    uint32 images_in_download = 6 [json_name="ImagesInDownload"];
+    bool in_progress = 7 [json_name="InProgress"];
+    uint32 index = 8 [json_name="Index"];
+    string logical_identifier = 9 [json_name="LogicalIdentifier"];
+    string manufacturer = 10 [json_name="Manufacturer"];
+    string model = 11 [json_name="Model"];
+    string oid = 12 [json_name="OID"];
+    bool online_update_in_progress = 13 [json_name="OnlineUpdateInProgress"];
+    string online_update_last_activity = 14 [json_name="OnlineUpdateLastActivity"];
+    string online_update_state = 15 [json_name="OnlineUpdateState"];
+    uint32 online_update_status = 16 [json_name="OnlineUpdateStatus"];
+    string online_update_status_description = 17 [json_name="OnlineUpdateStatusDescription"];
+    string package_version = 18 [json_name="PackageVersion"];
+    uint32 percent_complete = 19 [json_name="PercentComplete"];
+    uint32 position = 20 [json_name="Position"];
+    string product_id = 21 [json_name="ProductID"];
+    string release_date = 22 [json_name="ReleaseDate"];
+    string revision = 23 [json_name="Revision"];
+    string state = 24 [json_name="State"];
+    string status = 25 [json_name="Status"];
+    string status_description = 26 [json_name="StatusDescription"];
+    uint32 total_bytes_downloaded = 27 [json_name="TotalBytesDownloaded"];
+    uint32 total_bytes_in_download = 28 [json_name="TotalBytesInDownload"];
+    string vendor_id = 29 [json_name="VendorID"];
+}
+
+// A class that represents an expander in an disk enclosure on the SFA platform.
+message Expander {
+    string child_health_state = 1 [json_name="ChildHealthState"];
+    string element_name = 2 [json_name="ElementName"];
+    uint32 enclosure_index = 3 [json_name="EnclosureIndex"];
+    string enclosure_oid = 4 [json_name="EnclosureOID"];
+    uint32 enclosure_position = 5 [json_name="EnclosurePosition"];
+    bool fault = 6 [json_name="Fault"];
+    string firmware_version = 7 [json_name="FirmwareVersion"];
+    string fpga_version = 8 [json_name="FpgaVersion"];
+    string hardware_revision = 9 [json_name="HardwareRevision"];
+    string health_state = 10 [json_name="HealthState"];
+    string health_state_reason = 11 [json_name="HealthStateReason"];
+    uint32 index = 12 [json_name="Index"];
+    string init_string_version = 13 [json_name="InitStringVersion"];
+    bool locate_on = 14 [json_name="LocateOn"];
+    string location = 15 [json_name="Location"];
+    string oid = 16 [json_name="OID"];
+    bool ok = 17 [json_name="OK"];
+    string part_number = 18 [json_name="PartNumber"];
+    uint32 position = 19 [json_name="Position"];
+    bool predict_failure = 20 [json_name="PredictFailure"];
+    bool present = 21 [json_name="Present"];
+    string ses_status = 22 [json_name="SESStatus"];
+    string serial_number = 23 [json_name="SerialNumber"];
+}
+
+// A class that represents a fan in in either a disk enclosure or controller on the SFA platform.
+message Fan {
+    string child_health_state = 1 [json_name="ChildHealthState"];
+    uint32 current_speed = 2 [json_name="CurrentSpeed"];
+    uint32 desired_speed = 3 [json_name="DesiredSpeed"];
+    string element_name = 4 [json_name="ElementName"];
+    uint32 enclosure_index = 5 [json_name="EnclosureIndex"];
+    string enclosure_oid = 6 [json_name="EnclosureOID"];
+    uint32 enclosure_position = 7 [json_name="EnclosurePosition"];
+    bool fault = 8 [json_name="Fault"];
+    string firmware_version = 9 [json_name="FirmwareVersion"];
+    string fpga_version = 10 [json_name="FpgaVersion"];
+    string hardware_revision = 11 [json_name="HardwareRevision"];
+    string health_state = 12 [json_name="HealthState"];
+    string health_state_reason = 13 [json_name="HealthStateReason"];
+    uint32 index = 14 [json_name="Index"];
+    string init_string_version = 15 [json_name="InitStringVersion"];
+    bool locate_on = 16 [json_name="LocateOn"];
+    string location = 17 [json_name="Location"];
+    string oid = 18 [json_name="OID"];
+    bool ok = 19 [json_name="OK"];
+    string part_number = 20 [json_name="PartNumber"];
+    uint32 position = 21 [json_name="Position"];
+    bool powered_on = 22 [json_name="PoweredOn"];
+    bool predict_failure = 23 [json_name="PredictFailure"];
+    bool present = 24 [json_name="Present"];
+    string ses_status = 25 [json_name="SESStatus"];
+    string serial_number = 26 [json_name="SerialNumber"];
+}
+
+// Represents the SFA ASM Host object.
+message Host {
+    string characteristics = 1 [json_name="Characteristics"];
+    string child_health_state = 2 [json_name="ChildHealthState"];
+    uint32 discovered_auth_index = 3 [json_name="DiscoveredAuthIndex"];
+    string discovered_auth_name = 4 [json_name="DiscoveredAuthName"];
+    string health_state = 5 [json_name="HealthState"];
+    string health_state_reason = 6 [json_name="HealthStateReason"];
+    uint32 index = 7 [json_name="Index"];
+    uint32 login_auth_index = 8 [json_name="LoginAuthIndex"];
+    string login_auth_name = 9 [json_name="LoginAuthName"];
+    string name = 10 [json_name="Name"];
+    string oid = 11 [json_name="OID"];
+    string os_type = 12 [json_name="OSType"];
+    uint32 stack_index = 13 [json_name="StackIndex"];
+    uint32 virtual_machine_index = 14 [json_name="VirtualMachineIndex"];
+}
+
+// Represents the SFA ASM Host Channel object.
+message HostChannel {
+    uint32 available_speeds = 1 [json_name="AvailableSpeeds"];
+    uint32 controller_index = 2 [json_name="ControllerIndex"];
+    string device_status = 3 [json_name="DeviceStatus"];
+    string fw_version = 4 [json_name="FWVersion"];
+    uint32 hw_version = 5 [json_name="HWVersion"];
+    string ip_address = 6 [json_name="IPAddress"];
+    string ip_family = 7 [json_name="IPFamily"];
+    uint32 ip_mask = 8 [json_name="IPMask"];
+    uint32 index = 9 [json_name="Index"];
+    string link_state = 10 [json_name="LinkState"];
+    string mode = 11 [json_name="Mode"];
+    string node_identifier = 12 [json_name="NodeIdentifier"];
+    string oid = 13 [json_name="OID"];
+    string pcie_link_health = 14 [json_name="PCIeLinkHealth"];
+    string pcie_link_speed = 15 [json_name="PCIeLinkSpeed"];
+    string pcie_link_width = 16 [json_name="PCIeLinkWidth"];
+    uint32 port = 17 [json_name="Port"];
+    uint32 port_id = 18 [json_name="PortID"];
+    string port_identifier = 19 [json_name="PortIdentifier"];
+    uint32 product_id = 20 [json_name="ProductID"];
+    uint32 rpindex_on_controller = 21 [json_name="RPIndexOnController"];
+    uint32 speed = 22 [json_name="Speed"];
+    string type = 23 [json_name="Type"];
+    uint32 vendor_id = 24 [json_name="VendorID"];
+}
+
+// Represents the SFA Host Channel object connection details.
+message HostChannelConnectionDetails {
+    uint32 controller_index = 1 [json_name="ControllerIndex"];
+    uint32 free_connections = 2 [json_name="FreeConnections"];
+    uint32 index = 3 [json_name="Index"];
+    string link_state = 4 [json_name="LinkState"];
+    string oid = 5 [json_name="OID"];
+    uint32 port = 6 [json_name="Port"];
+    uint32 rpindex_on_controller = 7 [json_name="RPIndexOnController"];
+    string type = 8 [json_name="Type"];
+    uint32 used_connections = 9 [json_name="UsedConnections"];
+}
+
+// Represents the error counts of an SFAHostChannel object within the system.
+message HostChannelErrors {
+    string channel_type = 1 [json_name="ChannelType"];
+    repeated uint64 error_counters = 2 [json_name="ErrorCounters"];
+    repeated string error_labels = 3 [json_name="ErrorLabels"];
+    uint32 index = 4 [json_name="Index"];
+    string name = 5 [json_name="Name"];
+    uint32 total_error_counters = 6 [json_name="TotalErrorCounters"];
+}
+
+// Represents the statistics, also known as counters, of an SFAHostChannel object.
+message HostChannelStatistics {
+    double average_read_io_latency = 1 [json_name="AverageReadIOLatency"];
+    double average_write_io_latency = 2 [json_name="AverageWriteIOLatency"];
+    string element_name = 3 [json_name="ElementName"];
+    string element_type = 4 [json_name="ElementType"];
+    uint32 filter_mask = 5 [json_name="FilterMask"];
+    repeated string io_latency_index_labels = 6 [json_name="IOLatencyIndexLabels"];
+    repeated string io_size_index_labels = 7 [json_name="IOSizeIndexLabels"];
+    uint32 index = 8 [json_name="Index"];
+    repeated uint64 kbytes_read = 9 [json_name="KBytesRead"];
+    repeated uint64 kbytes_transferred = 10 [json_name="KBytesTransferred"];
+    repeated uint64 kbytes_written = 11 [json_name="KBytesWritten"];
+    string oid = 12 [json_name="OID"];
+    repeated uint64 q_depth_buckets = 13 [json_name="QDepthBuckets"];
+    repeated string q_depth_index_labels = 14 [json_name="QDepthIndexLabels"];
+    repeated uint64 read_io_latency_buckets = 15 [json_name="ReadIOLatencyBuckets"];
+    repeated uint64 read_io_size_buckets = 16 [json_name="ReadIOSizeBuckets"];
+    repeated uint64 read_ios = 17 [json_name="ReadIOs"];
+    repeated uint64 read_qdepth_buckets = 18 [json_name="ReadQDepthBuckets"];
+    google.protobuf.Timestamp start_statistic_time = 19 [json_name="StartStatisticTime"];
+    google.protobuf.Timestamp statistic_time = 20 [json_name="StatisticTime"];
+    int32 total_io_latency_modifier = 21 [json_name="TotalIOLatencyModifier"];
+    repeated uint64 total_ios = 22 [json_name="TotalIOs"];
+    uint64 total_read_io_latency = 23 [json_name="TotalReadIOLatency"];
+    uint64 total_write_io_latency = 24 [json_name="TotalWriteIOLatency"];
+    uint32 unknown_statistic_type = 25 [json_name="UnknownStatisticType"];
+    repeated uint64 write_io_latency_buckets = 26 [json_name="WriteIOLatencyBuckets"];
+    repeated uint64 write_io_size_buckets = 27 [json_name="WriteIOSizeBuckets"];
+    repeated uint64 write_ios = 28 [json_name="WriteIOs"];
+    repeated uint64 write_qdepth_buckets = 29 [json_name="WriteQDepthBuckets"];
+}
+
+// This class supplies the RATES related statistics data for the SFAHostChannel objects. The data returned is identical to that returned by the SFAHostChannelStatistics class with the FilterMask set to RATES. However, calls to this class may have a lower latency due to reduced overhead.
+message HostChannelStatisticsRates {
+    string element_name = 1 [json_name="ElementName"];
+    uint32 index = 2 [json_name="Index"];
+    repeated uint64 kbytes_read = 3 [json_name="KBytesRead"];
+    repeated uint64 kbytes_transferred = 4 [json_name="KBytesTransferred"];
+    repeated uint64 kbytes_written = 5 [json_name="KBytesWritten"];
+    repeated uint64 read_ios = 6 [json_name="ReadIOs"];
+    google.protobuf.Timestamp statistic_time = 7 [json_name="StatisticTime"];
+    repeated uint64 total_ios = 8 [json_name="TotalIOs"];
+    repeated uint64 write_ios = 9 [json_name="WriteIOs"];
+}
+
+// Represents the SFA Inter-Controller Link (ICL) channel object.
+message ICLChannel {
+    repeated uint32 available_speeds = 1 [json_name="AvailableSpeeds"];
+    string child_health_state = 2 [json_name="ChildHealthState"];
+    uint32 controller_index = 3 [json_name="ControllerIndex"];
+    uint32 current_speed = 4 [json_name="CurrentSpeed"];
+    repeated uint64 error_statistic_counts = 5 [json_name="ErrorStatisticCounts"];
+    repeated string error_statistic_names = 6 [json_name="ErrorStatisticNames"];
+    string ethernet_ip_address = 7 [json_name="EthernetIPAddress"];
+    string ethernet_ip_port = 8 [json_name="EthernetIPPort"];
+    string ethernet_interface = 9 [json_name="EthernetInterface"];
+    string ethernet_mac_address = 10 [json_name="EthernetMACAddress"];
+    string health_state = 11 [json_name="HealthState"];
+    string health_state_reason = 12 [json_name="HealthStateReason"];
+    uint32 iclioc_index = 13 [json_name="ICLIOCIndex"];
+    string iclioc_oid = 14 [json_name="ICLIOCOID"];
+    uint32 iclioc_port = 15 [json_name="ICLIOCPort"];
+    string iclioc_type = 16 [json_name="ICLIOCType"];
+    uint32 index = 17 [json_name="Index"];
+    uint32 infiniband_current_width = 18 [json_name="InfinibandCurrentWidth"];
+    string infiniband_ethernet_interface = 19 [json_name="InfinibandEthernetInterface"];
+    uint32 infiniband_expected_width = 20 [json_name="InfinibandExpectedWidth"];
+    string infiniband_node_identifier = 21 [json_name="InfinibandNodeIdentifier"];
+    string infiniband_port_identifier = 22 [json_name="InfinibandPortIdentifier"];
+    uint32 infiniband_port_lid = 23 [json_name="InfinibandPortLID"];
+    uint32 infiniband_port_number = 24 [json_name="InfinibandPortNumber"];
+    string infiniband_port_state = 25 [json_name="InfinibandPortState"];
+    string link_state = 26 [json_name="LinkState"];
+    bool missing = 27 [json_name="Missing"];
+    string name = 28 [json_name="Name"];
+    string oid = 29 [json_name="OID"];
+    uint32 pci_express_ntb_current_width = 30 [json_name="PCIExpressNTBCurrentWidth"];
+    uint32 pci_express_ntb_expected_width = 31 [json_name="PCIExpressNTBExpectedWidth"];
+    string port_location = 32 [json_name="PortLocation"];
+    uint32 rpindex_on_controller = 33 [json_name="RPIndexOnController"];
+    uint32 sas_current_width = 34 [json_name="SASCurrentWidth"];
+    uint32 sas_expected_width = 35 [json_name="SASExpectedWidth"];
+    string sas_identifier = 36 [json_name="SASIdentifier"];
+    repeated uint32 sas_phys = 37 [json_name="SASPHYs"];
+    repeated string service_capabilities = 38 [json_name="ServiceCapabilities"];
+    repeated string services_provided = 39 [json_name="ServicesProvided"];
+}
+
+// Represents the statistics of an SFAICLChannel object within the system.
+message ICLChannelStatistics {
+    uint64 connection_failures = 1 [json_name="ConnectionFailures"];
+    uint64 datagrams_rcvd = 2 [json_name="DatagramsRcvd"];
+    uint64 datagrams_sent = 3 [json_name="DatagramsSent"];
+    string element_name = 4 [json_name="ElementName"];
+    string element_type = 5 [json_name="ElementType"];
+    uint32 index = 6 [json_name="Index"];
+    uint64 mad_write_bytes_sent = 7 [json_name="MADWriteBytesSent"];
+    uint64 messages_rcvd = 8 [json_name="MessagesRcvd"];
+    uint64 messages_sent = 9 [json_name="MessagesSent"];
+    string oid = 10 [json_name="OID"];
+    uint64 rdma_write_bytes_sent = 11 [json_name="RDMAWriteBytesSent"];
+    uint64 send_queue_length = 12 [json_name="SendQueueLength"];
+    google.protobuf.Timestamp start_statistic_time = 13 [json_name="StartStatisticTime"];
+    google.protobuf.Timestamp statistic_time = 14 [json_name="StatisticTime"];
+}
+
+// Represents the SFA Inter-Controller Link (ICL) I/O controller object.
+message ICLIOC {
+    uint32 channel_count = 1 [json_name="ChannelCount"];
+    string child_health_state = 2 [json_name="ChildHealthState"];
+    uint32 controller_index = 3 [json_name="ControllerIndex"];
+    string firmware_version = 4 [json_name="FirmwareVersion"];
+    string hardware_version = 5 [json_name="HardwareVersion"];
+    string health_state = 6 [json_name="HealthState"];
+    string health_state_reason = 7 [json_name="HealthStateReason"];
+    uint32 iclioc_handle = 8 [json_name="ICLIOCHandle"];
+    uint32 index = 9 [json_name="Index"];
+    uint32 logical_parent = 10 [json_name="LogicalParent"];
+    bool missing = 11 [json_name="Missing"];
+    string model_name = 12 [json_name="ModelName"];
+    string oid = 13 [json_name="OID"];
+    string os_device_name = 14 [json_name="OSDeviceName"];
+    uint32 pci_bus_number = 15 [json_name="PCIBusNumber"];
+    uint32 physical_parent = 16 [json_name="PhysicalParent"];
+    repeated uint32 physical_parents = 17 [json_name="PhysicalParents"];
+    uint32 product_id = 18 [json_name="ProductID"];
+    string slot = 19 [json_name="Slot"];
+    string type = 20 [json_name="Type"];
+    uint32 vendor_id = 21 [json_name="VendorID"];
+}
+
+// Represents an image object for the SFA E platform Virtual Machine (stack) management.  The image object is used to define size and location of the file system for an SFAVirtualMachine object.
+message Image {
+    string format = 1 [json_name="Format"];
+    uint32 index = 2 [json_name="Index"];
+    string name = 3 [json_name="Name"];
+    string oid = 4 [json_name="OID"];
+    string path = 5 [json_name="Path"];
+    repeated uint32 percent_complete = 6 [json_name="PercentComplete"];
+    uint32 size = 7 [json_name="Size"];
+    uint32 snapshot_count = 8 [json_name="SnapshotCount"];
+    repeated string snapshot_information = 9 [json_name="SnapshotInformation"];
+    repeated string state = 10 [json_name="State"];
+    repeated string status = 11 [json_name="Status"];
+}
+
+// Represents the SFA ASM Initiator object.
+message Initiator {
+    string child_health_state = 1 [json_name="ChildHealthState"];
+    string health_state = 2 [json_name="HealthState"];
+    string health_state_reason = 3 [json_name="HealthStateReason"];
+    uint32 host_index = 4 [json_name="HostIndex"];
+    string host_name = 5 [json_name="HostName"];
+    string host_oid = 6 [json_name="HostOID"];
+    string ip_address = 7 [json_name="IPAddress"];
+    uint32 index = 8 [json_name="Index"];
+    string input_guid = 9 [json_name="InputGUID"];
+    string input_wwpn = 10 [json_name="InputWWPN"];
+    string node_identifier = 11 [json_name="NodeIdentifier"];
+    string oid = 12 [json_name="OID"];
+    string port_identifier = 13 [json_name="PortIdentifier"];
+    string type = 14 [json_name="Type"];
+    string iscsi_name = 15 [json_name="iSCSIName"];
+}
+
+// A class that represents a internal disk in a controller enclosure on the SFA platform.
+message InternalDiskDrive {
+    uint32 block_size = 1 [json_name="BlockSize"];
+    uint64 capacity = 2 [json_name="Capacity"];
+    string child_health_state = 3 [json_name="ChildHealthState"];
+    string element_name = 4 [json_name="ElementName"];
+    uint32 enclosure_index = 5 [json_name="EnclosureIndex"];
+    string enclosure_oid = 6 [json_name="EnclosureOID"];
+    uint32 enclosure_position = 7 [json_name="EnclosurePosition"];
+    bool fault = 8 [json_name="Fault"];
+    string firmware_version = 9 [json_name="FirmwareVersion"];
+    string fpga_version = 10 [json_name="FpgaVersion"];
+    string hardware_revision = 11 [json_name="HardwareRevision"];
+    string health_state = 12 [json_name="HealthState"];
+    string health_state_reason = 13 [json_name="HealthStateReason"];
+    string identifier = 14 [json_name="Identifier"];
+    uint32 index = 15 [json_name="Index"];
+    string init_string_version = 16 [json_name="InitStringVersion"];
+    uint32 life_remaining = 17 [json_name="LifeRemaining"];
+    bool locate_on = 18 [json_name="LocateOn"];
+    string location = 19 [json_name="Location"];
+    string mirror_state = 20 [json_name="MirrorState"];
+    string model = 21 [json_name="Model"];
+    string model_short = 22 [json_name="ModelShort"];
+    string name = 23 [json_name="Name"];
+    string oid = 24 [json_name="OID"];
+    bool ok = 25 [json_name="OK"];
+    string part_number = 26 [json_name="PartNumber"];
+    uint32 position = 27 [json_name="Position"];
+    bool predict_failure = 28 [json_name="PredictFailure"];
+    bool present = 29 [json_name="Present"];
+    uint32 rebuild_percentage = 30 [json_name="RebuildPercentage"];
+    string ses_status = 31 [json_name="SESStatus"];
+    string serial_number = 32 [json_name="SerialNumber"];
+    string type = 33 [json_name="Type"];
+    string version = 34 [json_name="Version"];
+    string version_short = 35 [json_name="VersionShort"];
+}
+
+// Represents the SFA disk I/O controller object.
+message IOC {
+    uint32 channel_count = 1 [json_name="ChannelCount"];
+    string child_health_state = 2 [json_name="ChildHealthState"];
+    uint32 controller_index = 3 [json_name="ControllerIndex"];
+    string device_status = 4 [json_name="DeviceStatus"];
+    string firmware_version = 5 [json_name="FirmwareVersion"];
+    string hardware_version = 6 [json_name="HardwareVersion"];
+    string health_state = 7 [json_name="HealthState"];
+    string health_state_reason = 8 [json_name="HealthStateReason"];
+    uint32 ioc_handle = 9 [json_name="IOCHandle"];
+    string identifier = 10 [json_name="Identifier"];
+    uint32 index = 11 [json_name="Index"];
+    string oid = 12 [json_name="OID"];
+    uint32 pci_bus_number = 13 [json_name="PCIBusNumber"];
+    uint32 phy_count = 14 [json_name="PHYCount"];
+    repeated uint32 phy_invalid_dword_counts = 15 [json_name="PHYInvalidDwordCounts"];
+    repeated uint32 phy_loss_of_dword_sync_counts = 16 [json_name="PHYLossOfDwordSyncCounts"];
+    repeated uint32 phy_reset_problem_counts = 17 [json_name="PHYResetProblemCounts"];
+    repeated uint32 phy_running_disparity_error_counts = 18 [json_name="PHYRunningDisparityErrorCounts"];
+    string part_number = 19 [json_name="PartNumber"];
+    uint32 physical_parent = 20 [json_name="PhysicalParent"];
+    repeated uint32 physical_parents = 21 [json_name="PhysicalParents"];
+    uint32 product_id = 22 [json_name="ProductID"];
+    uint32 rpindex_on_controller = 23 [json_name="RPIndexOnController"];
+    bool reset_in_progress = 24 [json_name="ResetInProgress"];
+    string slot = 25 [json_name="Slot"];
+    bool t10dif_support = 26 [json_name="T10DIFSupport"];
+    string type = 27 [json_name="Type"];
+    uint32 vendor_id = 28 [json_name="VendorID"];
+    bool virtualization_support = 29 [json_name="VirtualizationSupport"];
+}
+
+// Represents the SFA Job object.
+message Job {
+    uint64 completion_rate = 1 [json_name="CompletionRate"];
+    string completion_status = 2 [json_name="CompletionStatus"];
+    google.protobuf.Timestamp completion_time = 3 [json_name="CompletionTime"];
+    uint64 elapsed_time = 4 [json_name="ElapsedTime"];
+    uint32 fraction_complete = 5 [json_name="FractionComplete"];
+    uint32 index = 6 [json_name="Index"];
+    string oid = 7 [json_name="OID"];
+    float percent_complete = 8 [json_name="PercentComplete"];
+    float percent_complete_fast = 9 [json_name="PercentCompleteFast"];
+    float percent_complete_full = 10 [json_name="PercentCompleteFull"];
+    float percent_remaining_fast = 11 [json_name="PercentRemainingFast"];
+    float percent_remaining_full = 12 [json_name="PercentRemainingFull"];
+    uint32 priority = 13 [json_name="Priority"];
+    google.protobuf.Timestamp projected_completion_time = 14 [json_name="ProjectedCompletionTime"];
+    google.protobuf.Timestamp start_time = 15 [json_name="StartTime"];
+    string state = 16 [json_name="State"];
+    uint32 sub_target_index = 17 [json_name="SubTargetIndex"];
+    string sub_target_oid = 18 [json_name="SubTargetOID"];
+    string sub_target_type = 19 [json_name="SubTargetType"];
+    repeated string suspended_reasons = 20 [json_name="SuspendedReasons"];
+    uint32 target_index = 21 [json_name="TargetIndex"];
+    string target_oid = 22 [json_name="TargetOID"];
+    string target_type = 23 [json_name="TargetType"];
+    google.protobuf.Timestamp time = 24 [json_name="Time"];
+    string type = 25 [json_name="Type"];
+}
+
+// Represents the configuration data for a Key Management Interoperability Protocol (KMIP) server used for remotely managing self-encrypting drive authorization keys for a DataDirect Networks Storage Fusion Architecture (SFA) system.
+message KMIPServer {
+    string capabilities = 1 [json_name="Capabilities"];
+    string certificate_file = 2 [json_name="CertificateFile"];
+    string health_state = 3 [json_name="HealthState"];
+    string health_state_reason = 4 [json_name="HealthStateReason"];
+    string ip_address = 5 [json_name="IPAddress"];
+    uint32 ip_port = 6 [json_name="IPPort"];
+    uint32 index = 7 [json_name="Index"];
+    string key_file = 8 [json_name="KeyFile"];
+    string oid = 9 [json_name="OID"];
+    string protocol = 10 [json_name="Protocol"];
+    string status = 11 [json_name="Status"];
+    string trusted_file = 12 [json_name="TrustedFile"];
+}
+
+// A class that represents a power supply in an enclosure  on an SFA platform.
+message PowerSupply {
+    bool ac_failure = 1 [json_name="ACFailure"];
+    string boot_firmware_version = 2 [json_name="BootFirmwareVersion"];
+    string child_health_state = 3 [json_name="ChildHealthState"];
+    bool dc_failure = 4 [json_name="DCFailure"];
+    bool dc_over_current = 5 [json_name="DCOverCurrent"];
+    bool dc_over_voltage = 6 [json_name="DCOverVoltage"];
+    bool dc_under_voltage = 7 [json_name="DCUnderVoltage"];
+    string element_name = 8 [json_name="ElementName"];
+    uint32 enclosure_index = 9 [json_name="EnclosureIndex"];
+    string enclosure_oid = 10 [json_name="EnclosureOID"];
+    uint32 enclosure_position = 11 [json_name="EnclosurePosition"];
+    bool fault = 12 [json_name="Fault"];
+    string firmware_version = 13 [json_name="FirmwareVersion"];
+    string fpga_version = 14 [json_name="FpgaVersion"];
+    string hardware_revision = 15 [json_name="HardwareRevision"];
+    string health_state = 16 [json_name="HealthState"];
+    string health_state_reason = 17 [json_name="HealthStateReason"];
+    uint32 index = 18 [json_name="Index"];
+    string init_string_version = 19 [json_name="InitStringVersion"];
+    bool locate_on = 20 [json_name="LocateOn"];
+    string location = 21 [json_name="Location"];
+    bool mixed_or_unsupported = 22 [json_name="MixedOrUnsupported"];
+    string oid = 23 [json_name="OID"];
+    bool ok = 24 [json_name="OK"];
+    string part_number = 25 [json_name="PartNumber"];
+    uint32 position = 26 [json_name="Position"];
+    bool power_state = 27 [json_name="PowerState"];
+    bool predict_failure = 28 [json_name="PredictFailure"];
+    bool present = 29 [json_name="Present"];
+    string ses_status = 30 [json_name="SESStatus"];
+    string serial_number = 31 [json_name="SerialNumber"];
+    bool temperature_failure = 32 [json_name="TemperatureFailure"];
+    bool temperature_warning = 33 [json_name="TemperatureWarning"];
+}
+
+// Represents the SFA ASM Presentation object.
+message Presentation {
+    string channel_enable_flag = 1 [json_name="ChannelEnableFlag"];
+    string channel_mask = 2 [json_name="ChannelMask"];
+    string child_health_state = 3 [json_name="ChildHealthState"];
+    repeated uint32 enabled_channels = 4 [json_name="EnabledChannels"];
+    repeated string enabled_ports = 5 [json_name="EnabledPorts"];
+    string health_state = 6 [json_name="HealthState"];
+    string health_state_reason = 7 [json_name="HealthStateReason"];
+    bool home_only = 8 [json_name="HomeOnly"];
+    bool host_all_flag = 9 [json_name="HostAllFlag"];
+    uint32 host_index = 10 [json_name="HostIndex"];
+    string host_name = 11 [json_name="HostName"];
+    uint32 index = 12 [json_name="Index"];
+    uint32 lun = 13 [json_name="LUN"];
+    string oid = 14 [json_name="OID"];
+    uint64 quality_of_service = 15 [json_name="QualityOfService"];
+    bool read_only = 16 [json_name="ReadOnly"];
+    uint32 stack_index = 17 [json_name="StackIndex"];
+    uint32 virtual_disk_index = 18 [json_name="VirtualDiskIndex"];
+    uint32 virtual_machine_index = 19 [json_name="VirtualMachineIndex"];
+}
+
+// A class that represents a ROCE Connector object for a disk enclosure.
+message ROCEConnector {
+    uint32 configured_speed = 1 [json_name="ConfiguredSpeed"];
+    uint32 current_speed = 2 [json_name="CurrentSpeed"];
+    string element_name = 3 [json_name="ElementName"];
+    uint32 enclosure_index = 4 [json_name="EnclosureIndex"];
+    string enclosure_oid = 5 [json_name="EnclosureOID"];
+    uint32 enclosure_position = 6 [json_name="EnclosurePosition"];
+    uint32 index = 7 [json_name="Index"];
+    string link_state = 8 [json_name="LinkState"];
+    uint32 m_tu = 9 [json_name="MTU"];
+    string name = 10 [json_name="Name"];
+    string oid = 11 [json_name="OID"];
+}
+
+// A class that represents a SAS Connector object for a disk enclosure.
+message SASConnector {
+    string cable_part_number = 1 [json_name="CablePartNumber"];
+    string cable_revision = 2 [json_name="CableRevision"];
+    string cable_serial_number = 3 [json_name="CableSerialNumber"];
+    string cable_vendor_name = 4 [json_name="CableVendorName"];
+    string child_health_state = 5 [json_name="ChildHealthState"];
+    string element_name = 6 [json_name="ElementName"];
+    uint32 enclosure_index = 7 [json_name="EnclosureIndex"];
+    string enclosure_oid = 8 [json_name="EnclosureOID"];
+    uint32 enclosure_position = 9 [json_name="EnclosurePosition"];
+    bool fault = 10 [json_name="Fault"];
+    string health_state = 11 [json_name="HealthState"];
+    string health_state_reason = 12 [json_name="HealthStateReason"];
+    bool identify_indicator = 13 [json_name="IdentifyIndicator"];
+    uint32 index = 14 [json_name="Index"];
+    string name = 15 [json_name="Name"];
+    string oid = 16 [json_name="OID"];
+    uint32 position = 17 [json_name="Position"];
+    string ses_status = 18 [json_name="SESStatus"];
+    string type = 19 [json_name="Type"];
+}
+
+// Represents the SFA RAID Processor (RP) object.
+message RAIDProcessor {
+    uint32 cpu_core_count = 1 [json_name="CPUCoreCount"];
+    uint32 cpu_family = 2 [json_name="CPUFamily"];
+    uint32 cpu_model = 3 [json_name="CPUModel"];
+    string cpu_model_name = 4 [json_name="CPUModelName"];
+    uint32 cpu_stepping = 5 [json_name="CPUStepping"];
+    string child_health_state = 6 [json_name="ChildHealthState"];
+    uint32 controller_index = 7 [json_name="ControllerIndex"];
+    string health_state = 8 [json_name="HealthState"];
+    string health_state_reason = 9 [json_name="HealthStateReason"];
+    uint32 index = 10 [json_name="Index"];
+    uint32 index_on_controller = 11 [json_name="IndexOnController"];
+    uint32 memory_size = 12 [json_name="MemorySize"];
+    int32 memory_speed = 13 [json_name="MemorySpeed"];
+    string name = 14 [json_name="Name"];
+    uint32 numa_node_index = 15 [json_name="NumaNodeIndex"];
+    string oid = 16 [json_name="OID"];
+    uint32 sub_rps = 17 [json_name="SubRPs"];
+}
+
+// A class that represents a Storage Enclosure Processor device in a disk enclosure on the SFA platform.
+message SEP {
+    string child_health_state = 1 [json_name="ChildHealthState"];
+    string element_name = 2 [json_name="ElementName"];
+    uint32 enclosure_index = 3 [json_name="EnclosureIndex"];
+    string enclosure_oid = 4 [json_name="EnclosureOID"];
+    uint32 enclosure_position = 5 [json_name="EnclosurePosition"];
+    bool failure = 6 [json_name="Failure"];
+    string firmware_version = 7 [json_name="FirmwareVersion"];
+    string fpga_version = 8 [json_name="FpgaVersion"];
+    string hardware_revision = 9 [json_name="HardwareRevision"];
+    string health_state = 10 [json_name="HealthState"];
+    string health_state_reason = 11 [json_name="HealthStateReason"];
+    uint32 index = 12 [json_name="Index"];
+    string init_string_version = 13 [json_name="InitStringVersion"];
+    bool locate_on = 14 [json_name="LocateOn"];
+    string location = 15 [json_name="Location"];
+    string oid = 16 [json_name="OID"];
+    string part_number = 17 [json_name="PartNumber"];
+    uint32 position = 18 [json_name="Position"];
+    bool predict_failure = 19 [json_name="PredictFailure"];
+    bool present = 20 [json_name="Present"];
+    bool report = 21 [json_name="Report"];
+    string ses_status = 22 [json_name="SESStatus"];
+    string serial_number = 23 [json_name="SerialNumber"];
+}
+
+// Represents an SFX batch object.  An SFX batch object is a set of data that could be used to create an SFX Extent or prefetch a set of blocks into the SFX cache.  Each block set includes a VD index
+message SFXBatch {
+    uint64 blocks = 1 [json_name="Blocks"];
+    uint64 blocks_prefetched = 2 [json_name="BlocksPrefetched"];
+    uint32 controller_index = 3 [json_name="ControllerIndex"];
+    bool create_async = 4 [json_name="CreateAsync"];
+    bool create_in_progress = 5 [json_name="CreateInProgress"];
+    uint32 create_status = 6 [json_name="CreateStatus"];
+    string create_status_description = 7 [json_name="CreateStatusDescription"];
+    bool delete_after_create = 8 [json_name="DeleteAfterCreate"];
+    bool delete_after_prefetch = 9 [json_name="DeleteAfterPrefetch"];
+    uint32 index = 10 [json_name="Index"];
+    uint32 items = 11 [json_name="Items"];
+    uint32 items_created = 12 [json_name="ItemsCreated"];
+    uint32 items_prefetched = 13 [json_name="ItemsPrefetched"];
+    bool prefetch_complete = 14 [json_name="PrefetchComplete"];
+    string type = 15 [json_name="Type"];
+}
+
+// Represents the SFA SFXCache object.
+message SFXCache {
+    uint64 available_read_capacity = 1 [json_name="AvailableReadCapacity"];
+    uint64 available_write_capacity = 2 [json_name="AvailableWriteCapacity"];
+    bool capacity_updating = 3 [json_name="CapacityUpdating"];
+    repeated uint64 controller_supported_capacity = 4 [json_name="ControllerSupportedCapacity"];
+    repeated uint64 controller_total_read_capacity = 5 [json_name="ControllerTotalReadCapacity"];
+    repeated uint64 controller_total_write_capacity = 6 [json_name="ControllerTotalWriteCapacity"];
+    repeated uint64 controller_usable_read_capacity = 7 [json_name="ControllerUsableReadCapacity"];
+    repeated uint64 controller_usable_write_capacity = 8 [json_name="ControllerUsableWriteCapacity"];
+    repeated uint64 controller_used_read_capacity = 9 [json_name="ControllerUsedReadCapacity"];
+    repeated uint64 controller_used_write_capacity = 10 [json_name="ControllerUsedWriteCapacity"];
+    bool enabled = 11 [json_name="Enabled"];
+    bool enabled_on_next_boot = 12 [json_name="EnabledOnNextBoot"];
+    uint32 index = 13 [json_name="Index"];
+    uint32 max_sfx_extents = 14 [json_name="MaxSFXExtents"];
+    repeated uint32 scsi_read_group_priority_map = 15 [json_name="SCSIReadGroupPriorityMap"];
+    uint64 supported_capacity = 16 [json_name="SupportedCapacity"];
+    uint64 total_read_capacity = 17 [json_name="TotalReadCapacity"];
+    uint64 total_write_capacity = 18 [json_name="TotalWriteCapacity"];
+    uint64 usable_read_capacity = 19 [json_name="UsableReadCapacity"];
+    uint64 usable_write_capacity = 20 [json_name="UsableWriteCapacity"];
+    uint64 used_read_capacity = 21 [json_name="UsedReadCapacity"];
+    uint64 used_write_capacity = 22 [json_name="UsedWriteCapacity"];
+}
+
+// Represents the SFA SFX Cache Statistics object.
+message SFXCacheStatistics {
+    repeated uint64 controller_prefetch_remaining = 1 [json_name="ControllerPrefetchRemaining"];
+    repeated uint64 controller_read_hits = 2 [json_name="ControllerReadHits"];
+    repeated uint64 controller_read_misses = 3 [json_name="ControllerReadMisses"];
+    uint32 index = 4 [json_name="Index"];
+    uint64 prefetch_remaining = 5 [json_name="PrefetchRemaining"];
+    uint64 read_hits = 6 [json_name="ReadHits"];
+    uint64 read_misses = 7 [json_name="ReadMisses"];
+}
+
+// Represents an SFX Extent object.
+message SFXExtent {
+    uint64 blocks = 1 [json_name="Blocks"];
+    string end_lba = 2 [json_name="EndLBA"];
+    bool prefetch = 3 [json_name="Prefetch"];
+    string priority = 4 [json_name="Priority"];
+    string start_lba = 5 [json_name="StartLBA"];
+    uint32 virtual_disk_index = 6 [json_name="VirtualDiskIndex"];
+}
+
+// A class that represents the settings and configuration details of the SNMP agents on each controller of an  SFA Storage System.
+message SNMPAgent {
+    string controller_oid = 1 [json_name="ControllerOID"];
+    bool enabled = 2 [json_name="Enabled"];
+    string engine_id = 3 [json_name="EngineID"];
+    string engine_id_text = 4 [json_name="EngineIDText"];
+    string engine_id_type = 5 [json_name="EngineIDType"];
+    uint32 index = 6 [json_name="Index"];
+    bool local = 7 [json_name="Local"];
+    string read_only_community = 8 [json_name="ReadOnlyCommunity"];
+    string read_only_filter = 9 [json_name="ReadOnlyFilter"];
+    string read_write_community = 10 [json_name="ReadWriteCommunity"];
+    string read_write_filter = 11 [json_name="ReadWriteFilter"];
+}
+
+// Specifies the index of th SNMP trap agent.  This index will correspond to the index of the controller that owns the SNMP trap agent.
+message SNMPTrapAgent {
+    string community = 1 [json_name="Community"];
+    string controller_oid = 2 [json_name="ControllerOID"];
+    bool enabled = 3 [json_name="Enabled"];
+    string ip_address = 4 [json_name="IPAddress"];
+    uint32 index = 5 [json_name="Index"];
+    bool local = 6 [json_name="Local"];
+    string severity_filter = 7 [json_name="SeverityFilter"];
+}
+
+// This class represents the SNMPv3 receiver on an SFA controller.
+message SNMPTrapReceiver {
+    uint32 controller_index = 1 [json_name="ControllerIndex"];
+    string controller_oid = 2 [json_name="ControllerOID"];
+    string encryption_password_key = 3 [json_name="EncryptionPasswordKey"];
+    string encryption_password_type = 4 [json_name="EncryptionPasswordType"];
+    string engine_id = 5 [json_name="EngineID"];
+    string ip_address = 6 [json_name="IPAddress"];
+    uint32 index = 7 [json_name="Index"];
+    string name = 8 [json_name="Name"];
+    string severity_filter = 9 [json_name="SeverityFilter"];
+    string user_password_key = 10 [json_name="UserPasswordKey"];
+    string user_password_type = 11 [json_name="UserPasswordType"];
+}
+
+// This class represents the SNMPv3 User on an SFA controller.
+message SNMPUser {
+    string access_type = 1 [json_name="AccessType"];
+    uint32 controller_index = 2 [json_name="ControllerIndex"];
+    string controller_oid = 3 [json_name="ControllerOID"];
+    string encryption_password_key = 4 [json_name="EncryptionPasswordKey"];
+    string encryption_password_type = 5 [json_name="EncryptionPasswordType"];
+    string engine_id = 6 [json_name="EngineID"];
+    uint32 index = 7 [json_name="Index"];
+    string name = 8 [json_name="Name"];
+    string user_password_key = 9 [json_name="UserPasswordKey"];
+    string user_password_type = 10 [json_name="UserPasswordType"];
+}
+
+// Represents a snapshot of an image object assigned to a virtual machine on an SFA storage system. This class only functions on embedded SFA models.
+message Snapshot {
+    uint32 controller_index = 1 [json_name="ControllerIndex"];
+    google.protobuf.Timestamp created_on = 2 [json_name="CreatedOn"];
+    uint64 id = 3 [json_name="ID"];
+    uint32 image_index = 4 [json_name="ImageIndex"];
+    uint32 index = 5 [json_name="Index"];
+    string name = 6 [json_name="Name"];
+    string oid = 7 [json_name="OID"];
+}
+
+// Represents the SFA spare pool.
+message SparePool {
+    string block_size = 1 [json_name="BlockSize"];
+    string child_health_state = 2 [json_name="ChildHealthState"];
+    google.protobuf.Timestamp created_on = 3 [json_name="CreatedOn"];
+    uint32 disk_timeout = 4 [json_name="DiskTimeout"];
+    string health_state = 5 [json_name="HealthState"];
+    string health_state_reason = 6 [json_name="HealthStateReason"];
+    uint32 index = 7 [json_name="Index"];
+    string name = 8 [json_name="Name"];
+    uint32 num_disks = 9 [json_name="NumDisks"];
+    string oid = 10 [json_name="OID"];
+    uint64 raw_capacity = 11 [json_name="RawCapacity"];
+    repeated uint32 storage_pools = 12 [json_name="StoragePools"];
+    uint32 total_disks = 13 [json_name="TotalDisks"];
+    string type = 14 [json_name="Type"];
+    string uuid = 15 [json_name="UUID"];
+}
+
+// Represents the application stack object on an SFA storage system.
+message Stack {
+    bool anonymous_login_allowed = 1 [json_name="AnonymousLoginAllowed"];
+    uint32 auth_index = 2 [json_name="AuthIndex"];
+    string characteristics = 3 [json_name="Characteristics"];
+    string child_health_state = 4 [json_name="ChildHealthState"];
+    uint32 cur_controllers = 5 [json_name="CurControllers"];
+    uint32 cur_ports_per_rp = 6 [json_name="CurPortsPerRP"];
+    uint32 cur_rps_per_controller = 7 [json_name="CurRPsPerController"];
+    string health_state = 8 [json_name="HealthState"];
+    string health_state_reason = 9 [json_name="HealthStateReason"];
+    uint32 index = 10 [json_name="Index"];
+    bool keep_alive_enabled = 11 [json_name="KeepAliveEnabled"];
+    uint32 keep_alive_interval = 12 [json_name="KeepAliveInterval"];
+    uint32 keep_alive_timeout = 13 [json_name="KeepAliveTimeout"];
+    uint32 max_controllers = 14 [json_name="MaxControllers"];
+    uint32 max_ports_per_rp = 15 [json_name="MaxPortsPerRP"];
+    uint32 max_rps_per_controller = 16 [json_name="MaxRPsPerController"];
+    bool nop_in_enabled = 17 [json_name="NOPInEnabled"];
+    uint32 nop_in_interval = 18 [json_name="NOPInInterval"];
+    uint32 nop_in_timeout = 19 [json_name="NOPInTimeout"];
+    string name = 20 [json_name="Name"];
+    string oid = 21 [json_name="OID"];
+    string os_type = 22 [json_name="OSType"];
+    string protocol = 23 [json_name="Protocol"];
+}
+
+// Represents a declustered storage pool on an SFA storage system.
+message StoragePool {
+    string assign_disk_type = 1 [json_name="AssignDiskType"];
+    uint32 assign_maximum_indirection_unit = 2 [json_name="AssignMaximumIndirectionUnit"];
+    uint32 assign_minimum_endurance = 3 [json_name="AssignMinimumEndurance"];
+    string assign_optimization = 4 [json_name="AssignOptimization"];
+    uint64 assign_raw_capacity = 5 [json_name="AssignRawCapacity"];
+    string assign_rotation_speed = 6 [json_name="AssignRotationSpeed"];
+    uint32 bad_block_count = 7 [json_name="BadBlockCount"];
+    string block_size = 8 [json_name="BlockSize"];
+    string child_health_state = 9 [json_name="ChildHealthState"];
+    string copyback_job_oid = 10 [json_name="CopybackJobOID"];
+    bool copyback_jobs_present = 11 [json_name="CopybackJobsPresent"];
+    uint32 copyback_priority = 12 [json_name="CopybackPriority"];
+    google.protobuf.Timestamp created_on = 13 [json_name="CreatedOn"];
+    uint64 dirty_cache = 14 [json_name="DirtyCache"];
+    uint32 disk_timeout = 15 [json_name="DiskTimeout"];
+    bool encrypted = 16 [json_name="Encrypted"];
+    bool end_to_end_data_integrity_enabled = 17 [json_name="EndToEndDataIntegrityEnabled"];
+    uint64 fractional_rebuild_size = 18 [json_name="FractionalRebuildSize"];
+    uint64 free_capacity = 19 [json_name="FreeCapacity"];
+    uint64 free_capacity_raid1 = 20 [json_name="FreeCapacityRAID1"];
+    uint64 free_capacity_raid5 = 21 [json_name="FreeCapacityRAID5"];
+    uint64 free_capacity_raid5_5 = 22 [json_name="FreeCapacityRAID5_5"];
+    uint64 free_capacity_raid6 = 23 [json_name="FreeCapacityRAID6"];
+    uint64 free_capacity_raid6_6 = 24 [json_name="FreeCapacityRAID6_6"];
+    uint64 free_capacity_spare = 25 [json_name="FreeCapacitySpare"];
+    string health_state = 26 [json_name="HealthState"];
+    string health_state_reason = 27 [json_name="HealthStateReason"];
+    uint32 index = 28 [json_name="Index"];
+    string initialization_job_oid = 29 [json_name="InitializationJobOID"];
+    bool initialization_jobs_present = 30 [json_name="InitializationJobsPresent"];
+    uint32 member_count = 31 [json_name="MemberCount"];
+    uint32 member_count_healthy = 32 [json_name="MemberCountHealthy"];
+    uint64 member_size = 33 [json_name="MemberSize"];
+    uint32 minimum_rebuilds = 34 [json_name="MinimumRebuilds"];
+    string name = 35 [json_name="Name"];
+    string oid = 36 [json_name="OID"];
+    uint64 raw_capacity = 37 [json_name="RawCapacity"];
+    string rebuild_job_oid = 38 [json_name="RebuildJobOID"];
+    bool rebuild_jobs_present = 39 [json_name="RebuildJobsPresent"];
+    uint32 rebuild_priority = 40 [json_name="RebuildPriority"];
+    uint32 remaining_raidset_parity = 41 [json_name="RemainingRaidsetParity"];
+    float remaining_rebuilds = 42 [json_name="RemainingRebuilds"];
+    uint32 spare_pool_index = 43 [json_name="SparePoolIndex"];
+    string sparing_policy = 44 [json_name="SparingPolicy"];
+    string state = 45 [json_name="State"];
+    string t10_pi_type = 46 [json_name="T10_PIType"];
+    uint64 total_capacity = 47 [json_name="TotalCapacity"];
+    string type = 48 [json_name="Type"];
+    string uuid = 49 [json_name="UUID"];
+    bool unmap_supported = 50 [json_name="UnmapSupported"];
+    string verify_job_oid = 51 [json_name="VerifyJobOID"];
+    bool verify_jobs_present = 52 [json_name="VerifyJobsPresent"];
+}
+
+// A class that represents the \'top-level\' view of a DataDirect Networks Storage Fusion Architecture (SFA) system. This is a collection that provides compute capabilities and serves as an aggregation point to associate one or more of the elements that comprise the Storage Appliance. (e.g. LU, ports, controllers, disks, etc.).
+message StorageSystem {
+    bool ats_monitor_enabled = 1 [json_name="ATSMonitorEnabled"];
+    bool ats_monitor_supported = 2 [json_name="ATSMonitorSupported"];
+    bool auto_verify_enabled = 3 [json_name="AutoVerifyEnabled"];
+    string child_health_state = 4 [json_name="ChildHealthState"];
+    google.protobuf.Timestamp config_date = 5 [json_name="ConfigDate"];
+    google.protobuf.Timestamp date_and_time = 6 [json_name="DateAndTime"];
+    string default_block_size = 7 [json_name="DefaultBlockSize"];
+    bool default_end_to_end_data_integrity_enabled = 8 [json_name="DefaultEndToEndDataIntegrityEnabled"];
+    string default_pool_type = 9 [json_name="DefaultPoolType"];
+    string disk_enclosure_configuration = 10 [json_name="DiskEnclosureConfiguration"];
+    string disk_error_tolerance = 11 [json_name="DiskErrorTolerance"];
+    string disk_format_policy = 12 [json_name="DiskFormatPolicy"];
+    string drive_error_tolerance = 13 [json_name="DriveErrorTolerance"];
+    string drive_format_policy = 14 [json_name="DriveFormatPolicy"];
+    bool e_platform = 15 [json_name="E_Platform"];
+    bool elevated_logging = 16 [json_name="ElevatedLogging"];
+    bool encryption_enabled = 17 [json_name="EncryptionEnabled"];
+    string encryption_model = 18 [json_name="EncryptionModel"];
+    string encryption_policy = 19 [json_name="EncryptionPolicy"];
+    bool fast_timeout = 20 [json_name="FastTimeout"];
+    string health_state = 21 [json_name="HealthState"];
+    string health_state_reason = 22 [json_name="HealthStateReason"];
+    uint32 index = 23 [json_name="Index"];
+    bool license_needed = 24 [json_name="LicenseNeeded"];
+    repeated string licenses = 25 [json_name="Licenses"];
+    uint32 locate_dwell_time = 26 [json_name="LocateDwellTime"];
+    bool multi_rebuild_enabled = 27 [json_name="MultiRebuildEnabled"];
+    bool ntp_mode = 28 [json_name="NTPMode"];
+    repeated string ntp_servers = 29 [json_name="NTPServers"];
+    bool ntp_starting = 30 [json_name="NTPStarting"];
+    string name = 31 [json_name="Name"];
+    uint32 periodic_cache_flush_interval = 32 [json_name="PeriodicCacheFlushInterval"];
+    string platform = 33 [json_name="Platform"];
+    bool pool_verify_policy = 34 [json_name="PoolVerifyPolicy"];
+    uint32 read_retry_timeout = 35 [json_name="ReadRetryTimeout"];
+    bool sfx_capable = 36 [json_name="SFXCapable"];
+    bool sfx_enabled = 37 [json_name="SFXEnabled"];
+    bool sfx_enabled_on_next_boot = 38 [json_name="SFXEnabledOnNextBoot"];
+    bool single_controller_wb_c = 39 [json_name="SingleControllerWBC"];
+    string slow_drive_detection_action = 40 [json_name="SlowDriveDetectionAction"];
+    uint32 slow_drive_latency_threshold_rotating = 41 [json_name="SlowDriveLatencyThresholdRotating"];
+    uint32 slow_drive_latency_threshold_ss_d = 42 [json_name="SlowDriveLatencyThresholdSSD"];
+    string state = 43 [json_name="State"];
+    string time_zone = 44 [json_name="TimeZone"];
+    int32 time_zone_gm_toffset = 45 [json_name="TimeZoneGMTOffset"];
+    bool time_zone_posix = 46 [json_name="TimeZonePOSIX"];
+    string uuid = 47 [json_name="UUID"];
+}
+
+// A class that represents the settings and configuration details of the syslog agent on each controller of an SFA Storage System.
+message SyslogAgent {
+    string cacertificate_file = 1 [json_name="CACertificateFile"];
+    string certificate_file = 2 [json_name="CertificateFile"];
+    repeated string configuration_status = 3 [json_name="ConfigurationStatus"];
+    bool enabled = 4 [json_name="Enabled"];
+    string ip_address = 5 [json_name="IPAddress"];
+    uint32 ip_port = 6 [json_name="IPPort"];
+    uint32 index = 7 [json_name="Index"];
+    string key_file = 8 [json_name="KeyFile"];
+    string peer_common_name = 9 [json_name="PeerCommonName"];
+    string protocol = 10 [json_name="Protocol"];
+    string severity_filter = 11 [json_name="SeverityFilter"];
+}
+
+// A class that represents a temperature sensor in an enclosure on the SFA platform.
+message TemperatureSensor {
+    string child_health_state = 1 [json_name="ChildHealthState"];
+    int32 current_reading = 2 [json_name="CurrentReading"];
+    string element_name = 3 [json_name="ElementName"];
+    uint32 enclosure_index = 4 [json_name="EnclosureIndex"];
+    string enclosure_oid = 5 [json_name="EnclosureOID"];
+    uint32 enclosure_position = 6 [json_name="EnclosurePosition"];
+    string firmware_version = 7 [json_name="FirmwareVersion"];
+    string fpga_version = 8 [json_name="FpgaVersion"];
+    string hardware_revision = 9 [json_name="HardwareRevision"];
+    string health_state = 10 [json_name="HealthState"];
+    string health_state_reason = 11 [json_name="HealthStateReason"];
+    uint32 index = 12 [json_name="Index"];
+    string init_string_version = 13 [json_name="InitStringVersion"];
+    bool locate_on = 14 [json_name="LocateOn"];
+    string location = 15 [json_name="Location"];
+    string oid = 16 [json_name="OID"];
+    string part_number = 17 [json_name="PartNumber"];
+    uint32 position = 18 [json_name="Position"];
+    bool predict_failure = 19 [json_name="PredictFailure"];
+    bool present = 20 [json_name="Present"];
+    string ses_status = 21 [json_name="SESStatus"];
+    string serial_number = 22 [json_name="SerialNumber"];
+    bool temperature_failure = 23 [json_name="TemperatureFailure"];
+    bool temperature_warning = 24 [json_name="TemperatureWarning"];
+}
+
+// Represents the SFA unassigned pool.
+message UnassignedPool {
+    string block_size = 1 [json_name="BlockSize"];
+    uint64 capacity = 2 [json_name="Capacity"];
+    string child_health_state = 3 [json_name="ChildHealthState"];
+    uint64 failed_capacity = 4 [json_name="FailedCapacity"];
+    string health_state = 5 [json_name="HealthState"];
+    string health_state_reason = 6 [json_name="HealthStateReason"];
+    uint32 index = 7 [json_name="Index"];
+    uint32 num_disks = 8 [json_name="NumDisks"];
+    string oid = 9 [json_name="OID"];
+    string type = 10 [json_name="Type"];
+}
+
+// A class that represents a ups in or attached to a controller enclosure on the SFA platform.
+message UPS {
+    bool ac_failure = 1 [json_name="ACFailure"];
+    int32 battery_life_remaining = 2 [json_name="BatteryLifeRemaining"];
+    google.protobuf.Timestamp battery_manufacture_date = 3 [json_name="BatteryManufactureDate"];
+    string child_health_state = 4 [json_name="ChildHealthState"];
+    int32 current_input_voltage = 5 [json_name="CurrentInputVoltage"];
+    string element_name = 6 [json_name="ElementName"];
+    bool enabled = 7 [json_name="Enabled"];
+    uint32 enclosure_index = 8 [json_name="EnclosureIndex"];
+    string enclosure_oid = 9 [json_name="EnclosureOID"];
+    uint32 enclosure_position = 10 [json_name="EnclosurePosition"];
+    uint32 estimated_charge_remaining = 11 [json_name="EstimatedChargeRemaining"];
+    uint32 estimated_recharge_time = 12 [json_name="EstimatedRechargeTime"];
+    uint32 estimated_run_time = 13 [json_name="EstimatedRunTime"];
+    bool fault = 14 [json_name="Fault"];
+    string firmware_version = 15 [json_name="FirmwareVersion"];
+    string fpga_version = 16 [json_name="FpgaVersion"];
+    string hardware_revision = 17 [json_name="HardwareRevision"];
+    string health_state = 18 [json_name="HealthState"];
+    string health_state_reason = 19 [json_name="HealthStateReason"];
+    uint32 index = 20 [json_name="Index"];
+    string init_string_version = 21 [json_name="InitStringVersion"];
+    bool interface_failure = 22 [json_name="InterfaceFailure"];
+    bool locate_on = 23 [json_name="LocateOn"];
+    string location = 24 [json_name="Location"];
+    bool long_term_storage_preparation_in_progress = 25 [json_name="LongTermStoragePreparationInProgress"];
+    bool long_term_storage_ready = 26 [json_name="LongTermStorageReady"];
+    uint32 long_term_storage_ready_eta = 27 [json_name="LongTermStorageReadyETA"];
+    string nominal_input_voltage = 28 [json_name="NominalInputVoltage"];
+    string oid = 29 [json_name="OID"];
+    string operation_state = 30 [json_name="OperationState"];
+    string part_number = 31 [json_name="PartNumber"];
+    uint32 position = 32 [json_name="Position"];
+    bool predict_failure = 33 [json_name="PredictFailure"];
+    bool present = 34 [json_name="Present"];
+    string ses_status = 35 [json_name="SESStatus"];
+    string serial_number = 36 [json_name="SerialNumber"];
+    bool ups_failure = 37 [json_name="UPSFailure"];
+    string warning_status = 38 [json_name="WarningStatus"];
+}
+
+// Represents a user account on an SFAStorageSystem.
+message UserAccount {
+    string command_shell = 1 [json_name="CommandShell"];
+    uint32 group_id = 2 [json_name="GroupID"];
+    uint32 group_index = 3 [json_name="GroupIndex"];
+    string group_name = 4 [json_name="GroupName"];
+    bool has_ssh_key = 5 [json_name="HasSSHKey"];
+    string home_directory = 6 [json_name="HomeDirectory"];
+    uint32 index = 7 [json_name="Index"];
+    bool is_admin = 8 [json_name="IsAdmin"];
+    bool locked = 9 [json_name="Locked"];
+    string name = 10 [json_name="Name"];
+    string oid = 11 [json_name="OID"];
+    bool supports_delete = 12 [json_name="SupportsDelete"];
+    bool supports_modify_group = 13 [json_name="SupportsModifyGroup"];
+    bool supports_modify_ssh_key = 14 [json_name="SupportsModifySSHKey"];
+    uint32 user_id = 15 [json_name="UserID"];
+}
+
+// Represents a user group on an SFAStorageSystem.
+message UserGroup {
+    uint32 group_id = 1 [json_name="GroupID"];
+    uint32 index = 2 [json_name="Index"];
+    string name = 3 [json_name="Name"];
+    string oid = 4 [json_name="OID"];
+}
+
+// A class that represents the configuration details of the user interface of the SFA storage system.
+message UserInterface {
+    string controller_ip_address = 1 [json_name="ControllerIPAddress"];
+    string controller_ip_address_alt = 2 [json_name="ControllerIPAddressAlt"];
+    string controller_ip_gateway = 3 [json_name="ControllerIPGateway"];
+    string controller_ip_gateway_alt = 4 [json_name="ControllerIPGatewayAlt"];
+    string controller_ip_netmask = 5 [json_name="ControllerIPNetmask"];
+    string controller_ip_netmask_alt = 6 [json_name="ControllerIPNetmaskAlt"];
+    bool email_append_event_summary = 7 [json_name="EmailAppendEventSummary"];
+    string email_backup_ip_address = 8 [json_name="EmailBackupIPAddress"];
+    uint32 email_backup_ip_port = 9 [json_name="EmailBackupIPPort"];
+    string email_from_address = 10 [json_name="EmailFromAddress"];
+    string email_ip_address = 11 [json_name="EmailIPAddress"];
+    uint32 email_ip_port = 12 [json_name="EmailIPPort"];
+    string email_severity_minimum = 13 [json_name="EmailSeverityMinimum"];
+    string email_state = 14 [json_name="EmailState"];
+    string email_subject = 15 [json_name="EmailSubject"];
+    string email_to_address = 16 [json_name="EmailToAddress"];
+    bool gui_enabled = 17 [json_name="GUIEnabled"];
+    string gui_ss_lcertificate = 18 [json_name="GUISSLCertificate"];
+    repeated string ip_gateways = 19 [json_name="IPGateways"];
+    repeated string ip_netmasks = 20 [json_name="IPNetmasks"];
+    repeated string ipv4_addresses = 21 [json_name="IPv4Addresses"];
+    repeated string ipv6_addresses = 22 [json_name="IPv6Addresses"];
+    uint32 index = 23 [json_name="Index"];
+    string snmp_agent_address = 24 [json_name="SNMPAgentAddress"];
+    string snmp_agentx = 25 [json_name="SNMPAgentx"];
+    string snmp_read_only_community = 26 [json_name="SNMPReadOnlyCommunity"];
+    string snmp_read_only_filter = 27 [json_name="SNMPReadOnlyFilter"];
+    string snmp_read_write_community = 28 [json_name="SNMPReadWriteCommunity"];
+    string snmp_read_write_filter = 29 [json_name="SNMPReadWriteFilter"];
+    uint32 snmp_sys_services = 30 [json_name="SNMPSysServices"];
+    string snmp_trap_community = 31 [json_name="SNMPTrapCommunity"];
+    string snmp_trap_ip_address = 32 [json_name="SNMPTrapIPAddress"];
+    string snmp_trap_severity_minimum = 33 [json_name="SNMPTrapSeverityMinimum"];
+    string snmp_trap_state = 34 [json_name="SNMPTrapState"];
+    bool stats_enabled = 35 [json_name="StatsEnabled"];
+    bool stats_local_only = 36 [json_name="StatsLocalOnly"];
+    uint32 stats_sampling_rate = 37 [json_name="StatsSamplingRate"];
+    string syslog_ip_address = 38 [json_name="SyslogIPAddress"];
+    uint32 syslog_ip_port = 39 [json_name="SyslogIPPort"];
+    string syslog_severity_minimum = 40 [json_name="SyslogSeverityMinimum"];
+    string syslog_state = 41 [json_name="SyslogState"];
+}
+
+// Represents a declustered virtual disk object on an SFA storage system.
+message VirtualDisk {
+    string auto_verify_status = 1 [json_name="AutoVerifyStatus"];
+    bool auto_write_locked = 2 [json_name="AutoWriteLocked"];
+    uint64 bad_block_count = 3 [json_name="BadBlockCount"];
+    string block_size = 4 [json_name="BlockSize"];
+    uint64 capacity = 5 [json_name="Capacity"];
+    string child_health_state = 6 [json_name="ChildHealthState"];
+    string chunk_size = 7 [json_name="ChunkSize"];
+    string copyback_job_oid = 8 [json_name="CopybackJobOID"];
+    bool copyback_jobs_present = 9 [json_name="CopybackJobsPresent"];
+    google.protobuf.Timestamp created_on = 10 [json_name="CreatedOn"];
+    bool critical = 11 [json_name="Critical"];
+    bool direct_protect = 12 [json_name="DirectProtect"];
+    uint64 dirty_cache = 13 [json_name="DirtyCache"];
+    bool end_to_end_data_integrity_enabled = 14 [json_name="EndToEndDataIntegrityEnabled"];
+    bool forced_write_through = 15 [json_name="ForcedWriteThrough"];
+    string forced_write_through_reason = 16 [json_name="ForcedWriteThroughReason"];
+    repeated string forced_write_through_reasons = 17 [json_name="ForcedWriteThroughReasons"];
+    uint32 future_home_controller_index = 18 [json_name="FutureHomeControllerIndex"];
+    uint32 future_home_controller_rpindex = 19 [json_name="FutureHomeControllerRPIndex"];
+    string future_home_rp_name = 20 [json_name="FutureHomeRPName"];
+    bool has_sfx_extents = 21 [json_name="HasSFXExtents"];
+    string health_state = 22 [json_name="HealthState"];
+    string health_state_reason = 23 [json_name="HealthStateReason"];
+    uint32 home_controller_index = 24 [json_name="HomeControllerIndex"];
+    uint32 home_controller_rpindex = 25 [json_name="HomeControllerRPIndex"];
+    string home_rp_name = 26 [json_name="HomeRPName"];
+    bool io_routing = 27 [json_name="IORouting"];
+    uint32 index = 28 [json_name="Index"];
+    string initialization_job_oid = 29 [json_name="InitializationJobOID"];
+    string initialization_policy = 30 [json_name="InitializationPolicy"];
+    string initialization_status = 31 [json_name="InitializationStatus"];
+    string member_count = 32 [json_name="MemberCount"];
+    string mirrored_caching = 33 [json_name="MirroredCaching"];
+    string name = 34 [json_name="Name"];
+    string oid = 35 [json_name="OID"];
+    uint32 pool_active_job_count = 36 [json_name="PoolActiveJobCount"];
+    uint32 pool_index = 37 [json_name="PoolIndex"];
+    string pool_type = 38 [json_name="PoolType"];
+    uint32 preferred_home_controller_index = 39 [json_name="PreferredHomeControllerIndex"];
+    uint32 preferred_home_controller_rpindex = 40 [json_name="PreferredHomeControllerRPIndex"];
+    string preferred_home_rp_name = 41 [json_name="PreferredHomeRPName"];
+    string raid_level = 42 [json_name="RAIDLevel"];
+    bool react = 43 [json_name="ReACT"];
+    bool read_ahead_caching = 44 [json_name="ReadAheadCaching"];
+    string rebuild_job_oid = 45 [json_name="RebuildJobOID"];
+    bool rebuild_jobs_present = 46 [json_name="RebuildJobsPresent"];
+    uint32 remaining_raidset_parity = 47 [json_name="RemainingRaidsetParity"];
+    string sfx_usage = 48 [json_name="SFXUsage"];
+    string state = 49 [json_name="State"];
+    uint32 stripe_group_cardinality = 50 [json_name="StripeGroupCardinality"];
+    uint32 stripe_group_size = 51 [json_name="StripeGroupSize"];
+    uint32 stripe_size = 52 [json_name="StripeSize"];
+    uint32 superstripe_size = 53 [json_name="SuperstripeSize"];
+    string t10_pi_type = 54 [json_name="T10_PIType"];
+    string uuid = 55 [json_name="UUID"];
+    bool unmap_supported = 56 [json_name="UnmapSupported"];
+    bool verify_enabled = 57 [json_name="VerifyEnabled"];
+    string verify_job_oid = 58 [json_name="VerifyJobOID"];
+    uint32 verify_priority = 59 [json_name="VerifyPriority"];
+    uint32 vertical_rotation_cardinality = 60 [json_name="VerticalRotationCardinality"];
+    string worst_raidset_state = 61 [json_name="WorstRaidsetState"];
+    string write_back_caching = 62 [json_name="WriteBackCaching"];
+}
+
+// Represents the statistics, also known as counters, of an SFAVirtualDisk object.
+message VirtualDiskStatistics {
+    double average_read_io_latency = 1 [json_name="AverageReadIOLatency"];
+    double average_write_io_latency = 2 [json_name="AverageWriteIOLatency"];
+    string element_name = 3 [json_name="ElementName"];
+    string element_type = 4 [json_name="ElementType"];
+    uint32 filter_mask = 5 [json_name="FilterMask"];
+    repeated uint64 forwarded_ios = 6 [json_name="ForwardedIOs"];
+    repeated string io_latency_index_labels = 7 [json_name="IOLatencyIndexLabels"];
+    repeated string io_size_index_labels = 8 [json_name="IOSizeIndexLabels"];
+    uint32 index = 9 [json_name="Index"];
+    repeated uint64 kbytes_forwarded = 10 [json_name="KBytesForwarded"];
+    repeated uint64 kbytes_read = 11 [json_name="KBytesRead"];
+    repeated uint64 kbytes_transferred = 12 [json_name="KBytesTransferred"];
+    repeated uint64 kbytes_unmapped = 13 [json_name="KBytesUnmapped"];
+    repeated uint64 kbytes_written = 14 [json_name="KBytesWritten"];
+    string oid = 15 [json_name="OID"];
+    repeated uint64 q_depth_buckets = 16 [json_name="QDepthBuckets"];
+    repeated string q_depth_index_labels = 17 [json_name="QDepthIndexLabels"];
+    repeated uint64 read_io_latency_buckets = 18 [json_name="ReadIOLatencyBuckets"];
+    repeated uint64 read_io_size_buckets = 19 [json_name="ReadIOSizeBuckets"];
+    repeated uint64 read_ios = 20 [json_name="ReadIOs"];
+    google.protobuf.Timestamp start_statistic_time = 21 [json_name="StartStatisticTime"];
+    google.protobuf.Timestamp statistic_time = 22 [json_name="StatisticTime"];
+    int32 total_io_latency_modifier = 23 [json_name="TotalIOLatencyModifier"];
+    repeated uint64 total_ios = 24 [json_name="TotalIOs"];
+    uint64 total_read_io_latency = 25 [json_name="TotalReadIOLatency"];
+    uint64 total_write_io_latency = 26 [json_name="TotalWriteIOLatency"];
+    uint32 unknown_statistic_type = 27 [json_name="UnknownStatisticType"];
+    repeated uint64 unmap_ios = 28 [json_name="UnmapIOs"];
+    repeated uint64 write_io_latency_buckets = 29 [json_name="WriteIOLatencyBuckets"];
+    repeated uint64 write_io_size_buckets = 30 [json_name="WriteIOSizeBuckets"];
+    repeated uint64 write_ios = 31 [json_name="WriteIOs"];
+}
+
+// This class supplies the RATES related statistics data for the SFAVirtualDisk objects. The data returned is identical to that returned by the SFAVirtualDiskStatistics class with the FilterMask set to RATES. However, calls to this class may have a lower latency due to reduced overhead.
+message VirtualDiskStatisticsRates {
+    string element_name = 1 [json_name="ElementName"];
+    repeated uint64 forwarded_ios = 2 [json_name="ForwardedIOs"];
+    uint32 index = 3 [json_name="Index"];
+    repeated uint64 kbytes_forwarded = 4 [json_name="KBytesForwarded"];
+    repeated uint64 kbytes_read = 5 [json_name="KBytesRead"];
+    repeated uint64 kbytes_transferred = 6 [json_name="KBytesTransferred"];
+    repeated uint64 kbytes_unmapped = 7 [json_name="KBytesUnmapped"];
+    repeated uint64 kbytes_written = 8 [json_name="KBytesWritten"];
+    repeated uint64 read_ios = 9 [json_name="ReadIOs"];
+    google.protobuf.Timestamp statistic_time = 10 [json_name="StatisticTime"];
+    repeated uint64 total_ios = 11 [json_name="TotalIOs"];
+    repeated uint64 unmap_ios = 12 [json_name="UnmapIOs"];
+    repeated uint64 write_ios = 13 [json_name="WriteIOs"];
+}
+
+// Represents the SFA virtual machine (VM, aka STACK) management object.This class only functions on embedded SFA models.
+message VirtualMachine {
+    string automatic_recovery_action = 1 [json_name="AutomaticRecoveryAction"];
+    string automatic_startup_action = 2 [json_name="AutomaticStartupAction"];
+    string child_health_state = 3 [json_name="ChildHealthState"];
+    string configuration_file = 4 [json_name="ConfigurationFile"];
+    bool console_redirect = 5 [json_name="ConsoleRedirect"];
+    bool console_wait = 6 [json_name="ConsoleWait"];
+    uint32 controller_index = 7 [json_name="ControllerIndex"];
+    uint32 core_count = 8 [json_name="CoreCount"];
+    uint32 file_system_virtual_disk_index = 9 [json_name="FileSystemVirtualDiskIndex"];
+    string health_state = 10 [json_name="HealthState"];
+    string health_state_reason = 11 [json_name="HealthStateReason"];
+    bool hyper_threading_enabled = 12 [json_name="HyperThreadingEnabled"];
+    uint32 ioc_count = 13 [json_name="IOCCount"];
+    repeated uint32 ioc_indices = 14 [json_name="IOCIndices"];
+    repeated string ioc_mac_addresses = 15 [json_name="IOCMACAddresses"];
+    repeated uint32 ioc_multifunction_partners = 16 [json_name="IOCMultifunctionPartners"];
+    repeated uint32 ioc_virtual_functions = 17 [json_name="IOCVirtualFunctions"];
+    string image = 18 [json_name="Image"];
+    uint32 index = 19 [json_name="Index"];
+    bool is_running = 20 [json_name="IsRunning"];
+    bool local_vnc_only = 21 [json_name="LocalVNCOnly"];
+    uint32 maximum_io_size = 22 [json_name="MaximumIOSize"];
+    uint32 memory_capacity = 23 [json_name="MemoryCapacity"];
+    bool n_ic_naming_by_ioc_index = 24 [json_name="NICNamingByIOCIndex"];
+    string name = 25 [json_name="Name"];
+    string oid = 26 [json_name="OID"];
+    bool pxe_boot_enabled = 27 [json_name="PXEBootEnabled"];
+    string pending_automatic_startup_action = 28 [json_name="PendingAutomaticStartupAction"];
+    string pending_configuration_file = 29 [json_name="PendingConfigurationFile"];
+    bool pending_console_redirect = 30 [json_name="PendingConsoleRedirect"];
+    bool pending_console_wait = 31 [json_name="PendingConsoleWait"];
+    uint32 pending_core_count = 32 [json_name="PendingCoreCount"];
+    uint32 pending_file_system_virtual_disk_index = 33 [json_name="PendingFileSystemVirtualDiskIndex"];
+    bool pending_hyper_threading_enabled = 34 [json_name="PendingHyperThreadingEnabled"];
+    uint32 pending_ioc_count = 35 [json_name="PendingIOCCount"];
+    repeated uint32 pending_ioc_indices = 36 [json_name="PendingIOCIndices"];
+    repeated string pending_ioc_mac_addresses = 37 [json_name="PendingIOCMACAddresses"];
+    repeated uint32 pending_ioc_multifunction_partners = 38 [json_name="PendingIOCMultifunctionPartners"];
+    repeated uint32 pending_ioc_virtual_functions = 39 [json_name="PendingIOCVirtualFunctions"];
+    string pending_image = 40 [json_name="PendingImage"];
+    bool pending_local_vnc_only = 41 [json_name="PendingLocalVNCOnly"];
+    uint32 pending_maximum_io_size = 42 [json_name="PendingMaximumIOSize"];
+    uint32 pending_memory_capacity = 43 [json_name="PendingMemoryCapacity"];
+    bool pending_ni_cnaming_by_ioc_index = 44 [json_name="PendingNICNamingByIOCIndex"];
+    string pending_name = 45 [json_name="PendingName"];
+    bool pending_pxe_boot_enabled = 46 [json_name="PendingPXEBootEnabled"];
+    string pending_secondary_configuration_file = 47 [json_name="PendingSecondaryConfigurationFile"];
+    bool pending_start_vnc_server = 48 [json_name="PendingStartVNCServer"];
+    bool pending_uefi_boot_enabled = 49 [json_name="PendingUEFIBootEnabled"];
+    uint32 pending_virtual_processor_index = 50 [json_name="PendingVirtualProcessorIndex"];
+    string secondary_configuration_file = 51 [json_name="SecondaryConfigurationFile"];
+    bool start_vnc_server = 52 [json_name="StartVNCServer"];
+    bool uefi_boot_enabled = 53 [json_name="UEFIBootEnabled"];
+    string uuid = 54 [json_name="UUID"];
+    uint32 virtual_processor_index = 55 [json_name="VirtualProcessorIndex"];
+    bool wait_for_presentations = 56 [json_name="WaitForPresentations"];
+    bool wait_for_state = 57 [json_name="WaitForState"];
+}
+
+// Represents the SFA E platform Virtual Processor object.
+message VirtualProcessor {
+    uint32 cpu_family = 1 [json_name="CPUFamily"];
+    uint32 cpu_model = 2 [json_name="CPUModel"];
+    string cpu_model_name = 3 [json_name="CPUModelName"];
+    uint32 cpu_stepping = 4 [json_name="CPUStepping"];
+    uint32 controller_index = 5 [json_name="ControllerIndex"];
+    string controller_oid = 6 [json_name="ControllerOID"];
+    uint32 free_cores = 7 [json_name="FreeCores"];
+    uint32 free_memory_capacity = 8 [json_name="FreeMemoryCapacity"];
+    uint32 index = 9 [json_name="Index"];
+    uint32 memory_size = 10 [json_name="MemorySize"];
+    int32 memory_speed = 11 [json_name="MemorySpeed"];
+    string name = 12 [json_name="Name"];
+    uint32 numa_node_index = 13 [json_name="NumaNodeIndex"];
+    uint32 total_cores = 14 [json_name="TotalCores"];
+    uint32 total_memory_capacity = 15 [json_name="TotalMemoryCapacity"];
+}
+
+// A class that represents a voltage sensor in an enclosure on the SFA platform.
+message VoltageSensor {
+    string child_health_state = 1 [json_name="ChildHealthState"];
+    int32 current_reading = 2 [json_name="CurrentReading"];
+    string element_name = 3 [json_name="ElementName"];
+    uint32 enclosure_index = 4 [json_name="EnclosureIndex"];
+    string enclosure_oid = 5 [json_name="EnclosureOID"];
+    uint32 enclosure_position = 6 [json_name="EnclosurePosition"];
+    string firmware_version = 7 [json_name="FirmwareVersion"];
+    string fpga_version = 8 [json_name="FpgaVersion"];
+    string hardware_revision = 9 [json_name="HardwareRevision"];
+    string health_state = 10 [json_name="HealthState"];
+    string health_state_reason = 11 [json_name="HealthStateReason"];
+    uint32 index = 12 [json_name="Index"];
+    string init_string_version = 13 [json_name="InitStringVersion"];
+    bool locate_on = 14 [json_name="LocateOn"];
+    string location = 15 [json_name="Location"];
+    string oid = 16 [json_name="OID"];
+    bool over_voltage_failure = 17 [json_name="OverVoltageFailure"];
+    bool over_voltage_warning = 18 [json_name="OverVoltageWarning"];
+    string part_number = 19 [json_name="PartNumber"];
+    uint32 position = 20 [json_name="Position"];
+    bool predict_failure = 21 [json_name="PredictFailure"];
+    bool present = 22 [json_name="Present"];
+    string ses_status = 23 [json_name="SESStatus"];
+    string serial_number = 24 [json_name="SerialNumber"];
+    bool under_voltage_failure = 25 [json_name="UnderVoltageFailure"];
+    bool under_voltage_warning = 26 [json_name="UnderVoltageWarning"];
+}
+
+// Common SFAObject message
+message SFAObject {
+    string bundle_id = 1 [json_name="bundleId"];
+    string system_id = 2 [json_name="systemId"];
+    string object_type = 3 [json_name="objectType"];
+    oneof data {
+        BundleInfo bundle_info = 100 [json_name="BundleInfo"];
+        AllowedIPRange allowed_ip_range = 101 [json_name="AllowedIPRange"];
+        Authentication authentication = 102 [json_name="Authentication"];
+        AuthorizationKey authorization_key = 103 [json_name="AuthorizationKey"];
+        ClientIOC client_ioc = 104 [json_name="ClientIOC"];
+        ConfigurationFile configuration_file = 105 [json_name="ConfigurationFile"];
+        Connector connector = 106 [json_name="Connector"];
+        Controller controller = 107 [json_name="Controller"];
+        DiscoveredInitiator discovered_initiator = 108 [json_name="DiscoveredInitiator"];
+        DiskChannel disk_channel = 109 [json_name="DiskChannel"];
+        DiskDrive disk_drive = 110 [json_name="DiskDrive"];
+        DiskDrivePHYErrors disk_drive_phy_errors = 111 [json_name="DiskDrivePHYErrors"];
+        DiskDriveStatistics disk_drive_statistics = 112 [json_name="DiskDriveStatistics"];
+        DiskDriveStatisticsRates disk_drive_statistics_rates = 113 [json_name="DiskDriveStatisticsRates"];
+        DiskDriveUpdateProgress disk_drive_update_progress = 114 [json_name="DiskDriveUpdateProgress"];
+        DiskSlot disk_slot = 115 [json_name="DiskSlot"];
+        DNSAgent d_ns_agent = 116 [json_name="DNSAgent"];
+        EmailAgent email_agent = 117 [json_name="EmailAgent"];
+        Enclosure enclosure = 118 [json_name="Enclosure"];
+        EnclosureConfigurations enclosure_configurations = 119 [json_name="EnclosureConfigurations"];
+        EnclosureUpdateProgress enclosure_update_progress = 120 [json_name="EnclosureUpdateProgress"];
+        Expander expander = 121 [json_name="Expander"];
+        Fan fan = 122 [json_name="Fan"];
+        Host host = 123 [json_name="Host"];
+        HostChannel host_channel = 124 [json_name="HostChannel"];
+        HostChannelConnectionDetails host_channel_connection_details = 125 [json_name="HostChannelConnectionDetails"];
+        HostChannelErrors host_channel_errors = 126 [json_name="HostChannelErrors"];
+        HostChannelStatistics host_channel_statistics = 127 [json_name="HostChannelStatistics"];
+        HostChannelStatisticsRates host_channel_statistics_rates = 128 [json_name="HostChannelStatisticsRates"];
+        ICLChannel icl_channel = 129 [json_name="ICLChannel"];
+        ICLChannelStatistics icl_channel_statistics = 130 [json_name="ICLChannelStatistics"];
+        ICLIOC iclioc = 131 [json_name="ICLIOC"];
+        Image image = 132 [json_name="Image"];
+        Initiator initiator = 133 [json_name="Initiator"];
+        InternalDiskDrive internal_disk_drive = 134 [json_name="InternalDiskDrive"];
+        IOC ioc = 135 [json_name="IOC"];
+        Job job = 136 [json_name="Job"];
+        KMIPServer kmip_server = 137 [json_name="KMIPServer"];
+        PowerSupply power_supply = 138 [json_name="PowerSupply"];
+        Presentation presentation = 139 [json_name="Presentation"];
+        ROCEConnector r_oc_econnector = 140 [json_name="ROCEConnector"];
+        SASConnector sas_connector = 141 [json_name="SASConnector"];
+        RAIDProcessor raid_processor = 142 [json_name="RAIDProcessor"];
+        SEP sep = 143 [json_name="SEP"];
+        SFXBatch sfx_batch = 144 [json_name="SFXBatch"];
+        SFXCache sfx_cache = 145 [json_name="SFXCache"];
+        SFXCacheStatistics sfx_cache_statistics = 146 [json_name="SFXCacheStatistics"];
+        SFXExtent sfx_extent = 147 [json_name="SFXExtent"];
+        SNMPAgent snmp_agent = 148 [json_name="SNMPAgent"];
+        SNMPTrapAgent snmp_trap_agent = 149 [json_name="SNMPTrapAgent"];
+        SNMPTrapReceiver snmp_trap_receiver = 150 [json_name="SNMPTrapReceiver"];
+        SNMPUser snmp_user = 151 [json_name="SNMPUser"];
+        Snapshot snapshot = 152 [json_name="Snapshot"];
+        SparePool spare_pool = 153 [json_name="SparePool"];
+        Stack stack = 154 [json_name="Stack"];
+        StoragePool storage_pool = 155 [json_name="StoragePool"];
+        StorageSystem storage_system = 156 [json_name="StorageSystem"];
+        SyslogAgent syslog_agent = 157 [json_name="SyslogAgent"];
+        TemperatureSensor temperature_sensor = 158 [json_name="TemperatureSensor"];
+        UnassignedPool unassigned_pool = 159 [json_name="UnassignedPool"];
+        UPS ups = 160 [json_name="UPS"];
+        UserAccount user_account = 161 [json_name="UserAccount"];
+        UserGroup user_group = 162 [json_name="UserGroup"];
+        UserInterface user_interface = 163 [json_name="UserInterface"];
+        VirtualDisk virtual_disk = 164 [json_name="VirtualDisk"];
+        VirtualDiskStatistics virtual_disk_statistics = 165 [json_name="VirtualDiskStatistics"];
+        VirtualDiskStatisticsRates virtual_disk_statistics_rates = 166 [json_name="VirtualDiskStatisticsRates"];
+        VirtualMachine virtual_machine = 167 [json_name="VirtualMachine"];
+        VirtualProcessor virtual_processor = 168 [json_name="VirtualProcessor"];
+        VoltageSensor voltage_sensor = 169 [json_name="VoltageSensor"];
+    }
+}
+
+
+// Messages which are not provided inside bundle,
+// Created at the parsing time
+
+message SystemInfo {
+    message Controller {
+        string id = 1 [json_name="id"];
+        string platform = 2 [json_name="platform"];
+        string serial_number = 3 [json_name="serialNumber"];
+
+        // SFA OS version
+        string firmware = 4 [json_name="firmware"];
+        string firmware_source_version = 5 [json_name="firmwareSourceVersion"];
+
+        string bmc = 6 [json_name="bmc"];
+        string bios = 7 [json_name="bios"];
+        string cpld = 8 [json_name="cpld"];
+        uint64 uptime = 9 [json_name="uptime"];
+        bool primary = 10 [json_name="primary"];
+        string name = 11 [json_name="name"];
+        string index = 12 [json_name="index"];
+    }
+
+    message Enclosure {
+        message Cpld {
+            string version = 1 [json_name="version"];
+            string location = 2 [json_name="location"];
+        }
+
+        string model = 1 [json_name="model"];
+        string firmware = 2 [json_name="firmware"];
+        repeated Cpld cplds = 3 [json_name="cplds"];
+        uint32 amount = 4 [json_name="amount"];
+    }
+
+    message Drive {
+        string vendor = 1 [json_name="vendor"];
+        string model = 2 [json_name="model"];
+        string revision = 3 [json_name="revision"];
+        string type = 4 [json_name="type"];
+        uint32 amount = 5 [json_name="amount"];
+    }
+
+    message Battery {
+        google.protobuf.Timestamp manufactured_date = 1 [json_name="manufacturedDate"];
+        uint32 amount = 2 [json_name="amount"];
+    }
+
+    message Pool {
+        uint32 storage_pools = 1 [json_name="storagePools"];
+        uint32 spare_pools = 2 [json_name="sparePools"];
+        repeated string sparing_policies = 3 [json_name="sparingPolicies"];
+        repeated uint32 disk_timeouts = 4 [json_name="diskTimeouts"];
+    }
+
+    // General data
+    string rp_subsystem_name = 1 [json_name="rpSubsystemName"];
+    string pool_verify_policy = 2 [json_name="poolVerifyPolicy"];
+    string disk_enclosure_config = 3 [json_name="diskEnclosureConfig"];
+
+    repeated Controller controllers = 10 [json_name="controllers"];
+    repeated Enclosure enclosures = 20 [json_name="enclosures"];
+    repeated Drive drives = 30 [json_name="drives"];
+    repeated Battery batteries = 40 [json_name="batteries"];
+    Pool pools = 50 [json_name="pools"];
+}

@@ -1,0 +1,303 @@
+syntax = "proto3";
+
+package services.api.v1;
+
+option go_package = "services/api/v1;apiv1";
+
+import "google/protobuf/timestamp.proto";
+
+import "services/api/v1/common.proto";
+
+service ReportsService {
+    rpc BundleUploadReport(BundleUploadReportRequest) returns (BundleUploadReportResponse) {}
+    rpc DiskDriveReport(DiskDriveReportRequest) returns (DiskDriveReportResponse) {}
+    rpc SystemConfigurationReport(SystemConfigurationReportRequest) returns (SystemConfigurationReportResponse) {}
+    rpc UnknownCustomersReport(UnknownCustomersReportRequest) returns (UnknownCustomersReportResponse) {}
+    rpc AdoptedCustomersReport(AdoptedCustomersReportRequest) returns (AdoptedCustomersReportResponse) {}
+    rpc SFAReport(SFAReportRequest) returns (SFAReportResponse) {}
+    rpc ExascalerReport(ExascalerReportRequest) returns (ExascalerReportResponse) {}
+    rpc SystemHealthReport(SystemHealthReportRequest) returns (SystemHealthReportResponse) {}
+
+    rpc FindColumnValues(FindColumnValuesRequest) returns (FindColumnValuesResponse) {}
+
+    rpc CustomReport(CustomReportRequest) returns (CustomReportResponse) {}
+    rpc FindCustomReportColumnValues(FindCustomReportColumnValuesRequest) returns (FindCustomReportColumnValuesResponse) {}
+}
+
+message BundleUploadReportRequest {
+    enum Interval {
+        INTERVAL_UNSPECIFIED = 0;
+        INTERVAL_HOUR = 1;
+        INTERVAL_DAY = 2;
+        INTERVAL_WEEK = 3;
+        INTERVAL_MONTH = 4;
+        INTERVAL_YEAR = 5;
+    }
+
+    google.protobuf.Timestamp gte = 1 [json_name="gte"];
+    google.protobuf.Timestamp lte = 2 [json_name="lte"];
+    Interval interval = 3 [json_name="interval"];
+
+    repeated string system_type = 4 [json_name="systemType"];
+    repeated string bundle_type = 5 [json_name="bundleType"];
+}
+
+message BundleUploadReportResponse {
+    message Data {
+        google.protobuf.Timestamp date = 1 [json_name="date"];
+        string system_type = 2 [json_name="systemType"];
+        string bundle_type = 3 [json_name="bundleType"];
+        uint64 count = 4 [json_name="count"];
+    }
+
+    repeated Data res = 1 [json_name="res"];
+}
+
+message DiskDrive {
+    string bundle_id = 1 [json_name="bundleId"];
+    google.protobuf.Timestamp timestamp = 2 [json_name="timestamp"];
+    string serial_number = 3 [json_name="serialNumber"];
+    string vendor_id = 4 [json_name="vendorId"];
+    string product_id = 5 [json_name="productId"];
+    string product_revision = 6 [json_name="productRevision"];
+    string disk_speed = 7 [json_name="diskSpeed"];
+    int64 raw_capacity = 8 [json_name="rawCapacity"];
+    int64 ssd_life_left = 9 [json_name="ssdLifeLeft"];
+    string health_state = 10 [json_name="healthState"];
+    string health_state_reason = 11 [json_name="healthStateReason"];
+    string customer_id = 12 [json_name="customerId"];
+    string customer_sfdc = 13 [json_name="customerSfdc"];
+    string system_id = 14 [json_name="systemId"];
+    string platform = 15 [json_name="platform"];
+}
+
+message DiskDriveReportRequest {
+    FilterCondition filter = 1 [json_name="filter"];
+    repeated SortCondition sort = 2 [json_name="sort"];
+    uint32 offset = 3 [json_name="offset"];
+    uint32 limit = 4 [json_name="limit"];
+    bool only_latest = 5 [json_name="onlyLatest"];
+    bool skip_meta = 6 [json_name="skipMeta"];
+}
+
+message DiskDriveReportResponse {
+    repeated DiskDrive res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+message SystemConfiguration {
+    string bundle_id = 1 [json_name="bundleId"];
+    string system_id = 2 [json_name="systemId"];
+    string customer_id = 3 [json_name="customerId"];
+    string customer_sfdc = 4 [json_name="customerSfdc"];
+    google.protobuf.Timestamp timestamp = 5 [json_name="timestamp"];
+    string platform = 6 [json_name="platform"];
+    int64 capacity = 7 [json_name="capacity"];
+    google.protobuf.Timestamp config_date = 8 [json_name="configDate"];
+    string disk_enclosure_config = 9 [json_name="diskEnclosureConfig"];
+}
+
+message SystemConfigurationReportRequest {
+    FilterCondition filter = 1 [json_name="filter"];
+    repeated SortCondition sort = 2 [json_name="sort"];
+    uint32 offset = 3 [json_name="offset"];
+    uint32 limit = 4 [json_name="limit"];
+    bool only_latest = 5 [json_name="onlyLatest"];
+    bool skip_meta = 6 [json_name="skipMeta"];
+}
+
+message SystemConfigurationReportResponse {
+    repeated SystemConfiguration res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+message UnknownCustomersReportRequest {
+    FilterCondition filter = 1 [json_name="filter"];
+    repeated SortCondition sort = 2 [json_name="sort"];
+    uint32 offset = 3 [json_name="offset"];
+    uint32 limit = 4 [json_name="limit"];
+    bool skip_meta = 5 [json_name="skipMeta"];
+}
+
+message UnknownCustomer {
+    string bundle_id = 1 [json_name="bundleId"];
+    string system_id = 2 [json_name="systemId"];
+    string customer_id = 3 [json_name="customerId"];
+    string customer_name = 4 [json_name="customerName"];
+    string bundle_type = 5 [json_name="bundleType"];
+    string support_case = 6 [json_name="supportCase"];
+    string case_customer_id = 7 [json_name="caseCustomerId"];
+    string case_customer_name = 8 [json_name="caseCustomerName"];
+}
+
+message UnknownCustomersReportResponse {
+    repeated UnknownCustomer res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+message FindColumnValuesRequest {
+    enum Report {
+        REPORT_UNSPECIFIED = 0;
+        REPORT_DISK_DRIVE = 1;
+        REPORT_SYSTEM_CONFIGURATION = 2;
+        REPORT_UNKNOWN_CUSTOMERS = 3;
+        REPORT_ADOPTED_CUSTOMERS = 4;
+        REPORT_SFA_REPORT = 5;
+        REPORT_EXASCALER_REPORT = 6;
+        REPORT_SYSTEM_HEALTH = 7;
+    }
+
+    Report report = 1 [json_name="report"];
+    string column = 2 [json_name="column"];
+    FilterCondition filter = 3 [json_name="filter"];
+    string search = 4 [json_name="search"];
+    uint32 offset = 5 [json_name="offset"];
+    uint32 limit = 6 [json_name="limit"];
+    bool skip_meta = 7 [json_name="skipMeta"];
+}
+
+message FindColumnValuesResponse {
+    repeated string res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+message AdoptedCustomersReportRequest {
+    FilterCondition filter = 1 [json_name="filter"];
+    repeated SortCondition sort = 2 [json_name="sort"];
+    uint32 offset = 3 [json_name="offset"];
+    uint32 limit = 4 [json_name="limit"];
+    bool skip_meta = 5 [json_name="skipMeta"];
+}
+
+message AdoptedCustomer {
+    string customer_id = 1 [json_name="customerId"];
+    string customer_name = 2 [json_name="customerName"];
+    uint32 count = 4 [json_name="count"];
+}
+
+message AdoptedCustomersReportResponse {
+    repeated AdoptedCustomer res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+message SFASystem {
+    string bundle_id = 1 [json_name="bundleId"];
+    string system_id = 2 [json_name="systemId"];
+    string customer_id = 3 [json_name="customerId"];
+    string customer_name = 4 [json_name="customerName"];
+    string platform = 5 [json_name="platform"];
+    string release_version = 6 [json_name="releaseVersion"];
+    string enclosure_model = 7 [json_name="enclosureModel"];
+    int32 enclosure_count = 8 [json_name="enclosureCount"];
+    google.protobuf.Timestamp timestamp = 9 [json_name="timestamp"];
+
+}
+
+message SFAReportRequest {
+    FilterCondition filter = 1 [json_name="filter"];
+    repeated SortCondition sort = 2 [json_name="sort"];
+    uint32 offset = 3 [json_name="offset"];
+    uint32 limit = 4 [json_name="limit"];
+    bool skip_meta = 6 [json_name="skipMeta"];
+}
+
+message SFAReportResponse {
+    repeated SFASystem res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+message ExascalerSystem {
+    string bundle_id = 1 [json_name="bundleId"];
+    string system_id = 2 [json_name="systemId"];
+    string customer_id = 3 [json_name="customerId"];
+    string customer_name = 4 [json_name="customerName"];
+    google.protobuf.Timestamp timestamp = 5 [json_name="timestamp"];
+
+    string version = 6 [json_name="version"];
+    string stonith_type = 7 [json_name="stonithType"];
+    string full_version = 8 [json_name="fullVersion"];
+    string lustre_version = 9 [json_name="lustreVersion"];
+    string kernel_version = 10 [json_name="kernelVersion"];
+    string linux_version = 11 [json_name="linuxVersion"];
+}
+
+message ExascalerReportRequest {
+    FilterCondition filter = 1 [json_name="filter"];
+    repeated SortCondition sort = 2 [json_name="sort"];
+    uint32 offset = 3 [json_name="offset"];
+    uint32 limit = 4 [json_name="limit"];
+    bool skip_meta = 6 [json_name="skipMeta"];
+}
+message ExascalerReportResponse {
+    repeated ExascalerSystem res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+message SystemHealth {
+    string bundle_id = 1 [json_name="bundleId"];
+    string bundle_type = 2 [json_name="bundleType"];
+    string system_type = 3 [json_name="systemType"];
+    string system_id = 4 [json_name="systemId"];
+    string customer_id = 5 [json_name="customerId"];
+    string customer_name = 6 [json_name="customerName"];
+    google.protobuf.Timestamp timestamp = 7 [json_name="timestamp"];
+    string system_name = 8 [json_name="systemName"];
+    uint32 errors = 9 [json_name="errors"];
+    string version = 10 [json_name="version"];
+    string label = 11 [json_name="label"];
+}
+
+message SystemHealthReportRequest {
+    FilterCondition filter = 1 [json_name="filter"];
+    repeated SortCondition sort = 2 [json_name="sort"];
+    uint32 offset = 3 [json_name="offset"];
+    uint32 limit = 4 [json_name="limit"];
+    bool skip_meta = 6 [json_name="skipMeta"];
+}
+message SystemHealthReportResponse {
+    repeated SystemHealth res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+message CustomReportRequest {
+    message JoinVia {
+        string object_type = 1 [json_name="objectType"];
+        string name = 2 [json_name="name"];
+
+        string src_object_type = 3 [json_name="srcObjectType"];
+        string src_name = 4 [json_name="srcName"];
+    }
+
+    message Columns {
+        string system_type = 1 [json_name="systemType"];
+        string object_type = 2 [json_name="object_type"];
+        repeated string names = 3 [json_name="names"];
+        repeated JoinVia joins = 4 [json_name="joins"];
+    }
+
+    repeated Columns columns = 1 [json_name="columns"];
+
+    FilterCondition filter = 2 [json_name="filter"];
+    bool group_by_customer = 3 [json_name="groupByCustomer"];
+    bool group_by_system = 4 [json_name="groupBySystem"];
+    repeated SortCondition sort = 5 [json_name="sort"];
+    uint32 offset = 6 [json_name="offset"];
+    uint32 limit = 7 [json_name="limit"];
+    bool skip_meta = 8 [json_name="skipMeta"];
+}
+
+message CustomReportResponse {
+    repeated string res = 1 [json_name="res"];
+    FindObjectsMeta meta = 2 [json_name="meta"];
+}
+
+message FindCustomReportColumnValuesRequest {
+    CustomReportRequest request = 1 [json_name="req"];
+    string name = 2 [json_name="name"];
+    string search = 3 [json_name="search"];
+    uint32 limit = 4 [json_name="limit"];
+}
+
+message FindCustomReportColumnValuesResponse {
+    repeated string res = 1 [json_name="res"];
+}

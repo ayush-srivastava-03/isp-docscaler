@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package services.api.v1;
+
+option go_package = "services/api/v1;apiv1";
+
+import "google/protobuf/timestamp.proto";
+
+message AnyValue {
+    oneof value {
+        bool bool = 1 [json_name="boolean"];
+        string str = 2 [json_name="str"];
+        double number = 3 [json_name="number"];
+        google.protobuf.Timestamp timestamp = 4 [json_name="timestamp"];
+    }
+}
+
+message FilterCondition {
+    string condition = 1 [json_name="condition"];
+    repeated AnyValue values = 2 [json_name="values"];
+}
+
+message SortCondition {
+    string field = 1 [json_name="field"];
+    FieldType field_type = 2 [json_name="fieldType"];
+    SortDirection value = 3 [json_name="value"];
+}
+
+message SortClause {
+    string field = 1;
+    SortDirection value = 2;
+}
+
+enum SortDirection {
+    SORT_DIRECTION_UNSPECIFIED = 0;
+    SORT_DIRECTION_ASC = 1;
+    SORT_DIRECTION_DESC = 2;
+}
+
+message FindObjectsMeta {
+    uint32 total = 1;
+    uint32 offset = 2;
+    uint32 limit = 3;
+}
+
+enum FieldType {
+    FIELD_TYPE_UNSPECIFIED = 0;
+    FIELD_TYPE_STRING = 1;
+    FIELD_TYPE_NUMBER = 2;
+    FIELD_TYPE_FLOAT = 3;
+    FIELD_TYPE_TIMESTAMP = 4;
+    FIELD_TYPE_BOOLEAN = 5;
+}
