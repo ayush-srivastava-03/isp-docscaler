@@ -4,24 +4,21 @@ Created on 2 Jun 2018
 @author: mwolf
 '''
 import os
-import io
 import json
 import copy
 import tarfile
 import shutil
-import functools
 
 from jsoncfg.text_encoding import load_utf_text_file
 from collections import OrderedDict
 from copy import deepcopy
 from modules.tools import istext
-from pathlib import Path
 
 class ConfigDict(OrderedDict):
     __getattr__= OrderedDict.__getitem__
     __setattr__= OrderedDict.__setitem__
     __delattr__= OrderedDict.__delitem__
-    
+
     def __deepcopy__(self, memo):
         cls = self.__class__
         result = cls.__new__(cls)
@@ -56,12 +53,12 @@ class ConfigData():
     
     @staticmethod
     def __load__(listData):
-        if type(listData) is OrderedDict:
+        if isinstance(listData, OrderedDict):
             return ConfigData.__load_dict__(listData)
-        elif type(listData) is list:
-            return ConfigData.__load_list__(listData)  
+        elif isinstance(listData, list):
+            return ConfigData.__load_list__(listData)
         else:
-            return listData  
+            return listData
         
     @staticmethod
     def __load_dict__(listData: dict):
@@ -83,7 +80,7 @@ class ConfigData():
     @staticmethod
     def saveJson(filepath:str, config:ConfigDict):
         with open(filepath, 'w') as outfile:
-            json.dump(config, outfile, indent=3) 
+            json.dump(config, outfile, indent=3)
     
     @staticmethod
     def copyTemplates(self, filepath:str):
@@ -100,14 +97,14 @@ class ConfigData():
     
     
     def generateConfigData(self, ignore):
-        from modules import sfa, gpfs, lustre
+        from modules import sfa, lustre
         
         config = copy.deepcopy(self.__orig_config)
         
         print ("Generating '{}'".format(config.general.document_name))
         
         '''Project'''
-        if "project" in config: 
+        if "project" in config:
             for proj in config.project:
                 print ("  Collecting data for project '{}'".format(proj))
                 
@@ -128,7 +125,7 @@ class ConfigData():
                                     print("      - {}".format(conf[subsystemName]))
                                     with open("{0}/{1}".format(self.getConfigPath(), conf[subsystemName]), "rb") as f:
                                         sss = sfa.parse_sss(f.read().decode("utf-8")).getData()
-                                        sfa_data.update({subsystemName: sss})   
+                                        sfa_data.update({subsystemName: sss})
                             
                             # a TXT or TGZ file
                             if isinstance(conf, str):
@@ -163,37 +160,37 @@ class ConfigData():
                     
                 '''LUSTRE'''
                 if "lustre" in config.project[proj]:
-                        lustre_config = config.project[proj].lustre
+                    lustre_config = config.project[proj].lustre
+                    
+                    if isinstance(lustre_config, str) or isinstance(lustre_config, list):
+                    
+                        if isinstance(lustre_config, str):
+                            lustre_config = [lustre_config]
+                    
+                        for idx, conf in enumerate(lustre_config):
+                            print ("    Parsing es_showall: {}'".format(conf))
+                            file = "{}/{}".format(self.getConfigPath(), conf)
                         
-                        if isinstance(lustre_config, str) or isinstance(lustre_config, list):
-                        
-                            if isinstance(lustre_config, str):
-                                lustre_config = [lustre_config]
-                        
-                            for idx, conf in enumerate(lustre_config):
-                                print ("    Parsing es_showall: {}'".format(conf))
-                                file = "{}/{}".format(self.getConfigPath(), conf)
+                            lustre_config[idx] = lustre.parse_esctl(file).getData()
                             
-                                lustre_config[idx] = lustre.parse_esctl(file).getData()
-                                
-                                if len(lustre_config) == 1:
-                                    config.project[proj].lustre = lustre_config[0]
-                                else:
-                                    config.project[proj].lustre = lustre_config
+                            if len(lustre_config) == 1:
+                                config.project[proj].lustre = lustre_config[0]
+                            else:
+                                config.project[proj].lustre = lustre_config
+                        
+                    # Combined log file. Get the names from the config file
+                    # If the number of nodes inside the tar is larger then the combined setting,
+                    # then all none combined nodes will be treated as single ones.
+                    elif isinstance(lustre_config, ConfigDict):
+                        for nodes in lustre_config:
+                            print ("    Parsing es_showall: {}'".format(lustre_config[nodes]))
+                            file = "{}/{}".format(self.getConfigPath(), lustre_config[nodes])
                             
-                        # Combined log file. Get the names from the config file
-                        # If the number of nodes inside the tar is larger then the combined setting,
-                        # then all none combined nodes will be treated as single ones.
-                        elif isinstance(lustre_config, ConfigDict):
-                            for nodes in lustre_config:
-                                print ("    Parsing es_showall: {}'".format(lustre_config[nodes]))
-                                file = "{}/{}".format(self.getConfigPath(), lustre_config[nodes])
-                                
-                                config.project[proj].lustre = lustre.parse_esctl(file, nodes).getData()
+                            config.project[proj].lustre = lustre.parse_esctl(file, nodes).getData()
 
                 print("\n")
                       
-        self.__config = config 
+        self.__config = config
         return config
     
 class ConfigWriter:
